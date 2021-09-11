@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
-gem 'rails', '~> 6.1.4'
+gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.1'
 # Use Puma as the app server
@@ -12,7 +12,7 @@ gem 'puma', '~> 5.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 4.0'
+# gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -49,40 +49,13 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-# ui
-gem 'importmap-rails'
-gem 'hotwire-rails'
-gem 'view_component', require: 'view_component/engine'
-gem 'webpacker'
+# CMS
+gem 'spina'
 
-# emails
-gem 'postmark-rails'
-
-# active storage
-gem 'google-cloud-storage'
-
-# image processing and compression
-gem 'image_processing'
-
-# https://github.com/Casecommons/pg_search
-gem 'pg_search'
+# authentication
+gem 'devise'
+gem 'devise-security'
 
 #  validations
 gem 'phonelib'
 gem 'email_address'
-
-# devise
-gem 'devise'
-gem 'devise-security'
-
-# job processing
-gem 'sidekiq'
-gem 'sidekiq-status'
-gem 'sidekiq-unique-jobs'
-gem 'sidekiq-scheduler'
-
-# payments
-gem 'stripe'
-
-# encryption
-gem 'lockbox'
