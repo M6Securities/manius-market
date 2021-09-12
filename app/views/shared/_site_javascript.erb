@@ -1,0 +1,74 @@
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+
+<!-- BEGIN: Vendor JS-->
+<script src="https://cdn.m6securities.com/vuexy_admin_7-1-2/app-assets/vendors/js/vendors.min.js?_=<%= GIT_COMMIT %>"></script>
+<!-- BEGIN Vendor JS-->
+
+<!-- BEGIN: Theme JS-->
+<script src="https://cdn.m6securities.com/vuexy_admin_7-1-2/app-assets/js/core/app-menu.js?_=<%= GIT_COMMIT %>"></script>
+<script src="https://cdn.m6securities.com/vuexy_admin_7-1-2/app-assets/js/core/app.js?_=<%= GIT_COMMIT %>"></script>
+<!-- END: Theme JS-->
+
+<script src="https://cdn.m6securities.com/vuexy_admin_7-1-2/app-assets/js/scripts/tables/table-datatables-basic.js"></script>
+
+
+<script>
+    const localStorage = window.localStorage;
+    const instance = '<%= InstanceVar.get_instance %>';
+
+    const localInstance = localStorage.getItem('manius-market-instance');
+
+    if (localInstance === undefined || localInstance === null) {
+        localStorage.setItem('manius-market-instance', instance);
+    } else {
+
+        if (localInstance !== instance) {
+            basket.clear();
+            localStorage.setItem('manius-market-instance', instance);
+            console.log("Reloading all scripts");
+        }
+    }
+
+
+
+
+    basket.setDefaultExpiration(672); // four weeks
+    basket.setSkipCDNCache(true);
+    basket.setCacheInstance(localInstance);
+    //basket.enableDebug(true);
+
+    basket.require(
+        // { url: '/app-assets/vendors/js/unison-js/unison-js.min.js' }, // importing this breaks the menu
+        // { url: '/app-assets/vendors/js/feather-icons/feather-icons.min' }, // importing this breaks icons
+        { url: 'https://cdn.m6securities.com/vuexy_admin_7-1-2/app-assets/vendors/js/ui/jquery.sticky.js' },
+        { url: 'https://cdn.m6securities.com/vuexy_admin_7-1-2/app-assets/vendors/js/extensions/tether.min.js' },
+        { url: 'https://cdn.m6securities.com/vuexy_admin_7-1-2/app-assets/vendors/js/extensions/shepherd.min.js' },
+        { url: 'https://cdn.m6securities.com/vuexy_admin_7-1-2/app-assets/vendors/js/extensions/toastr.min.js' },
+
+        //{ url: '/javascript/toasts.js' },
+        <% unless ENV['DISABLE_SPA'] == 'true' %> //{ url: '/javascript/simple-spa.js', skipCache: false }, <% end %>
+        //{ url: '/javascript/format.js' },
+        //{ url: '/javascript/form-slide.js' },
+
+        { url: 'https://cdn.m6securities.com/libs/js/pretty-print-json.js' },
+        { url: 'https://cdn.m6securities.com/libs/js/jquery.md5.js' },
+        { url: 'https://cdn.m6securities.com/vuexy_admin_7-1-2/app-assets/js/scripts/tables/table-datatables-basic.js' },
+        { url: 'https://cdn.m6securities.com/vuexy_admin_7-1-2/app-assets/js/scripts/extensions/ext-component-sweet-alerts.js'},
+        { url: 'https://cdn.m6securities.com/vuexy_admin_7-1-2/app-assets/vendors/js/forms/select/select2.full.min.js'}
+        //{ url: 'https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js' }
+    );
+
+    $(window).on('load', function () {
+        updateFeather();
+        $('select').select2();
+    });
+
+    function updateFeather() {
+        if (feather) {
+            feather.replace({
+                width: 14,
+                height: 14
+            });
+        }
+    }
+</script>

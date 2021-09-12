@@ -1,0 +1,56 @@
+<!-- BEGIN: Header-->
+<nav class="header-navbar navbar-expand-lg navbar navbar-fixed align-items-center navbar-shadow navbar-brand-center" data-nav="brand-center">
+
+  <div class="navbar-container d-flex justify-content-between">
+    <div class="bookmark-wrapper d-flex align-items-center bg-whit mr-auto">
+
+      <div>
+        <a href="" data-external class="btn btn-primary">
+          <i data-feather="arrow-left"></i> <%= t 'global.wording.back_to_website' %>
+        </a>
+      </div>
+
+    </div>
+
+    <a class="navbar-brand m-0" href="/">
+      <img alt="" src="" height="24px">
+    </a>
+
+    <ul class="nav navbar-nav align-items-center ml-auto" style="width: 181px;">
+      <li class="nav-item dropdown dropdown-language ml-auto">
+        <a class="nav-link dropdown-toggle" id="dropdown-flag" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+          <% if I18n.locale == :en %>
+
+            <i class="flag-icon flag-icon-us"></i>
+            <span class="selected-language">English</span>
+
+          <% elsif I18n.locale == :es %>
+
+            <i class="flag-icon flag-icon-es"></i>
+            <span class="selected-language">Spanish</span>
+
+          <% end %>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-flag">
+          <a class="dropdown-item" href="<%= current_path locale: 'en' %>" data-language="en" data-internal>
+            <i class="flag-icon flag-icon-us"></i>
+            English
+          </a>
+        </div>
+      </li>
+
+
+      <!-- this causes some issues, it doesn't switch well here -->
+      <!--
+      <li class="nav-item d-none d-lg-block">
+        <a class="nav-link nav-link-style">
+          <i class="ficon" data-feather="moon"></i>
+        </a>
+      </li>
+      -->
+    </ul>
+
+  </div>
+</nav>
+<!-- END: Header-->

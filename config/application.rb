@@ -19,6 +19,11 @@ require "rails/test_unit/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Permitted locales available for the application
+#
+# en: english
+LOCALE_OPTIONS = %i[en].freeze
+
 module ManiusMarket
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -32,6 +37,11 @@ module ManiusMarket
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    config.autoload_paths += %W[#{config.root}/lib]
+
     config.hosts << 'dalen.m6securities.dev'
+
+    # set locales
+    I18n.available_locales = LOCALE_OPTIONS
   end
 end

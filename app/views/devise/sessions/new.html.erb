@@ -1,0 +1,51 @@
+<% content_for :title, t('.web_title') %>
+
+<div class="d-flex mb-1">
+  <h2 class="card-title font-weight-bold mr-2 mb-0"><%= t '.welcome_back' %></h2>
+
+  <a href="/" class="btn btn-sm btn-outline-primary" data-external>
+    <i data-feather="arrow-left"></i> <%= t 'global.wording.back_to_home' %>
+  </a>
+</div>
+
+<% unless flash.alert.blank? %>
+  <div class="alert alert-warning w-100 m-0 text-center my-1" role="alert">
+    <div class="alert-body">
+      <%= flash.alert %>
+    </div>
+  </div>
+<% end %>
+
+<% unless flash.notice.blank? %>
+  <div class="alert alert-warning w-100 m-0 text-center my-1" role="alert">
+    <div class="alert-body">
+      <%= flash.notice %>
+    </div>
+  </div>
+<% end %>
+
+<form class="auth-login-form mt-2" action="<%= user_session_path %>" method="post" novalidate="novalidate">
+
+  <div class="form-group">
+    <label class="form-label" for="login-username"><%= t '.username' %></label>
+    <input class="form-control" id="login-username" type="text" name="user[username]" placeholder="johnd" aria-describedby="login-username" autofocus="" tabindex="1">
+  </div>
+
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+  <div class="form-group">
+    <label class="form-label" for="login-password"><%= t '.password' %></label>
+    <input class="form-control form-control-merge" id="login-password" type="password" name="user[password]" placeholder="············" aria-describedby="login-password" tabindex="2">
+  </div>
+
+  <% if devise_mapping.rememberable? %>
+    <div class="form-group">
+      <div class="custom-control custom-checkbox">
+        <input class="custom-control-input" id="remember-me" type="checkbox" tabindex="3">
+        <label class="custom-control-label" for="remember-me"><%= t '.remember_me' %></label>
+      </div>
+    </div>
+  <% end %>
+
+  <button class="btn btn-primary btn-block waves-effect waves-float waves-light" tabindex="4"><%= t '.sign_in' %></button>
+</form>
