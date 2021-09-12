@@ -31,3 +31,13 @@
 
 en:
   hello: "Hello world"
+  devise:
+    sessions:
+      new:
+        web_title: "Login"
+        welcome_back: "Welcome Back"
+        remember_me: "Remember Me"
+  global:
+    wording:
+      username: "Username"
+      password: "Password"
