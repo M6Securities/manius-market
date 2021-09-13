@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(_resource)
-    app_dashboard_index_path # your path
+    app_root_path # your path
   end
 
   def after_sign_out_path_for(_resource)

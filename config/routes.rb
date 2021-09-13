@@ -3,6 +3,13 @@ Rails.application.routes.draw do
 
   scope '(:locale)', locale: /#{I18n.available_locales.join("|")}/ do
     devise_for :users
+
+    namespace :app do
+      root 'app#index'
+
+      resources :markets
+
+    end
   end
 
   mount Spina::Engine => '/'
