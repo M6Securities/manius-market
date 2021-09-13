@@ -1,0 +1,14 @@
+# SupportedStyles: spaces, tabs
+Layout/IndentationStyle:
+  EnforcedStyle: spaces # default
+
+# line length
+Metrics/LineLength:
+  Max: 300
+
+# method length
+Metrics/MethodLength:
+  Max: 200
+
+Metrics/ClassLength:
+  Max: 1000
