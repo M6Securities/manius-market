@@ -35,6 +35,11 @@
     <input class="form-control" id="user_email" type="email" name="user[email]" placeholder="john.smith@example.com" aria-describedby="user_email" autofocus="" tabindex="1">
   </div>
 
+  <div class="form-group">
+    <label class="form-label" for="user_display_name"><%= t 'global.wording.display_name' %></label>
+    <input class="form-control" id="user_display_name" type="text" name="user[display_name]" placeholder="John Smith" aria-describedby="user_display_name" autofocus="" tabindex="1">
+  </div>
+
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
   <div class="form-group">

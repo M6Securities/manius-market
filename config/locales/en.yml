@@ -49,4 +49,5 @@ en:
       email: "Email"
       back: "Back"
       password_confirmation: "Password Confirmation"
+      display_name: "Display Name"
   no_account: "Don't have an account?"

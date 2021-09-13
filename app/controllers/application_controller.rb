@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
 
   def check_user_enabled
     render 'error/unauthorized', status: :unauthorized, layout: 'error' unless current_user.enabled
@@ -38,6 +40,10 @@ class ApplicationController < ActionController::Base
       ## if you want render 404 page
       ## render :file => File.join(Rails.root, 'public/404'), :formats => [:html], :status => 404, :layout => false
     end
+  end
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:display_name])
   end
 
 end
