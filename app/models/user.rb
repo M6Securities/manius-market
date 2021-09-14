@@ -23,4 +23,10 @@ class User < ApplicationRecord
 
   validates :display_name, presence: true
   validates :email, presence: true, uniqueness: true
+
+  def gravatar
+    hash = email.nil? ? Digest::MD5.hexdigest(username) : Digest::MD5.hexdigest(email)
+
+    "https://www.gravatar.com/avatar/#{hash}?d=identicon"
+  end
 end
