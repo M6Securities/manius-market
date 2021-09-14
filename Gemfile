@@ -32,8 +32,8 @@ group :development do
   gem 'web-console', '>= 4.1.0'
   # Display performance information such as SQL time and flame graphs for each request in your browser.
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
-  gem 'rack-mini-profiler', '~> 2.0'
   gem 'listen', '~> 3.3'
+  gem 'rack-mini-profiler', '~> 2.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
@@ -55,8 +55,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'spina'
 
 # UI
-gem 'importmap-rails'
 gem 'hotwire-rails'
+gem 'importmap-rails'
 gem 'view_component'
 
 # authentication
@@ -64,5 +64,8 @@ gem 'devise'
 gem 'devise-security'
 
 #  validations
-gem 'phonelib'
 gem 'email_address'
+gem 'phonelib'
+
+# error handling
+gem 'gaffe'

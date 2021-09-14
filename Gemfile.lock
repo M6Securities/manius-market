@@ -100,6 +100,8 @@ GEM
       simpleidn
     erubi (1.10.0)
     ffi (1.15.4)
+    gaffe (1.2.0)
+      rails (>= 4.0.0)
     globalid (0.5.2)
       activesupport (>= 5.0)
     hotwire-rails (0.1.3)
@@ -304,6 +306,7 @@ DEPENDENCIES
   devise
   devise-security
   email_address
+  gaffe
   hotwire-rails
   importmap-rails
   jbuilder (~> 2.7)
