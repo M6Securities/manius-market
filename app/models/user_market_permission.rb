@@ -1,10 +1,10 @@
 class UserMarketPermission < ApplicationRecord
 
-  SITE_ADMIN = 0
+  OWNER = 0
   ADMIN = 1
 
   PERMISSIONS_ARRAY = [
-    SITE_ADMIN,
+    OWNER,
     ADMIN
   ].freeze
 
@@ -23,15 +23,6 @@ class UserMarketPermission < ApplicationRecord
     end
 
     permissions
-  end
-
-  def permission?(p)
-    p = p.to_i
-
-    return true if formatted_permissions.include?(SITE_ADMIN)
-    return true if (formatted_permissions.include?(ADMIN)) && (p != SITE_ADMIN)
-
-    formatted_permissions.include? p
   end
 
   def self.format_permissions(permissions)

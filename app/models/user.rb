@@ -29,4 +29,24 @@ class User < ApplicationRecord
 
     "https://www.gravatar.com/avatar/#{hash}?d=identicon"
   end
+
+  def permission?(permission, market)
+    # if the user is a site admin it will always return true
+    return true if site_admin
+
+    # if the user has no permissions with the market it will always return false
+    return false unless markets.include? market
+
+    market_permissions = user_market_permissions.find_by(user_id: id).permissions
+
+    # if the user is an owner of the market return true
+    return true if market_permissions.include? UserMarketPermission::OWNER
+
+    # if the user is an admin of the market return true
+    return true if market_permissions.include? UserMarketPermission::ADMIN
+
+    return market_permissions.include? permission.to_i
+  end
+
+
 end
