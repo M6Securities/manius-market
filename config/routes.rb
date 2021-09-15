@@ -8,16 +8,20 @@ Rails.application.routes.draw do
     devise_for :users
 
     namespace :app do
-      root 'dashboard#index'
 
-      resources :dashboard
+      resources :dashboard, only: %i[index]
 
       resources :market
 
       resources :user
 
     end
+    get '/app' => 'app#index'
   end
+
+  # shortcuts
+  get '/l', to: redirect('/users/sign_in')
+  get '/login', to: redirect('/users/sign_in')
 
   mount Spina::Engine => '/'
 end

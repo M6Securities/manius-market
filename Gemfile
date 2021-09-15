@@ -60,7 +60,7 @@ gem 'importmap-rails'
 gem 'view_component'
 
 # authentication
-gem 'devise'
+gem 'devise', github: 'ghiculescu/devise', branch: 'error-code-422'
 gem 'devise-security'
 
 #  validations

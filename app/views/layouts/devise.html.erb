@@ -39,23 +39,18 @@
 
   <body class="horizontal-layout horizontal-menu  navbar-floating footer-static  " data-open="hover" data-menu="horizontal-menu" data-col="">
 
-    <%= render 'shared/site_navbar' %>
+
 
     <!-- BEGIN: Content-->
 
     <div class="app-content content" style="padding: 0 !important;">
       <div class="content-wrapper">
-
-        <div id="dumbass-menu-spacer"></div>
-
-        <div>
-
-        </div>
+        
 
         <span id="requested-page-path" style="display: none;"><%= yield(:requested_page_path_value) %></span>
 
         <div class="content-body">
-          <div class="auth-wrapper auth-v2">
+          <div class="auth-wrapper auth-cover">
             <div class="auth-inner row m-0">
               <!-- Brand logo-->
               <a class="brand-logo">
