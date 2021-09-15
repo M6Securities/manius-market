@@ -23,5 +23,5 @@ Rails.application.routes.draw do
   get '/l', to: redirect('/users/sign_in')
   get '/login', to: redirect('/users/sign_in')
 
-  # mount Spina::Engine => '/'
+  mount Spina::Engine => '/'
 end

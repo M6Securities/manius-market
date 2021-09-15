@@ -79,6 +79,8 @@ Spina.configure do |config|
 end
 
 module ManiusMarket
+
+  # https://spinacms.com/docs/advanced/authentication
   module CustomAuth
     extend ActiveSupport::Concern
 
@@ -92,7 +94,7 @@ module ManiusMarket
     end
 
     def current_user
-      @current_user ||= ManiusMarket::User.find_by(id: session[:user_id]) if session[:user_id]
+      @current_user ||= User.find(session['warden.user.user.key'][0][0]) if session['warden.user.user.key']
     end
 
     private
