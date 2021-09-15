@@ -62,9 +62,9 @@
             <i class="mr-50" data-feather="user"></i> Profile
           </a>
 
-          <a class="dropdown-item" href="<%= destroy_user_session_path %>">
+          <%= link_to destroy_user_session_path, :method => :delete, class: 'dropdown-item' do %>
             <i class="mr-50" data-feather="power"></i> Logout
-          </a>
+          <% end %>
 
         </div>
       </li>

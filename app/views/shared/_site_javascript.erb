@@ -26,6 +26,7 @@
     });
 
     function updateFeather() {
+        console.log(feather);
         if (feather) {
             feather.replace({
                 width: 14,
@@ -35,11 +36,11 @@
     }
 
     function onLoad() {
-        //console.log('Ran onLoad()');
+        console.log('Ran onLoad()');
         updateFeather();
         $('select').select2();
     }
 
-    document.removeEventListener("turbo:visit", onLoad(), true);
-    document.addEventListener("turbo:visit", onLoad(), true);
+    document.removeEventListener("turbo:load", onLoad(), true);
+    document.addEventListener("turbo:load", onLoad(), true);
 </script>

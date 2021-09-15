@@ -7,13 +7,9 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(_resource)
-    app_root_path # your path
+    app_path # your path
   end
 
-  def after_sign_out_path_for(_resource)
-    new_user_session_path
-    # destroy_user_session_path
-  end
 
   private
 
@@ -31,8 +27,6 @@ class ApplicationController < ActionController::Base
   end
 
   protected
-
-
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:display_name])
