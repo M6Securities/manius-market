@@ -9,10 +9,13 @@ Rails.application.routes.draw do
 
       resources :dashboard, only: %i[index]
 
-      resources :market
+      resources :market, only: %i[new create show edit]
 
       namespace :site_admin do
+
         resources :user
+        resources :market
+
       end
       get '/site_admin' => 'site_admin#index'
 
