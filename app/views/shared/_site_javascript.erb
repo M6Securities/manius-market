@@ -43,4 +43,7 @@
 
     document.removeEventListener("turbo:load", onLoad(), true);
     document.addEventListener("turbo:load", onLoad(), true);
+
+    document.removeEventListener("turbo:frame-load", onLoad(), true);
+    document.addEventListener("turbo:frame-load", onLoad(), true);
 </script>
