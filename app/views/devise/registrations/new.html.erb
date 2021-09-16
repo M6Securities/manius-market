@@ -27,7 +27,8 @@
   </div>
 <% end %>
 
-<form class="new_user" id="new_user" action="<%= user_registration_path %>" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="6g32Rdg_XpoAjY1kCRay_aQLxJkZi9jv64ftSyFX-5f6DkYuYPTV9I8gBmwb30Jqd-VSCaLMFI3Hm-FGm5hdHQ">
+<form class="new_user" id="new_user" action="<%= user_registration_path %>" accept-charset="UTF-8" method="post">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
 
   <div class="form-group">

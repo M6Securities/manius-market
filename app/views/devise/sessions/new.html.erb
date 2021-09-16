@@ -28,6 +28,7 @@
 <% end %>
 
 <form class="auth-login-form mt-2" action="<%= user_session_path %>" method="post" novalidate="novalidate">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
   <div class="form-group">
     <label class="form-label" for="login-email"><%= t 'global.wording.email' %></label>
