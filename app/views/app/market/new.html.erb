@@ -63,3 +63,17 @@
   </section>
 
 </div>
+
+<script>
+
+    document.addEventListener('turbo:submit-start', (event) => {
+        console.log(event);
+        toastr.warning('Please wait...', 'Creating Market');
+    });
+
+    document.addEventListener('turbo:submit-end', (event) => {
+        console.log(event);
+        console.log(event.detail.formSubmission)
+    });
+
+</script>

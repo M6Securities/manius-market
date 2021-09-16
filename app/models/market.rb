@@ -1,6 +1,6 @@
 class Market < ApplicationRecord
 
-  encrypts :stripe_publishable_key, :stripe_secret_key
+  # encrypts :stripe_publishable_key, :stripe_secret_key
 
   validates_with EmailAddress::ActiveRecordValidator
 
