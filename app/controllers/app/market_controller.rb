@@ -4,30 +4,34 @@ module App
   # Handles user facing market stuff
   class MarketController < AppController
 
+    def new
+      @market = Market.new
+    end
+
     def create
       safe_params = params.require(:create).permit(:display_name, :path_name, :email)
 
-      market = Market.new(safe_params)
+      @market = Market.new(safe_params)
 
-      if market.invalid?
+      if @market.invalid?
 
-        # respond_to do |format|
-        #   format.turbo_stream { render plain: "Market object invalid.\n #{market.errors.messages}", status: :unprocessable_entity }
-        # end
+        respond_to do |format|
+          format.html { render :new, status: :unprocessable_entity }
+        end
 
-        return render plain: "Market object invalid.\n #{market.errors.messages}", status: :bad_request
+        return # render json: { info: "Market object invalid.\n #{market.errors.messages}" }, status: :unprocessable_entity
       end
 
       return
 
-      market.save
+      @market.save
 
       current_user.user_market_permissions.create(
-        market_id: market.id,
+        market_id: @market.id,
         formatted_permissions: UserMarketPermission.format_permissions([UserMarketPermission::OWNER])
       )
 
-      redirect_to app_market_path market.id
+      redirect_to app_market_path @market.id
     end
 
     def show

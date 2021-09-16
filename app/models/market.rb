@@ -14,7 +14,7 @@ class Market < ApplicationRecord
             uniqueness: true,
             format: {
               with: /\A[a-z]+\z/, # only lowercase letters, no numbers, symbols, or uppercase
-              message: 'Invalid path name'
+              message: "Invalid path name. Make sure it's only lowercase letters. No numbers, symbols, or uppercase characters."
             }
 
 end
