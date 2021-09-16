@@ -10,6 +10,9 @@ class ApplicationController < ActionController::Base
     app_path # your path
   end
 
+  def check_user_site_admin
+    render 'error/unauthorized', status: :unauthorized, layout: 'error' unless current_user.permission?
+  end
 
   private
 

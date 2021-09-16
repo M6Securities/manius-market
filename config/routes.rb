@@ -11,7 +11,10 @@ Rails.application.routes.draw do
 
       resources :market
 
-      resources :user
+      namespace :site_admin do
+        resources :user
+      end
+      get '/site_admin' => 'site_admin#index'
 
     end
     get '/app' => 'app#index'

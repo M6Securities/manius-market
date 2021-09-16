@@ -100,7 +100,7 @@ module ManiusMarket
     private
 
     def authenticate
-      redirect_to '/users/sign_in' unless logged_in?
+      redirect_to '/users/sign_in' unless current_user.permission? && logged_in?
     end
 
   end

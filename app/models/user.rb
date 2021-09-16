@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+
+  SYSTEM = -1
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable,
@@ -30,7 +33,7 @@ class User < ApplicationRecord
     "https://www.gravatar.com/avatar/#{hash}?d=identicon"
   end
 
-  def permission?(permission, market)
+  def permission?(permission=nil, market=nil)
     # if the user is a site admin it will always return true
     return true if site_admin
 
@@ -46,6 +49,8 @@ class User < ApplicationRecord
     return true if market_permissions.include? UserMarketPermission::ADMIN
 
     return market_permissions.include? permission.to_i
+
+    false
   end
 
 
