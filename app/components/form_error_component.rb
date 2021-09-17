@@ -3,9 +3,8 @@
 # displays form errors nicely
 class FormErrorComponent < ViewComponent::Base
 
-  def initialize(error:)
-    @error = error
-    super
+  def initialize(message_hash)
+    @messages = message_hash.values
   end
 
 end

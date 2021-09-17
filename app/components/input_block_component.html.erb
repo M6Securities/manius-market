@@ -1,0 +1,16 @@
+<div class="<%= @div_classes %>">
+
+  <label class="form-label" for="<%= @id %>">
+    <%= @title %>
+  </label>
+
+  <input type="text" class="<%= @input_classes %>" id="<%= @id %>" name="<%= @name %>" placeholder="<%= @placeholder %>" value="<%= @value %>" <%= 'required' if @required %>>
+
+  <% unless @helper_text.blank? %>
+    <p>
+      <small class="text-muted">
+        <%= @helper_text %>
+      </small>
+    </p>
+  <% end %>
+</div>

@@ -23,11 +23,7 @@
       </div>
 
       <div>
-        <% @market.errors.messages.each do |key, value| %>
-          <% value.each do |error| %>
-            <%= render(FormErrorComponent(error: error)) %>
-          <% end %>
-        <% end %>
+        <%= render(FormErrorComponent.new(@market.errors.messages)) %>
       </div>
 
       <div class="card">
@@ -40,25 +36,15 @@
 
                 <div class="col-12 col-lg-6 col-md-6 col-sm-12">
 
-                  <div class="mb-1">
-                    <label class="form-label" for="market-display-name">Display Name</label>
-                    <input type="text" class="form-control" id="market-name" name="create[display_name]" placeholder="Manius Market" required>
-                  </div>
+                  <%= render InputBlockComponent.new('market-display-name', 'create[display_name]', 'Market Name', placeholder: 'Manius Market', value: @market.display_name) %>
 
-                  <div class="mb-1">
-                    <label class="form-label" for="market-path-name">Path</label>
-                    <input type="text" class="form-control" id="market-path-name" name="create[path_name]" placeholder="maniusmarket" required>
-                    <p><small class="text-muted">Path should be alphabetical characters only, all lowercase.</small></p>
-                  </div>
+                  <%= render InputBlockComponent.new('market-path-name', 'create[path_name]', 'Path', placeholder: 'maniusmarket', value: @market.path_name, helper_text: 'Path should be alphabetical characters only, all lowercase.') %>
 
                 </div>
 
                 <div class="col-12 col-lg-6 col-md-6 col-sm-12">
 
-                  <div class="mb-1">
-                    <label class="form-label" for="market-email">Email</label>
-                    <input type="email" class="form-control" id="market-name" name="create[email]" placeholder="support@maniusmarket.com" required>
-                  </div>
+                  <%= render InputBlockComponent.new('market-email', 'create[email]', 'Email', placeholder: 'support@maniusmarket.com', value: @market.email, type: 'email') %>
 
                 </div>
 
@@ -80,12 +66,6 @@
     document.addEventListener('turbo:submit-start', (event) => {
         console.log(event);
         toastr.warning('Please wait...', 'Creating Market');
-    });
-
-    document.addEventListener('turbo:submit-end', (event) => {
-        console.log(event);
-        console.log(event.detail.formSubmission)
-        console.log(event.detail.fetchResponse.response.body)
     });
 
 </script>
