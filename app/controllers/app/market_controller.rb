@@ -15,14 +15,10 @@ module App
 
       if @market.invalid?
 
-        respond_to do |format|
+        return respond_to do |format|
           format.html { render :new, status: :unprocessable_entity }
         end
-
-        return # render json: { info: "Market object invalid.\n #{market.errors.messages}" }, status: :unprocessable_entity
       end
-
-      return
 
       @market.save
 
@@ -32,6 +28,12 @@ module App
       )
 
       redirect_to app_market_path @market.id
+
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to app_market_path @market.id }
+      end
+
     end
 
     def show
