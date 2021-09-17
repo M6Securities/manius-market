@@ -53,5 +53,9 @@ class User < ApplicationRecord
     false
   end
 
+  def has_market?
+    !markets.size.zero?
+  end
+
 
 end

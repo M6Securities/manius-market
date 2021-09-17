@@ -55,8 +55,8 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'spina'
 
 # UI
+gem 'importmap-rails' # needs to be first
 gem 'hotwire-rails'
-gem 'importmap-rails'
 gem 'view_component', require: 'view_component/engine'
 
 # authentication

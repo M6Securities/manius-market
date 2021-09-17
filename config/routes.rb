@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
     end
     get '/app' => 'app#index'
+    match '/app/set_market' => 'app#set_market', via: %i[post put patch]
   end
 
   # shortcuts
