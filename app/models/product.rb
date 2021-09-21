@@ -20,4 +20,14 @@ class Product < ApplicationRecord
               only_integer: true,
               greater_than_or_equal_to: 0
             }
+  validate :unique_sku
+
+
+  private
+
+  def unique_sku
+    p = market.products.find_by(sku: sku)
+
+    errors.add(:sku, 'sku already exists in this market') unless p.nil?
+  end
 end
