@@ -1,0 +1,54 @@
+<% content_for :title, 'Products' %>
+
+<div class="content-header d-flex mb-1 justify-content-between">
+  <h1 class="m-0" style="line-height: 39px;">
+    Products
+  </h1>
+
+  <a href="<%= new_app_product_path %>" class="btn btn-success">
+    <i data-feather="plus"></i> New Product
+  </a>
+</div>
+<div class="content-body">
+
+  <section id="products-index">
+
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+
+          <table id="products-table" class="table dataTable table-striped">
+            <thead>
+              <tr>
+                <th>SKU</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>View</th>
+              </tr>
+            </thead>
+
+            <tbody class="table-striped"></tbody>
+
+            <tfoot>
+              <tr>
+                <th>SKU</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>View</th>
+              </tr>
+            </tfoot>
+          </table>
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <script defer>
+
+  </script>
+
+</div>

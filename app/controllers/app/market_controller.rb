@@ -14,7 +14,6 @@ module App
       @market = Market.new(safe_params)
 
       if @market.invalid?
-
         return respond_to do |format|
           format.html { render :new, status: :unprocessable_entity }
         end

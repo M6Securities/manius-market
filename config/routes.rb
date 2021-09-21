@@ -11,6 +11,9 @@ Rails.application.routes.draw do
 
       resources :market, only: %i[new create show edit]
 
+      resources :product
+      get '/product_datatable' => 'product#datatable'
+
       namespace :site_admin do
 
         resources :user

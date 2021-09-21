@@ -54,7 +54,26 @@ class User < ApplicationRecord
   end
 
   def has_market?
-    !markets.size.zero?
+    key = has_market_key
+    cache = Rails.cache.read(key)
+
+    if cache.nil?
+      cache = !markets.size.zero?
+      Rails.cache.write(key, cache, expires_in: 5.minutes)
+    end
+
+    cache
+  end
+
+  def reset_has_market
+    key = has_market_key
+    Rails.cache.write(key, markets.size.zero?, expires_in: 5.minutes)
+  end
+
+  private
+
+  def has_market_key
+    "user_#{id}_has_market"
   end
 
 

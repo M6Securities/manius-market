@@ -28,4 +28,8 @@ class AppController < ApplicationController
     redirect_to app_market_path(market.id)
   end
 
+  def require_market
+    return redirect_to app_dashboard_index_path unless current_user.has_market?
+  end
+
 end

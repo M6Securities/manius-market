@@ -28,6 +28,14 @@
         </a>
       </li>
 
+      <% if current_user.has_market? %>
+        <li class="nav-item">
+          <a href="<%= app_product_index_path %>">
+            <i data-feather="layout"></i><span class="menu-title">Products</span>
+          </a>
+        </li>
+      <% end %>
+
       <% if current_user.permission? %>
         <li class="nav-item">
           <a href="<%= app_site_admin_path %>">
