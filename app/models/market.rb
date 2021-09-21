@@ -6,6 +6,7 @@ class Market < ApplicationRecord
 
   has_many :user_market_permissions
   has_many :users, through: :user_market_permissions
+  has_many :products
 
   validates :display_name, presence: true, uniqueness: true
 

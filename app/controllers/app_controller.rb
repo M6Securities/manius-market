@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# parent for everything under the app scope
 class AppController < ApplicationController
   layout 'app'
 
@@ -8,7 +9,7 @@ class AppController < ApplicationController
   before_action :current_market
 
   def current_market
-    @current_market = Market.find session[:market_id]
+    @current_market = Market.find session[:market_id] unless session[:market_id].blank?
     @current_market = nil unless current_user.markets.include?(@current_market) # unless @current_market.nil?
     @current_market = current_user.markets.first if @current_market.nil?
   end

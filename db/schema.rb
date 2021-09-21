@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_16_000904) do
+ActiveRecord::Schema.define(version: 2021_09_21_164437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,19 @@ ActiveRecord::Schema.define(version: 2021_09_16_000904) do
     t.string "password_salt"
     t.datetime "created_at"
     t.index ["password_archivable_type", "password_archivable_id"], name: "index_password_archivable"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "name", default: ""
+    t.string "sku", default: ""
+    t.decimal "price", precision: 8, scale: 2, default: "0.0"
+    t.integer "quantity", default: 0
+    t.string "tax_code", default: ""
+    t.bigint "market_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["market_id"], name: "index_products_on_market_id"
+    t.index ["sku"], name: "index_products_on_sku"
   end
 
   create_table "spina_accounts", id: :serial, force: :cascade do |t|

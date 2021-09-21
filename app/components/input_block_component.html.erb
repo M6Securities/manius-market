@@ -4,7 +4,7 @@
     <%= @title %>
   </label>
 
-  <input type="text" class="<%= @input_classes %>" id="<%= @id %>" name="<%= @name %>" placeholder="<%= @placeholder %>" value="<%= @value %>" <%= 'required' if @required %>>
+  <input type="text" class="<%= @input_classes %>" id="<%= @id %>" name="<%= @name %>" placeholder="<%= @placeholder %>" value="<%= @value %>" <%= 'required' if @required %> <%= 'readonly' if @read_only %> <%= 'disabled' if @disabled %>>
 
   <% unless @helper_text.blank? %>
     <p>

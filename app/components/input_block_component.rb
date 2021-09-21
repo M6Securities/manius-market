@@ -12,6 +12,8 @@ class InputBlockComponent < ViewComponent::Base
   #   helper_text: helper text under the input
   #   div_classes: replaces default div classes
   #   input_classes: replaces default input classes
+  #   read_only: default false
+  #   disabled: default false
   # }
 
 
@@ -33,6 +35,8 @@ class InputBlockComponent < ViewComponent::Base
     @helper_text = options[:helper_text]
     @div_classes = options[:div_classes].blank? ? 'mb-1' : options[:div_classes]
     @input_classes = options[:input_classes].blank? ? 'form-control' : options[:input_classes]
+    @read_only = options[:read_only].nil? ? false : options[:read_only]
+    @disabled = options[:disabled].nil? ? false : options[:disabled]
 
   end
 
