@@ -22,9 +22,9 @@ module App
         end
       end
 
-      if @product.save
-        return redirect_to app_product_index_path
-      end
+      @product.save
+
+      redirect_to app_product_index_path, status: 303
 
     end
 
