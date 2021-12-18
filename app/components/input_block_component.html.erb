@@ -1,0 +1,18 @@
+<div class="<%= @div_classes %>">
+
+  <% unless @title.blank? %>
+    <label class="form-label" for="<%= @id %>">
+      <%= @title %>
+    </label>
+  <% end %>
+
+  <input type="<%= @type %>" class="<%= @input_classes %>" id="<%= @id %>" name="<%= @name %>" placeholder="<%= @placeholder %>" <%= "value=\"#{@value}\"" unless @value.blank? %> <%= 'required' if @required %> <%= 'readonly' if @read_only %> <%= 'disabled' if @disabled %> <%= 'autofocus' if @autofocus %> <%= "autofocus=\"#{@autofocus}\"" unless @autofocus.blank? %>>
+
+  <% unless @helper_text.blank? %>
+    <p>
+      <small class="text-muted">
+        <%= @helper_text %>
+      </small>
+    </p>
+  <% end %>
+</div>

@@ -36,15 +36,15 @@
 
                 <div class="col-12 col-lg-6 col-md-6 col-sm-12">
 
-                  <%= render InputBlockComponent.new('market-display-name', 'create[display_name]', 'Market Name', placeholder: 'Manius Market', value: @market.display_name) %>
+                  <%= render InputBlockComponent.new(id: 'market-display-name', name: 'create[display_name]', title: 'Market Name', placeholder: 'Manius Market', value: @market.display_name) %>
 
-                  <%= render InputBlockComponent.new('market-path-name', 'create[path_name]', 'Path', placeholder: 'maniusmarket', value: @market.path_name, helper_text: 'Path should be alphabetical characters only, all lowercase.') %>
+                  <%= render InputBlockComponent.new(id: 'market-path-name', name: 'create[path_name]', title: 'Path', placeholder: 'maniusmarket', value: @market.path_name, helper_text: 'Path should be alphabetical characters only, all lowercase.') %>
 
                 </div>
 
                 <div class="col-12 col-lg-6 col-md-6 col-sm-12">
 
-                  <%= render InputBlockComponent.new('market-email', 'create[email]', 'Email', placeholder: 'support@maniusmarket.com', value: @market.email, type: 'email') %>
+                  <%= render InputBlockComponent.new(id: 'market-email', name: 'create[email]', title: 'Email', placeholder: 'support@maniusmarket.com', value: @market.email, type: 'email') %>
 
                 </div>
 

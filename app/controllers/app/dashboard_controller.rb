@@ -2,7 +2,7 @@
 
 module App
   # first thing the user sees when logging in
-  class DashboardController < ApplicationController
+  class DashboardController < AppController
 
   end
 end

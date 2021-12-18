@@ -1,26 +1,68 @@
-<h2>Log in</h2>
+<div class="d-flex mb-1">
+  <h2 class="card-title font-weight-bold mr-2 mb-0"><%= t '.web_title' %></h2>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  <div class="mx-1">
+    <a href="/" class="btn btn-sm btn-outline-primary">
+      <i data-feather="arrow-left"></i> <%= t 'global.wording.back' %>
+    </a>
   </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+</div>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<% unless flash.alert.blank? %>
+  <div class="alert alert-warning w-100 m-0 text-center my-1" role="alert">
+    <div class="alert-body">
+      <%= flash.alert %>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+<% unless flash.notice.blank? %>
+  <div class="alert alert-warning w-100 m-0 text-center my-1" role="alert">
+    <div class="alert-body">
+      <%= flash.notice %>
+    </div>
+  </div>
+<% end %>
+
+<form class="new_user" id="new_user" action="<%= user_session_path %>" accept-charset="UTF-8" method="post">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+  <%= render InputBlockComponent.new(title: t('global.wording.email'), name: 'user[email]', id: 'user_email', autocomplete: 'email', autofocus: true, type: 'email', placeholder: t('global.wording.email')) %>
+
+  <%= render InputBlockComponent.new(title: t('global.wording.password'), name: 'user[password]', id: 'user_password', type: 'password', placeholder: t('global.wording.password')) %>
+
+  <%= render(CheckboxBlockComponent.new(title: 'Remember Me', name: 'user[remember_me]', id: 'user_remember_me', required: false), cached: true) if devise_mapping.rememberable? %>
+
+  <div class="actions">
+    <button type="submit" class="btn btn-primary w-100" name="commit">
+      <%= t '.web_title' %>
+    </button>
+  </div>
+</form>
+
+<div class="row mt-2">
+  <div class="col-12 col-md-4">
+    <a href="<%= new_user_registration_path %>" class="btn btn-outline-primary w-100">
+      <%= t 'global.wording.sign_up' %>
+    </a>
+  </div>
+
+  <div class="col-12 col-md-4">
+    <a href="<%= new_user_password_path %>" class="btn btn-outline-primary w-100">
+      <%= t 'global.wording.forgot_password_question' %>
+    </a>
+  </div>
+
+  <div class="col-12 col-md-4">
+    <a href="<%= new_user_unlock_path %>" class="btn btn-outline-primary w-100">
+      <%= t 'global.wording.unlock_account_question' %>
+    </a>
+  </div>
+</div>
+
+
+
+
+
+
