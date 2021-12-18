@@ -21,6 +21,8 @@ class User < ApplicationRecord
          :expirable,
          :session_limitable
 
+  # before_create :check_if_first_user
+
   validates_with EmailAddress::ActiveRecordValidator
 
   has_many :user_market_permissions
@@ -76,6 +78,10 @@ class User < ApplicationRecord
 
   def has_market_key
     "user_#{id}_has_market"
+  end
+
+  def check_if_first_user
+    site_admin = true if User.all.size.zero?
   end
 
 end

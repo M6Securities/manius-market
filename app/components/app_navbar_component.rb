@@ -12,7 +12,7 @@ class AppNavbarComponent < ViewComponent::Base
   def render?
     super
 
-    return false if @user.nil? || @market.nil?
+    return false if @user.nil?
 
     true
   end
