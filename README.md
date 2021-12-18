@@ -1,9 +1,24 @@
-# Manius Market
+# README
 
-An online store focused around markets than products.
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
+Things you may want to cover:
 
-Useful Commands
-* `rake db:drop db:create db:migrate db:seed`
-* `rails g spina:install`
-  * Needs to be run after wiping the DB. Don't replace any files.
+* Ruby version
+
+* System dependencies
+
+* Configuration
+
+* Database creation
+
+* Database initialization
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...
