@@ -31,3 +31,4 @@
 /config/master.key
 .idea
 tmp
+node_modules
