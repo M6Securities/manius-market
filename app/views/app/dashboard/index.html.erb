@@ -3,7 +3,7 @@
 <br>
 
 <% if current_user.has_market? %>
-  <a href="<%= app_market_path current_user.markets.first.id %> %>" class="btn btn-success">
+  <a href="<%= app_market_path current_user.markets.first.id %>" class="btn btn-success">
     <i data-feather="plus"></i> View Market
   </a>
 <% else %>
