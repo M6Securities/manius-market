@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
         resources :user
         resources :market
+        get 'market_datatable' => 'market#datatable'
 
       end
       get '/site_admin' => 'site_admin#index'

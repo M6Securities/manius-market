@@ -7,7 +7,7 @@
           <span class="brand-logo">
             <img alt="" src="">
           </span>
-          <h2 class="brand-text">Manius Market</h2>
+          <h2 class="brand-text">Site Admin</h2>
         </a>
       </li>
       <li class="nav-item nav-toggle">
@@ -24,28 +24,19 @@
 
       <li class="nav-item">
         <a href="<%= app_dashboard_index_path %>">
-          <i data-feather="home"></i><span class="menu-title">Dashboard</span>
+          <i data-feather="chevron-left"></i><span class="menu-title">Back</span>
         </a>
       </li>
 
-      <% if @user.has_market? %>
-        <li class="nav-item">
-          <a href="<%= app_product_index_path %>">
-            <i data-feather='grid'></i><span class="menu-title">Products</span>
-          </a>
-        </li>
-      <% end %>
-
-      <% if @user.permission? %>
-        <li class="nav-item">
-          <a href="<%= app_site_admin_path %>">
-            <i data-feather='server'></i><span class="menu-title">Site Admin</span>
-          </a>
-        </li>
-      <% end %>
+      <li class="nav-item">
+        <a href="<%= app_site_admin_market_index_path %>">
+          <i data-feather="layout"></i><span class="menu-title">Markets</span>
+        </a>
+      </li>
 
 
     </ul>
   </div>
 </div>
 <!-- END: Main Menu-->
+

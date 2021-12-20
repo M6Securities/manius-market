@@ -58,14 +58,14 @@ module App
 
       return unless %w[id sku name price quantity].include? sort_name
 
-      filtered_count = Product.all.size
+      filtered_count = Product.where(market_id: @current_market.id).size
       records = Product.where(market_id: @current_market.id).order(sort_name => sort_dir).select(:id, :sku, :name, :price, :stock).limit(requested_length).offset(requested_start)
 
       ActiveRecord::Base.include_root_in_json = false
 
       payload = {
         draw: params[:draw],
-        recordsTotal: Product.all.size,
+        recordsTotal: Product.where(market_id: @current_market.id).size,
         recordsFiltered: filtered_count,
         data: records
       }
