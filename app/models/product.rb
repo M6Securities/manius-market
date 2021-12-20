@@ -25,9 +25,7 @@ class Product < ApplicationRecord
   private
 
   def unique_sku
-    p = market.products.find_by(sku: sku)
-
-    errors.add(:sku, 'sku already exists in this market') unless p.nil?
+    errors.add(:sku, 'sku already exists in this market') unless market.products.where(sku: sku).where.not(id: id).size.zero?
   end
 
 end

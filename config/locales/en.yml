@@ -53,4 +53,7 @@ en:
       forgot_password_question: "Forgot your Password?"
       unlock_account_question: "Didn't receive unlock instructions?"
       edit: "Edit"
+      description: "Description"
+      save: "Save"
+      tax_code: "Tax Code"
   no_account: "Don't have an account?"

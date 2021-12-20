@@ -42,7 +42,7 @@
 
               <%= render InputBlockComponent.new(id: 'product-quantity', name: 'create[stock]', title: 'Quantity in Stock', placeholder: 0, value: @product.stock, type: 'number') %>
 
-              <%= render InputBlockComponent.new(id: 'product-tax-code', name: 'create[tax_code]', title: 'Tax Code', value: @product.tax_code, required: false) %>
+              <%= render InputBlockComponent.new(id: 'product-tax-code', name: 'create[tax_code]', title: 'Tax Code', placeholder: t('global.wording.tax_code'), value: @product.tax_code, required: false) %>
 
             </div>
 

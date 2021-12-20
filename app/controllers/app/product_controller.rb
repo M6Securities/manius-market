@@ -8,7 +8,6 @@ module App
 
     def new
       @product = Product.new
-      p request.variant
     end
 
     def create
@@ -30,6 +29,22 @@ module App
 
     def show
       @product = Product.find_by(id: params[:id])
+    end
+
+    def edit
+      @product = Product.find_by(id: params[:id])
+    end
+
+    def update
+      @product = Product.find_by(id: params[:id])
+
+      safe_params = params.require(:update).permit(:name, :sku, :price, :stock, :tax_code)
+
+      if @product.update safe_params
+        render :show # don't redirect, just show the updated product
+      else
+        render :edit, status: :unprocessable_entity
+      end
     end
 
     def datatable

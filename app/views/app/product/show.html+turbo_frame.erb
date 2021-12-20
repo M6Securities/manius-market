@@ -11,7 +11,7 @@
     </div>
 
     <div class="d-flex">
-      <a href="<%= edit_app_product_path(@product) %>" class="btn btn-success" style="height: 39px;">
+      <a href="<%= edit_app_product_path(@product) %>" class="btn btn-success" rel="next" style="height: 39px;">
         <i data-feather="edit-3"></i>
         <%= t('global.wording.edit') %>
       </a>
@@ -21,8 +21,39 @@
 
   <div class="card">
 
+    <div class="card-body">
 
+      <h4 class="card-title">
+        <%= t('global.wording.description') %>
+      </h4>
+
+      <div class="row">
+
+        <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-12">
+          <%= render InputBlockComponent.new(id: 'product-display-name', title: 'Name', placeholder: @product.name, value: @product.name, required: false, read_only: true) %>
+        </div>
+
+        <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-12">
+          <%= render InputBlockComponent.new(id: 'product-sku', title: 'SKU', placeholder: @product.sku, value: @product.sku, required: false, read_only: true) %>
+        </div>
+
+        <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-12">
+          <%= render InputBlockComponent.new(id: 'product-price', title: 'Price', placeholder: @product.price, value: @product.price, required: false, read_only: true) %>
+        </div>
+
+        <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-12">
+          <%= render InputBlockComponent.new(id: 'product-stock', title: 'Stock', placeholder: @product.stock, value: @product.stock, required: false, read_only: true) %>
+        </div>
+
+        <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-12">
+          <%= render InputBlockComponent.new(id: 'product-tax-code', title: 'Tax Code', placeholder: t('global.wording.tax_code'), value: @product.tax_code, required: false, read_only: true) %>
+        </div>
+
+      </div>
+
+    </div>
 
   </div>
+
 
 <% end %>
