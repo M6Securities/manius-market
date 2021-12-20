@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       namespace :site_admin do
 
         resources :user
+        get 'user_datatable' => 'user#datatable'
         resources :market
         get 'market_datatable' => 'market#datatable'
 

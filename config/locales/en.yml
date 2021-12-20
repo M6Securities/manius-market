@@ -59,4 +59,20 @@ en:
       login: "Login"
       resend_confirmation_instructions: "Resend confirmation instructions"
       resend_unlock_instructions: "Resend Unlock Instructions"
+      created_at: "Created At"
+      updated_at: "Updated At"
+      failed_attempts: "Failed Attempts"
+      sign_in_count: "Sign In Count"
+      last_activity_at: "Last Activity At"
+      current_sign_in_at: "Current Sign In At"
+      last_sign_in_at: "Last Sign In At"
   no_account: "Don't have an account?"
+  app:
+    site_admin:
+      user:
+        show:
+          details:
+            sign_in_count: "Sign In Count"
+            last_sign_in_ip: "Last Sign In IP"
+            current_sign_in_ip: "Current Sign In IP"
+            failed_attempts: "Failed Attempts"

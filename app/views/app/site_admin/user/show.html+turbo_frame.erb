@@ -1,0 +1,88 @@
+<%= turbo_frame_tag @user do %>
+
+  <div class="d-flex justify-content-between">
+    <div>
+      <h1>
+        <%= @user.display_name %>
+      </h1>
+      <p class="text-muted">
+        <%= @user.id %>
+      </p>
+    </div>
+
+    <div class="d-flex">
+      <a href="<%= edit_app_site_admin_user_path(@user) %>" class="btn btn-success" rel="next" style="height: 39px;">
+        <i data-feather="edit-3"></i>
+        <%= t('global.wording.edit') %>
+      </a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">
+        <%= t('global.wording.details') %>
+      </h3>
+
+      <div class="row">
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+          <%= render InputBlockComponent.new(title: t('global.wording.email'), value: @user.email, type: :email, required: false, read_only: true) %>
+        </div>
+
+        <!-- failed attempts -->
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+          <%= render InputBlockComponent.new(title: t('.details.failed_attempts'), value: @user.failed_attempts, type: :number, required: false, read_only: true) %>
+        </div>
+
+        <!-- input block component created at -->
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+          <%= render InputBlockComponent.new(title: t('global.wording.created_at'), value: @user.created_at, type: :datetime, required: false, read_only: true) %>
+        </div>
+
+        <!-- input block component updated at -->
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+          <%= render InputBlockComponent.new(title: t('global.wording.updated_at'), value: @user.updated_at, type: :datetime, required: false, read_only: true) %>
+        </div>
+
+        <!-- input block component sign in count -->
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+          <%= render InputBlockComponent.new(title: t('.details.sign_in_count'), value: @user.sign_in_count, type: :integer, required: false, read_only: true) %>
+        </div>
+
+        <!-- last activity at -->
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+          <%= render InputBlockComponent.new(title: t('global.wording.last_activity_at'), value: @user.last_activity_at, type: :datetime, required: false, read_only: true) %>
+        </div>
+
+        <!-- password changed at -->
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+          <%= render InputBlockComponent.new(title: t('.details.sign_in_count'), value: @user.password_changed_at, type: :datetime, required: false, read_only: true) %>
+        </div>
+
+        <!-- current sign in at -->
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+          <%= render InputBlockComponent.new(title: t('global.wording.current_sign_in_at'), value: @user.current_sign_in_at, type: :datetime, required: false, read_only: true) %>
+        </div>
+
+        <!-- last sign in at -->
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+          <%= render InputBlockComponent.new(title: t('global.wording.last_sign_in_at'), value: @user.last_sign_in_at, type: :datetime, required: false, read_only: true) %>
+        </div>
+
+        <!-- current sign in ip -->
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+          <%= render InputBlockComponent.new(title: t('.details.current_sign_in_ip'), value: @user.current_sign_in_ip, type: :string, required: false, read_only: true) %>
+        </div>
+
+        <!-- last sign in ip -->
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+          <%= render InputBlockComponent.new(title: t('.details.last_sign_in_ip'), value: @user.last_sign_in_ip, type: :string, required: false, read_only: true) %>
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+<% end %>
