@@ -56,4 +56,7 @@ en:
       description: "Description"
       save: "Save"
       tax_code: "Tax Code"
+      login: "Login"
+      resend_confirmation_instructions: "Resend confirmation instructions"
+      resend_unlock_instructions: "Resend Unlock Instructions"
   no_account: "Don't have an account?"

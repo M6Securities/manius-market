@@ -1,16 +1,54 @@
-<h2>Resend unlock instructions</h2>
+<% content_for :title, t('global.wording.resend_unlock_instructions') %>
 
-<%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+<div class="d-flex mb-1">
+  <h2 class="card-title font-weight-bold mr-2 mb-0"><%= t('global.wording.resend_unlock_instructions') %></h2>
+</div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Resend unlock instructions" %>
+<% unless flash.alert.blank? %>
+  <div class="alert alert-warning w-100 m-0 text-center my-1" role="alert">
+    <div class="alert-body">
+      <%= flash.alert %>
+    </div>
   </div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+<% unless flash.notice.blank? %>
+  <div class="alert alert-warning w-100 m-0 text-center my-1" role="alert">
+    <div class="alert-body">
+      <%= flash.notice %>
+    </div>
+  </div>
+<% end %>
+
+<form class="new_user" id="new_user" action="<%= user_unlock_path %>" accept-charset="UTF-8" method="post">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+  <%= render InputBlockComponent.new(title: t('global.wording.email'), name: 'user[email]', id: 'user_email', autocomplete: 'email', autofocus: true, type: 'email', placeholder: t('global.wording.email')) %>
+
+  <div class="actions">
+    <button type="submit" class="btn btn-primary w-100" name="commit">
+      <%= t('global.wording.resend_unlock_instructions') %>
+    </button>
+  </div>
+</form>
+
+<div class="row mt-2">
+
+  <div class="col-12 col-md-4">
+    <a href="<%= new_user_session_path %>" class="btn btn-outline-primary w-100">
+      <%= t 'global.wording.login' %>
+    </a>
+  </div>
+
+  <div class="col-12 col-md-4">
+    <a href="<%= new_user_registration_path %>" class="btn btn-outline-primary w-100">
+      <%= t 'global.wording.sign_up' %>
+    </a>
+  </div>
+
+  <div class="col-12 col-md-4">
+    <a href="<%= new_user_password_path %>" class="btn btn-outline-primary w-100">
+      <%= t 'global.wording.forgot_password_question' %>
+    </a>
+  </div>
+</div>

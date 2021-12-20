@@ -15,7 +15,7 @@ class User < ApplicationRecord
          :timeoutable,
          :trackable,
          # :omniauthable,
-         :password_expirable,
+         # :password_expirable,
          :password_archivable,
          # :secure_validatable,
          :expirable,
