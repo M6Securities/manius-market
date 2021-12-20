@@ -1,7 +1,7 @@
 <% content_for :title, "Edit - Product #{@product.sku}" %>
 
 <div class="content-body">
-  <section id="new-product">
+  <section id="edit-product">
 
     <%= turbo_frame_tag @product, src: edit_app_product_path, loading: :lazy, data: { 'turbo-action': :advance } do %>
 
