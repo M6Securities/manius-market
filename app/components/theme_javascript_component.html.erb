@@ -39,5 +39,9 @@
     document.addEventListener('turbo:load', function () {
         updateFeather();
     });
+
+    document.addEventListener('turbo:frame-render', function () {
+        updateFeather();
+    });
 </script>
 

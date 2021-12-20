@@ -3,7 +3,7 @@
 # root controller
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
-
+  before_action :turbo_frame_request_variant
 
   def check_user_enabled
     render 'error/unauthorized', status: :unauthorized, layout: 'error' unless current_user.enabled
@@ -36,6 +36,14 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:display_name])
+  end
+
+  private
+
+  # from here:
+  # https://www.colby.so/posts/turbo-frames-on-rails
+  def turbo_frame_request_variant
+    request.variant = :turbo_frame if turbo_frame_request?
   end
 
 end

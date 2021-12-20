@@ -2,7 +2,7 @@
 
 # parent for everything under the app scope
 class AppController < ApplicationController
-  layout 'app'
+  layout :set_layout
 
   before_action :authenticate_user!
   before_action :check_user_enabled
@@ -30,6 +30,14 @@ class AppController < ApplicationController
 
   def require_market
     return redirect_to app_dashboard_index_path unless current_user.has_market?
+  end
+
+  private
+
+  def set_layout
+    return 'turbo_frame' if turbo_frame_request?
+
+    'app'
   end
 
 end

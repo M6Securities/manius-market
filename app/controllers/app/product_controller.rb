@@ -8,6 +8,7 @@ module App
 
     def new
       @product = Product.new
+      p request.variant
     end
 
     def create
@@ -24,12 +25,9 @@ module App
 
       @product.save
 
-      # redirect_to app_product_path(@product.id, format: :html), status: :see_other
+      redirect_to app_product_path(@product.id, format: :html), status: :see_other
 
-      respond_to do |format|
-        format.html { redirect_to app_product_path(@product.id, format: :html), status: :see_other }
-        format.turbo_stream
-      end
+
     end
 
     def show
