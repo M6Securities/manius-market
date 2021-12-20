@@ -26,8 +26,7 @@ module App
         formatted_permissions: UserMarketPermission.format_permissions([UserMarketPermission::OWNER])
       )
 
-      redirect_to app_market_path @market.id
-
+      redirect_to app_market_path @market
     end
 
     def show
