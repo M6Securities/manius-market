@@ -1,3 +1,11 @@
-<h1>
-  <%= @product.sku %>
-</h1>
+<% content_for :title, "Product #{@product.sku}" %>
+
+<div class="content-body">
+  <section id="new-product">
+
+    <%= turbo_frame_tag @product, src: app_product_path, loading: :lazy do %>
+
+    <% end %>
+
+  </section>
+</div>

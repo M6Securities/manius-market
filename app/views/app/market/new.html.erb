@@ -4,7 +4,7 @@
   <section id="market-new">
 
 
-    <%= turbo_frame_tag 'create_market' do %>
+    <%= turbo_frame_tag @market, data: '_top' do %>
       <form id="create_market" action="<%= app_market_index_path %>" method="post">
 
         <div class="d-flex justify-content-between mb-2">

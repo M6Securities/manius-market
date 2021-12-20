@@ -12,7 +12,7 @@ module App
     end
 
     def create
-      safe_params = params.require(:create).permit(:name, :sku, :price, :quantity, :tax_code)
+      safe_params = params.require(:create).permit(:name, :sku, :price, :stock, :tax_code)
 
       @product = Product.new safe_params
       @product.market = @current_market
@@ -25,9 +25,7 @@ module App
 
       @product.save
 
-      redirect_to app_product_path(@product.id, format: :html), status: :see_other
-
-
+      redirect_to app_product_path(@product.id)
     end
 
     def show
@@ -46,7 +44,7 @@ module App
       return unless %w[id sku name price quantity].include? sort_name
 
       filtered_count = Product.all.size
-      records = Product.order(sort_name => sort_dir).select(:id, :sku, :name, :price, :quantity).limit(requested_length).offset(requested_start)
+      records = Product.order(sort_name => sort_dir).select(:id, :sku, :name, :price, :stock).limit(requested_length).offset(requested_start)
 
       ActiveRecord::Base.include_root_in_json = false
 

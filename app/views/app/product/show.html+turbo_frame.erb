@@ -1,0 +1,28 @@
+<%= turbo_frame_tag @product do %>
+
+  <div class="d-flex justify-content-between">
+    <div>
+      <h1>
+        <%= @product.name %>
+      </h1>
+      <p class="text-muted">
+        <%= @product.sku %>
+      </p>
+    </div>
+
+    <div class="d-flex">
+      <a href="<%= edit_app_product_path(@product) %>" class="btn btn-success" style="height: 39px;">
+        <i data-feather="edit-3"></i>
+        <%= t('global.wording.edit') %>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="card">
+
+
+
+  </div>
+
+<% end %>

@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2021_12_18_050628) do
     t.string "name", default: ""
     t.string "sku", default: ""
     t.decimal "price", precision: 8, scale: 2, default: "0.0"
-    t.integer "quantity", default: 0
+    t.integer "stock", default: 0
     t.string "tax_code", default: ""
     t.bigint "market_id"
     t.datetime "created_at", precision: 6, null: false

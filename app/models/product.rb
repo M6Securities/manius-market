@@ -13,7 +13,7 @@ class Product < ApplicationRecord
               with: /\A[A-Z0-9]+\z/, # only lowercase letters, no numbers, symbols, or uppercase
               message: "Invalid sku. Make sure it's only uppercase alphanumeric characters. No symbols or lowercase characters."
             }
-  validates :quantity,
+  validates :stock,
             presence: true,
             numericality: {
               only_integer: true,

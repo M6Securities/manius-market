@@ -28,11 +28,6 @@ module App
 
       redirect_to app_market_path @market.id
 
-      respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to app_market_path @market.id }
-      end
-
     end
 
     def show

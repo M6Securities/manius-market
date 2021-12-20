@@ -40,7 +40,7 @@
 
               <%= render InputBlockComponent.new(id: 'product-price', name: 'create[price]', title: 'Price', placeholder: 0, value: @product.price, type: 'number') %>
 
-              <%= render InputBlockComponent.new(id: 'product-quantity', name: 'create[quantity]', title: 'Quantity', placeholder: 0, value: @product.quantity, type: 'number') %>
+              <%= render InputBlockComponent.new(id: 'product-quantity', name: 'create[stock]', title: 'Quantity in Stock', placeholder: 0, value: @product.stock, type: 'number') %>
 
               <%= render InputBlockComponent.new(id: 'product-tax-code', name: 'create[tax_code]', title: 'Tax Code', value: @product.tax_code, required: false) %>
 
