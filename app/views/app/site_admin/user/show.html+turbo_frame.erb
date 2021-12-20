@@ -1,7 +1,7 @@
 <%= turbo_frame_tag @user do %>
 
   <div class="d-flex justify-content-between">
-    <%= render App::SiteAdmin::UserTitleComponent.new(@user), cached: true %>
+    <%= render App::SiteAdmin::UserComponent::TitleComponent.new(@user), cached: true %>
 
     <div class="d-flex">
       <a href="<%= edit_app_site_admin_user_path(@user) %>" class="btn btn-success" rel="next" style="height: 39px;">
@@ -11,5 +11,5 @@
     </div>
   </div>
 
-  <%= render App::SiteAdmin::UserDetailsComponent.new(@user), cached: true %>
+  <%= render App::SiteAdmin::UserComponent::DetailsComponent.new(@user), cached: true %>
 <% end %>

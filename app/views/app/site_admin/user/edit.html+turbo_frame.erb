@@ -2,7 +2,7 @@
 
   <form id="edit_user<%= @user.id %>" action="<%= app_site_admin_user_path %>" method="patch">
     <div class="d-flex justify-content-between">
-      <%= render App::SiteAdmin::UserTitleComponent.new(@user), cached: true %>
+      <%= render App::SiteAdmin::UserComponent::TitleComponent.new(@user), cached: true %>
 
       <div class="d-flex">
 
@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <%= render App::SiteAdmin::UserDetailsComponent.new(@user), cached: true %>
+    <%= render App::SiteAdmin::UserComponent::DetailsComponent.new(@user), cached: true %>
   </form>
 
 
