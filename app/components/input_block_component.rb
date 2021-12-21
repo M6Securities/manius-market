@@ -15,7 +15,7 @@ class InputBlockComponent < ViewComponent::Base
   #   read_only: default false
   #   disabled: default false
   # }
-
+  DEFAULT_DIV_CLASSES = 'mb-1'
 
   def initialize(**options)
     super
@@ -28,7 +28,7 @@ class InputBlockComponent < ViewComponent::Base
     @type = options[:type].blank? ? 'text' : options[:type]
     @required = options[:required].nil? ? true : options[:required]
     @helper_text = options[:helper_text]
-    @div_classes = options[:div_classes].nil? ? 'mb-1' : options[:div_classes]
+    @div_classes = options[:div_classes].nil? ? DEFAULT_DIV_CLASSES : options[:div_classes]
     @input_classes = options[:input_classes].nil? ? 'form-control' : options[:input_classes]
     @read_only = options[:read_only].nil? ? false : options[:read_only]
     @disabled = options[:disabled].nil? ? false : options[:disabled]

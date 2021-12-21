@@ -41,18 +41,38 @@ class User < ApplicationRecord
     # if the user is a site admin it will always return true
     return true if site_admin
 
+    return false if permission.nil? || market.nil?
+
+    key = "user_#{id}_market_#{market.id}_permission_#{permission}"
+    expire = 5.minutes.freeze
+
+    cached = Rails.cache.read key
+    return cached unless cached.nil?
+
     # if the user has no permissions with the market it will always return false
     return false unless markets.include? market
 
-    market_permissions = user_market_permissions.find_by(user_id: id).permissions
+    market_permissions = user_market_permissions.find_by(market_id: market.id).permissions
 
     # if the user is an owner of the market return true
-    return true if market_permissions.include? UserMarketPermission::OWNER
+    if market_permissions.include? UserMarketPermission::OWNER
+      Rails.cache.write key, true, expires_in: expire
+      return true
+    end
+
+    # if they're really an owner it would've already returned true
+    return false if permission == UserMarketPermission::OWNER
 
     # if the user is an admin of the market return true
-    return true if market_permissions.include? UserMarketPermission::ADMIN
+    if market_permissions.include? UserMarketPermission::ADMIN
+      Rails.cache.write key, true, expires_in: expire
+      return true
+    end
 
-    return market_permissions.include? permission.to_i
+    if market_permissions.include? permission.to_i
+      Rails.cache.write key, true, expires_in: expire
+      return true
+    end
 
     false
   end

@@ -29,11 +29,24 @@
       </li>
 
       <% if @user.has_market? %>
-        <li class="nav-item">
-          <a href="<%= app_product_index_path %>">
-            <i data-feather='grid'></i><span class="menu-title">Products</span>
-          </a>
-        </li>
+        <% if @user.permission?(UserMarketPermission::VIEW_PRODUCTS) %>
+          <li class="nav-item">
+            <a href="<%= app_product_index_path %>">
+              <i data-feather='grid'></i><span class="menu-title">Products</span>
+            </a>
+          </li>
+        <% end %>
+
+
+        <% if @user.permission?(UserMarketPermission::ADMIN) %>
+          <li class="nav-item">
+            <a href="<%= app_user_index_path %>">
+              <i data-feather='users'></i><span class="menu-title">Users</span>
+            </a>
+          </li>
+        <% end %>
+
+
       <% end %>
 
       <% if @user.permission? %>

@@ -35,8 +35,6 @@ module App
         filtered_count = User.all.size
         records = User.all.select(:id, :email, :display_name, :last_activity_at).order(sort_name => sort_dir).limit(requested_length).offset(requested_start)
 
-        p records.as_json
-
         ActiveRecord::Base.include_root_in_json = false
 
         payload = {
