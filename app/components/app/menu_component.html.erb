@@ -36,6 +36,14 @@
         </li>
       <% end %>
 
+      <% if @user.permission?(UserMarketPermission::ADMIN) %>
+        <li class="nav-item">
+          <a href="<%= app_user_index_path %>">
+            <i data-feather='users'></i><span class="menu-title">Users</span>
+          </a>
+        </li>
+      <% end %>
+
       <% if @user.permission? %>
         <li class="nav-item">
           <a href="<%= app_site_admin_path %>">

@@ -16,7 +16,13 @@ Rails.application.routes.draw do
       resources :market, only: %i[new create show edit]
 
       resources :product
-      get '/product_datatable' => 'product#datatable'
+      get 'product_datatable' => 'product#datatable'
+
+      resources :user, only: %i[create show edit update destroy index]
+      get 'user_datatable' => 'user#datatable'
+      get 'invite_user_to_market' => 'user#invite_user_to_market_view'
+      match 'invite_user_to_market' => 'user#invite_user_to_market', via: %i[post patch put]
+
 
       namespace :site_admin do
 

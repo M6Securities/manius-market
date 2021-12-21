@@ -1,0 +1,15 @@
+<% unless flash[:alert].blank? %>
+  <div class="alert alert-warning w-100 m-0 text-center my-1" role="alert">
+    <div class="alert-body">
+      <%= flash[:alert] %>
+    </div>
+  </div>
+<% end %>
+
+<% unless flash[:notice].blank? %>
+  <div class="alert alert-warning w-100 m-0 text-center my-1" role="alert">
+    <div class="alert-body">
+      <%= flash[:notice] %>
+    </div>
+  </div>
+<% end %>

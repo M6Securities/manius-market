@@ -1,10 +1,12 @@
 class UserMarketPermission < ApplicationRecord
   OWNER = 0
   ADMIN = 1
+  MEMBER = 2
 
   PERMISSIONS_ARRAY = [
     OWNER,
-    ADMIN
+    ADMIN,
+    MEMBER
   ].freeze
 
   belongs_to :user

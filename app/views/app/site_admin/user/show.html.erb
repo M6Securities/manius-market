@@ -1,7 +1,5 @@
 <% content_for :title, "User #{@user.id}" %>
 
-<div class="content-body">
-  <%= turbo_frame_tag @user, src: app_site_admin_user_path, loading: :lazy, data: { 'turbo-action': :advance } do %>
+<%= turbo_frame_tag @user, src: app_site_admin_user_path, loading: :lazy, data: { 'turbo-action': :advance } do %>
 
-  <% end %>
-</div>
+<% end %>

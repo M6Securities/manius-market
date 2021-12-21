@@ -1,0 +1,39 @@
+<% unless flash[:success].blank? %>
+  <div class="alert alert-success alert-dismissible fade show my-1" role="alert">
+    <div class="alert-body text-center">
+      <%= flash[:success] %>
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <% flash[:success] = nil %>
+<% end %>
+
+<% unless flash[:info].blank? %>
+  <div class="alert alert-info alert-dismissible fade show my-1" role="alert">
+    <div class="alert-body">
+      <%= flash[:info] %>
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <% flash[:info] = nil %>
+<% end %>
+
+<% unless flash[:warning].blank? %>
+  <div class="alert alert-warning alert-dismissible fade show my-1" role="alert">
+    <div class="alert-body">
+      <%= flash[:warning] %>
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <% flash[:warning] = nil %>
+<% end %>
+
+<% unless flash[:error].blank? %>
+  <div class="alert alert-danger alert-dismissible fade show my-1" role="alert">
+    <div class="alert-body">
+      <%= flash[:error] %>
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <% flash[:error] = nil %>
+<% end %>
