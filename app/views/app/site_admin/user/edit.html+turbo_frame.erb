@@ -1,5 +1,4 @@
 <%= turbo_frame_tag @user do %>
-
   <form id="edit_user<%= @user.id %>" action="<%= app_site_admin_user_path %>" method="patch">
     <div class="d-flex justify-content-between">
       <%= render App::SiteAdmin::UserComponent::TitleComponent.new(@user), cached: true %>
@@ -24,13 +23,22 @@
           <%= t('global.wording.edit') %>
         </h3>
 
+        <div class="d-flex">
+          <div class="mr-1">
+            <%= render SwitchBlockComponent.new(title: 'Enabled', name: 'update[enabled]', checked: @user.enabled) %>
+          </div>
+
+          <div class="mx-1">
+            <%= render SwitchBlockComponent.new(title: 'Site Admin', name: 'update[site_admin]', checked: @user.site_admin) %>
+          </div>
+
+        </div>
+
+
 
       </div>
     </div>
 
     <%= render App::SiteAdmin::UserComponent::DetailsComponent.new(@user), cached: true %>
   </form>
-
-
-
 <% end %>

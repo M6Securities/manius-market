@@ -6,6 +6,21 @@ module App
     class UserController < SiteAdminController
       before_action :find_user
 
+      def update
+        # safe params
+        safe_params = params.require(:update).permit(:enabled, :site_admin)
+
+        %i[enabled site_admin].each do |key|
+          safe_params[key] = safe_params[key] == 'on'
+        end
+
+        if @user.update safe_params
+          render :show
+        else
+          render :edit, status: :unprocessable_entity
+        end
+      end
+
       def datatable
         requested_length = params[:length].to_i
         requested_start  = params[:start].to_i

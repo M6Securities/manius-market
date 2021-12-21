@@ -23,7 +23,7 @@ module App
 
       redirect_to app_product_path(@product.id)
     end
-    
+
     def update
       safe_params = params.require(:update).permit(:name, :sku, :price, :stock, :tax_code)
 
@@ -59,9 +59,9 @@ module App
 
       render json: payload, status: :ok
     end
-    
+
     private
-    
+
     def find_product
       @product = if params[:id].blank?
                    Product.new
