@@ -11,8 +11,6 @@ module App
 
     def show
       return render 'error/unauthorized', status: :unauthorized, layout: 'error' unless current_user.permission?(UserMarketPermission::ADMIN, @current_market)
-
-      @user_market_permissions = UserMarketPermission.find_by(user_id: @user.id, market_id: @current_market.id)
     end
 
     def update
@@ -29,7 +27,6 @@ module App
         return render :permissions, status: :unprocessable_entity
       end
 
-      @user_market_permissions = UserMarketPermission.find_by(user_id: @user.id, market_id: @current_market.id)
       if @user_market_permissions.nil?
         flash[:error] = 'Cannot edit permissions'
         return render :permissions, status: :unprocessable_entity
@@ -97,8 +94,6 @@ module App
 
     def permissions
       return render 'error/unauthorized', status: :unauthorized, layout: 'error' unless current_user.permission?(UserMarketPermission::ADMIN, @current_market)
-
-      @user_market_permissions = UserMarketPermission.find_by(user_id: @user.id, market_id: @current_market.id)
     end
 
     def invite_user_to_market
@@ -160,6 +155,39 @@ module App
       render json: payload, status: :ok
     end
 
+    def remove
+      render 'error/unauthorized', status: :unauthorized, layout: 'error' unless current_user.permission?(UserMarketPermission::ADMIN, @current_market)
+    end
+
+    def remove_from_market
+      return render 'error/unauthorized', status: :unauthorized, layout: 'error' unless current_user.permission?(UserMarketPermission::ADMIN, @current_market)
+
+      user_permissions = UserMarketPermission.find_by(user_id: @user.id, market_id: @current_market.id)
+
+      if user_permissions.nil?
+        flash[:error] = "User #{@user.email} is not a member of #{@current_market.display_name}"
+        return render :remove, status: :unprocessable_entity
+      end
+
+      if @user.permission?(UserMarketPermission::OWNER, @current_market)
+        flash[:error] = "User #{@user.email} is an owner of #{@current_market.display_name}, and cannot be removed"
+        return render :remove, status: :unprocessable_entity
+      end
+
+      if @user.permission?(UserMarketPermission::ADMIN, @current_market)
+        flash[:error] = "User #{@user.email} is an admin of #{@current_market.display_name}, and cannot be removed"
+        return render :remove, status: :unprocessable_entity
+      end
+
+      if user_permissions.destroy
+        flash[:success] = "User #{@user.email} has been removed from #{@current_market.display_name}"
+        render :remove, status: :ok
+      else
+        flash[:error] = "User #{@user.email} could not be removed from #{@current_market.display_name}"
+        render :remove, status: :unprocessable_entity
+      end
+    end
+
     private
 
     def find_user
@@ -168,8 +196,14 @@ module App
               elsif !params[:user_id].blank?
                 User.find_by(id: params[:user_id])
               else
-                User.new
+                @user = nil
               end
+
+      unless @user.nil?
+        # check to see  if they're in the current market
+        @user_market_permissions = UserMarketPermission.find_by(user_id: @user.id, market_id: @current_market.id)
+        return redirect_to app_user_index_path if @user_market_permissions.nil?
+      end
     end
 
   end

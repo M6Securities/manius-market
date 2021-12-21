@@ -8,9 +8,11 @@
           Permissions
         </h3>
 
-        <div>
+        <% if @user_market_permissions.nil? %>
+          <% flash[:error] = 'User does not belong to this market' %>
+        <% else %>
           <%= render FormErrorComponent.new(@user_market_permissions.errors.messages) %>
-        </div>
+        <% end %>
 
         <%= render FormFlashComponent.new %>
 

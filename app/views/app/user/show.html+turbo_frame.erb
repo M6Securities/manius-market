@@ -1,17 +1,9 @@
-<%= turbo_frame_tag @user do %>
+<%= turbo_frame_tag @user, target: '_top' do %>
   <div class="d-flex justify-content-between mb-2">
     <div>
       <h1>
         User: <%= @user.email %>
       </h1>
-    </div>
-
-    <div class="d-flex">
-
-      <button type="submit" class="btn btn-danger ms-1" style="height: 39px;">
-        <i data-feather="trash"></i>
-        Remove from Market
-      </button>
     </div>
   </div>
 
@@ -58,6 +50,12 @@
 
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
       <%= turbo_frame_tag "user_#{@user.id}_permissions", src: app_user_permissions_path(@user), loading: :lazy do %>
+
+      <% end %>
+
+      <br>
+
+      <%= turbo_frame_tag "user_#{@user.id}_remove", src: app_user_remove_path(@user), loading: :lazy do %>
 
       <% end %>
     </div>
