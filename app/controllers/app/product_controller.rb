@@ -5,10 +5,7 @@ module App
   # view and edit products for current market
   class ProductController < AppController
     before_action :require_market
-
-    def new
-      @product = Product.new
-    end
+    before_action :find_product
 
     def create
       safe_params = params.require(:create).permit(:name, :sku, :price, :stock, :tax_code)
@@ -27,17 +24,7 @@ module App
       redirect_to app_product_path(@product.id)
     end
 
-    def show
-      @product = Product.find_by(id: params[:id])
-    end
-
-    def edit
-      @product = Product.find_by(id: params[:id])
-    end
-
     def update
-      @product = Product.find_by(id: params[:id])
-
       safe_params = params.require(:update).permit(:name, :sku, :price, :stock, :tax_code)
 
       if @product.update safe_params
@@ -71,6 +58,16 @@ module App
       }
 
       render json: payload, status: :ok
+    end
+
+    private
+
+    def find_product
+      @product = if params[:id].blank?
+                   Product.new
+                 else
+                   Product.find_by(id: params[:id])
+                 end
     end
 
   end
