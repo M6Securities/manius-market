@@ -33,10 +33,10 @@
     <script src="https://cdn.m6securities.com/vuexy_admin_7-4/app-assets/vendors/js/tables/datatable/dataTables.rowGroup.min.js"></script>
 
     <!-- BEGIN: Header-->
-    <%= render AppNavbarComponent.new(current_user, @current_market) %>
+    <%= render App::NavbarComponent.new(current_user, @current_market) %>
     <!-- END: Header-->
 
-    <%= render AppMenuComponent.new current_user %>
+    <%= render App::MenuComponent.new current_user %>
 
     <!-- BEGIN: Content-->
     <div class="app-content content">
@@ -63,7 +63,7 @@
     <div class="drag-target"></div>
 
     <!-- BEGIN: Footer-->
-    <%= render AppFooterComponent.new, cached: true %>
+    <%= render App::FooterComponent.new, cached: true %>
     <!-- END: Footer-->
 
   </body>
