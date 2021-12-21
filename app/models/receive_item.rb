@@ -1,0 +1,2 @@
+class ReceiveItem < ApplicationRecord
+end

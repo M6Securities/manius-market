@@ -27,6 +27,9 @@ Rails.application.routes.draw do
       get 'invite_user_to_market' => 'user#invite_user_to_market_view'
       match 'invite_user_to_market' => 'user#invite_user_to_market', via: %i[post patch put]
 
+      resources :receiving
+      get 'receiving_datatable' => 'receiving#datatable'
+
 
       namespace :site_admin do
 
