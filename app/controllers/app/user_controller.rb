@@ -9,6 +9,98 @@ module App
       render 'error/unauthorized', status: :unauthorized, layout: 'error' unless current_user.permission?(UserMarketPermission::ADMIN, @current_market)
     end
 
+    def show
+      return render 'error/unauthorized', status: :unauthorized, layout: 'error' unless current_user.permission?(UserMarketPermission::ADMIN, @current_market)
+
+      @user_market_permissions = UserMarketPermission.find_by(user_id: @user.id, market_id: @current_market.id)
+    end
+
+    def update
+      return render 'error/unauthorized', status: :unauthorized, layout: 'error' unless current_user.permission?(UserMarketPermission::ADMIN, @current_market)
+
+      if @user.id == current_user.id
+        flash[:warning] = 'You cannot edit your own permissions'
+        return render :permissions, status: :unprocessable_entity
+      end
+
+      # unless current user is an admin
+      unless current_user.permission?(UserMarketPermission::ADMIN, @current_market)
+        flash[:error] = 'You are not authorized to update user permissions'
+        return render :permissions, status: :unprocessable_entity
+      end
+
+      @user_market_permissions = UserMarketPermission.find_by(user_id: @user.id, market_id: @current_market.id)
+      if @user_market_permissions.nil?
+        flash[:error] = 'Cannot edit permissions'
+        return render :permissions, status: :unprocessable_entity
+      end
+
+      permission_keys = %i[
+        owner
+        admin
+        view_products
+        edit_products
+      ].freeze
+
+      safe_params = if params[:update].nil?
+                      {}
+                    else
+                      params[:update].permit(permission_keys)
+                    end
+
+      permission_keys.each do |key|
+        safe_params[key] = safe_params[key] == 'on'
+      end
+
+      if safe_params[:owner]
+        unless current_user.permission?(UserMarketPermission::OWNER, @current_market)
+          flash[:error] = 'You cannot set ownership unless you are an owner'
+          return render :permissions, status: :unprocessable_entity
+        end
+
+        if @user_market_permissions.update(formatted_permissions: UserMarketPermission.format_permissions([UserMarketPermission::OWNER]))
+          flash[:success] = 'Permissions updated'
+          return render :permissions, status: :ok
+        end
+      end
+
+      if safe_params[:admin]
+        # rubocop:disable Style/SoleNestedConditional
+        # Needs to see if admin is true first before updating the permissions
+        if @user_market_permissions.update(formatted_permissions: UserMarketPermission.format_permissions([UserMarketPermission::ADMIN]))
+          flash[:success] = 'Permissions updated'
+          return render :permissions, status: :ok
+        end
+        # rubocop:enable Style/SoleNestedConditional
+      end
+
+      new_permissions = [UserMarketPermission::MEMBER]
+      permission_keys.each do |key|
+        next unless safe_params[key]
+
+        case key
+        when :view_products
+          new_permissions.append UserMarketPermission::VIEW_PRODUCTS
+        when :edit_products
+          new_permissions.append UserMarketPermission::EDIT_PRODUCTS
+        end
+      end
+
+      if @user_market_permissions.update(formatted_permissions: UserMarketPermission.format_permissions(new_permissions))
+        flash[:success] = 'Permissions updated'
+        render :permissions, status: :ok
+      else
+        flash[:error] = 'Cannot update permissions'
+        render :permissions, status: :unprocessable_entity
+      end
+    end
+
+    def permissions
+      return render 'error/unauthorized', status: :unauthorized, layout: 'error' unless current_user.permission?(UserMarketPermission::ADMIN, @current_market)
+
+      @user_market_permissions = UserMarketPermission.find_by(user_id: @user.id, market_id: @current_market.id)
+    end
+
     def invite_user_to_market
       return render 'error/unauthorized', status: :unauthorized, layout: 'error' unless current_user.permission?(UserMarketPermission::ADMIN, @current_market)
 
@@ -71,10 +163,12 @@ module App
     private
 
     def find_user
-      @user = if params[:id].blank?
-                User.new
-              else
+      @user = if !params[:id].blank?
                 User.find_by(id: params[:id])
+              elsif !params[:user_id].blank?
+                User.find_by(id: params[:user_id])
+              else
+                User.new
               end
     end
 

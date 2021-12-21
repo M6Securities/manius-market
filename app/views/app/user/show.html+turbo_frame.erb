@@ -1,0 +1,66 @@
+<%= turbo_frame_tag @user do %>
+  <div class="d-flex justify-content-between mb-2">
+    <div>
+      <h1>
+        User: <%= @user.email %>
+      </h1>
+    </div>
+
+    <div class="d-flex">
+
+      <button type="submit" class="btn btn-danger ms-1" style="height: 39px;">
+        <i data-feather="trash"></i>
+        Remove from Market
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+      <!-- details card -->
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            Details
+          </h5>
+
+          <hr>
+
+          <p class="card-text">
+            <b>Display Name:</b> <%= @user.display_name %>
+          </p>
+
+          <p class="card-text">
+            <b>Email:</b>
+            <a href="mailto:<%= @user.email %>">
+              <i data-feather="mail"></i> <%= @user.email %>
+            </a>
+          </p>
+
+          <p class="card-text">
+            <b>Added to Market:</b> <%= @user_market_permissions.created_at %>
+          </p>
+
+          <!-- last sign in at -->
+          <p class="card-text">
+            <b>Last Sign In:</b> <%= @user.last_sign_in_at %>
+          </p>
+
+          <!-- last activity at -->
+          <p class="card-text">
+            <b>Last Activity:</b> <%= @user.last_activity_at %>
+          </p>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+      <%= turbo_frame_tag "user_#{@user.id}_permissions", src: app_user_permissions_path(@user), loading: :lazy do %>
+
+      <% end %>
+    </div>
+
+  </div>
+<% end %>

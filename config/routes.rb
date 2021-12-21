@@ -18,7 +18,9 @@ Rails.application.routes.draw do
       resources :product
       get 'product_datatable' => 'product#datatable'
 
-      resources :user, only: %i[create show edit update destroy index]
+      resources :user, only: %i[create show edit update destroy index] do
+        get 'permissions'
+      end
       get 'user_datatable' => 'user#datatable'
       get 'invite_user_to_market' => 'user#invite_user_to_market_view'
       match 'invite_user_to_market' => 'user#invite_user_to_market', via: %i[post patch put]
