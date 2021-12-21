@@ -68,6 +68,15 @@ module App
                  else
                    Product.find_by(id: params[:id])
                  end
+      if @product != Product.new
+        # if the product doesn't exist
+        return redirect_to app_product_index_path if @product.nil?
+
+        # if the product exists but belongs to a different market
+        return redirect_to app_product_index_path unless @product.market_id == @current_market.id
+      end
+
+      @product
     end
 
   end
