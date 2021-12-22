@@ -7,7 +7,7 @@
     Receiving
   </h1>
 
-  <a href="<%= new_app_product_path %>" class="btn btn-success">
+  <a href="<%= new_app_receiving_path %>" class="btn btn-success">
     <i data-feather="plus"></i> Receive New Stock
   </a>
 </div>
@@ -23,6 +23,7 @@
             <thead>
               <tr>
                 <th>Date</th>
+                <th>User</th>
                 <th>View</th>
               </tr>
             </thead>
@@ -32,6 +33,7 @@
             <tfoot>
               <tr>
                 <th>Date</th>
+                <th>User</th>
                 <th>View</th>
               </tr>
             </tfoot>
@@ -64,6 +66,7 @@
               order: [[ 0, 'asc' ]],
               columns: [
                   { data: 'created_at' },
+                  { data: 'user_id'},
                   {
                       data: function (row, _type, _set) {
                           return `<a href="<%= app_receiving_index_path %>/${row.id}" class="btn btn-outline-primary my-0 mr-0">
@@ -74,6 +77,7 @@
               ],
               columnDefs: [
                   { name: 'created_at', targets: 0 },
+                  { name: 'user_id', targets: 1 },
                   { name: 'view', targets: 2, orderable: false, searchable: false },
 
                   { targets: '_all', orderable: true, searchable: true}

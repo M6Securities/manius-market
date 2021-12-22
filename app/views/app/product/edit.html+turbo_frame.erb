@@ -1,5 +1,6 @@
 <%= turbo_frame_tag @product do %>
   <form id="edit_product<%= @product.id %>" action="<%= app_product_path %>"  method="patch">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
     <div class="d-flex justify-content-between">
       <div>
         <h1>
@@ -64,8 +65,5 @@
 
     </div>
   </form>
-
-
-
 
 <% end %>

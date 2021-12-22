@@ -68,7 +68,8 @@ module App
                  else
                    Product.find_by(id: params[:id])
                  end
-      if @product != Product.new
+
+      unless @product.id.nil?
         # if the product doesn't exist
         return redirect_to app_product_index_path if @product.nil?
 
