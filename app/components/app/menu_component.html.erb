@@ -37,6 +37,14 @@
           </li>
         <% end %>
 
+        <% if @user.permission?(UserMarketPermission::RECEIVE_PRODUCTS) %>
+          <li class="nav-item">
+            <a href="<%= app_receiving_index_path %>">
+              <i data-feather='box'></i><span class="menu-title">Receiving</span>
+            </a>
+          </li>
+        <% end %>
+
 
         <% if @user.permission?(UserMarketPermission::ADMIN) %>
           <li class="nav-item">

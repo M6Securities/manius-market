@@ -1,6 +1,9 @@
 class Product < ApplicationRecord
   belongs_to :market
 
+  has_many :receive_items
+  has_many :receives, through: :receive_items
+
   validates :name, presence: true
   validates :price,
             presence: true,

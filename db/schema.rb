@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_18_050628) do
+ActiveRecord::Schema.define(version: 2021_12_21_192925) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,25 @@ ActiveRecord::Schema.define(version: 2021_12_18_050628) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["market_id"], name: "index_products_on_market_id"
     t.index ["sku"], name: "index_products_on_sku"
+  end
+
+  create_table "receive_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "receive_id"
+    t.bigint "product_id"
+    t.integer "quantity", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_receive_items_on_product_id"
+    t.index ["receive_id"], name: "index_receive_items_on_receive_id"
+  end
+
+  create_table "receives", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "market_id"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["market_id"], name: "index_receives_on_market_id"
+    t.index ["user_id"], name: "index_receives_on_user_id"
   end
 
   create_table "user_market_permissions", force: :cascade do |t|

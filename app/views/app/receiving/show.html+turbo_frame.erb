@@ -1,0 +1,78 @@
+<%= turbo_frame_tag @receiving do %>
+
+  <div class="d-flex justify-content-between">
+    <div>
+      <h1>Receiving</h1>
+      <p class="text-muted">
+        <%= @receiving.id %>
+      </p>
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <a href="<%= edit_app_receiving_path @receiving %>" class="btn btn-success mx-1" data-turbo-action="advance" style="height: 39px;">
+        <i data-feather="edit-3"></i>
+        Edit
+      </a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">
+        Details
+      </h3>
+    </div>
+    <div class="card-body">
+      <p>
+        <b>User:</b> <%= @receiving.user.display_name %> <a href="<%= app_user_path @receiving.user %>" target="_blank"><i data-feather='external-link'></i></a>
+      </p>
+      <!-- created at -->
+      <p>
+        <b>Created at:</b> <%= @receiving.created_at %>
+      </p>
+      <!-- updated at -->
+      <p>
+        <b>Updated at:</b> <%= @receiving.updated_at %>
+      </p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>
+              Product
+            </th>
+            <th>
+              Quantity
+            </th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <% @receiving.receive_items.each do |item| %>
+            <% cache item do %>
+              <tr>
+                <td>
+                  <span>
+                    <%= item.product.name %> - <span class="text-muted"><%= item.product.sku %></span> <a href="<%= app_product_path item.product %>" target="_blank"><i data-feather='external-link'></i></a>
+                  </span>
+                </td>
+                <td>
+                  <%= item.quantity %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+<% end %>
