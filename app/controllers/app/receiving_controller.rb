@@ -27,7 +27,15 @@ module App
           return render :edit, status: :unprocessable_entity
         end
 
-        receive_item.update quantity: item[:quantity] if receive_item.quantity != item[:quantity]
+        next if receive_item.quantity == item[:quantity]
+
+        difference = item[:quantity] - receive_item.quantity
+
+        receive_item.update quantity: item[:quantity]
+
+        receive_item.product.stock += difference
+        receive_item.product.save
+
         flash[:success] = 'Receiving updated'
       end
 
