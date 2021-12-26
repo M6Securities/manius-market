@@ -13,7 +13,13 @@ module App
       redirect_to edit_app_receiving_path(@receiving)
     end
 
+    def edit
+      render 'error/unauthorized', status: :unauthorized, layout: 'error' unless (current_user.id != @receiving.user_id) || current_user.permission?(UserMarketPermission::ADMIN, @current_market)
+    end
+
     def update
+      return render 'error/unauthorized', status: :unauthorized, layout: 'error' unless (current_user.id != @receiving.user_id) || current_user.permission?(UserMarketPermission::ADMIN, @current_market)
+
       new_item = params[:new][:sku]
 
       items = params[:update][:items]
