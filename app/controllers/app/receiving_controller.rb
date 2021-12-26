@@ -13,6 +13,47 @@ module App
       redirect_to edit_app_receiving_path(@receiving)
     end
 
+    def update
+      new_item = params[:new][:sku]
+
+      items = params[:update][:items]
+
+      items.each do |item|
+        p item
+        receive_item = ReceiveItem.find_by id: item[:id]
+        item[:quantity] = item[:quantity].to_i
+
+        if receive_item.nil?
+          flash[:error] = 'Product not found'
+          return render :edit, status: :unprocessable_entity
+        end
+
+        receive_item.update quantity: item[:quantity] if receive_item.quantity != item[:quantity]
+        flash[:success] = 'Receiving updated'
+      end
+
+      unless new_item.blank?
+        product = Product.find_by(sku: new_item)
+
+        if product.nil?
+          flash[:error] = 'Product not found'
+          return render :edit, status: :unprocessable_entity
+        end
+
+        receive_item = ReceiveItem.find_by receive_id: @receiving.id, product_id: product.id
+
+        if receive_item.nil?
+          receive_item = @receiving.receive_items.new product_id: product.id, quantity: 1
+        else
+          receive_item.quantity += 1
+        end
+
+        receive_item.save
+      end
+
+      render :edit
+    end
+
     def datatable
       requested_length = params[:length].to_i
       requested_start  = params[:start].to_i
@@ -40,7 +81,11 @@ module App
     end
 
     def receiving_item_line
-      @item = @receiving.receive_items.find_by(id: params[:receive_item])
+      @item = ReceiveItem.find_by id: params[:receive_item], receive_id: params[:receiving_id]
+
+      return render 'error/bad_request', status: :bad_request, layout: 'error' if @item.nil?
+
+      @item
     end
 
     private

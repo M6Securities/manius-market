@@ -25,6 +25,8 @@
       </div>
     </div>
 
+    <%= render FormFlashComponent.new %>
+
     <div class="card">
       <div class="card-body">
 
@@ -46,7 +48,18 @@
 
             <tbody>
               <% @receiving.receive_items.each do |item| %>
-                <%= turbo_frame_tag item, src: app_receiving_item_line_path(receiving_id: @receiving.id, receive_item: item.id), loading: :lazy do %>
+                <% cache item do %>
+                  <tr>
+                    <td>
+                      <span>
+                        <%= item.product.name %> - <span class="text-muted"><%= item.product.sku %></span> <a href="<%= app_product_path item.product %>"><i data-feather='external-link'></i></a>
+                      </span>
+                      <input type="hidden" name="update[items][][id]" value="<%= item.id %>">
+                    </td>
+                    <td>
+                      <%= render InputBlockComponent.new(name: 'update[items][][quantity]', value: item.quantity, type: :number, div_classes: '') %>
+                    </td>
+                  </tr>
                 <% end %>
               <% end %>
             </tbody>
@@ -54,7 +67,10 @@
         </div>
 
         <div class="d-flex justify-content-end mt-1">
-          <button type="button" class="btn btn-outline-success">
+
+          <%= render InputBlockComponent.new(name: 'new[sku]', placeholder: 'Receive Item SKU', div_classes: 'me-1', required: false), cached: true %>
+
+          <button type="submit" class="btn btn-outline-success">
             <i data-feather="plus"></i> Add Receiving Line
           </button>
         </div>
