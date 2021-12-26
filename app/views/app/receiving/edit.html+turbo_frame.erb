@@ -13,7 +13,7 @@
 
       <div class="d-flex justify-content-end">
 
-        <a href="<%= app_receiving_path @receiving %>" class="btn btn-outline-danger mx-1" style="height: 39px;">
+        <a href="<%= app_receiving_path @receiving %>" class="btn btn-outline-danger mx-1" data-turbo-action="advance" style="height: 39px;">
           <i data-feather="x"></i>
           Cancel
         </a>
@@ -52,7 +52,7 @@
                   <tr>
                     <td>
                       <span>
-                        <%= item.product.name %> - <span class="text-muted"><%= item.product.sku %></span> <a href="<%= app_product_path item.product %>"><i data-feather='external-link'></i></a>
+                        <%= item.product.name %> - <span class="text-muted"><%= item.product.sku %></span> <a href="<%= app_product_path item.product %>" target="_blank"><i data-feather='external-link'></i></a>
                       </span>
                       <input type="hidden" name="update[items][][id]" value="<%= item.id %>">
                     </td>
@@ -78,9 +78,5 @@
       </div>
     </div>
   </form>
-
-  <script defer>
-
-  </script>
 
 <% end %>

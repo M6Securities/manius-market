@@ -19,7 +19,6 @@ module App
       items = params[:update][:items]
 
       items.each do |item|
-        p item
         receive_item = ReceiveItem.find_by id: item[:id]
         item[:quantity] = item[:quantity].to_i
 
