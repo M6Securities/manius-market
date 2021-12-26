@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 2021_12_21_192925) do
     t.index ["sku"], name: "index_products_on_sku"
   end
 
-  create_table "receive_items", force: :cascade do |t|
+  create_table "receive_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "receive_id"
     t.bigint "product_id"
     t.integer "quantity", default: 0

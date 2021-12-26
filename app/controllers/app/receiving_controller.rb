@@ -39,6 +39,10 @@ module App
       render json: payload, status: :ok
     end
 
+    def receiving_item_line
+      @item = @receiving.receive_items.find_by(id: params[:receive_item])
+    end
+
     private
 
     def check_permissions

@@ -1,0 +1,17 @@
+<%= turbo_frame_tag @item do %>
+  <tr>
+    <td>
+      <% if @item.product.nil? %>
+        Something
+      <% else %>
+        <span class="text-muted">
+          <%= @tem.product.id.to_s %>
+        </span>
+      <% end %>
+
+    </td>
+    <td>
+      <%= @item.quantity %>
+    </td>
+  </tr>
+<% end %>

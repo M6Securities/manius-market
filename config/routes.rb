@@ -27,7 +27,9 @@ Rails.application.routes.draw do
       get 'invite_user_to_market' => 'user#invite_user_to_market_view'
       match 'invite_user_to_market' => 'user#invite_user_to_market', via: %i[post patch put]
 
-      resources :receiving
+      resources :receiving do
+        get 'line_item/:receive_item' => 'receiving#receiving_item_line', as: :item_line
+      end
       get 'receiving_datatable' => 'receiving#datatable'
 
 
