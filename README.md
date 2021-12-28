@@ -19,3 +19,5 @@ It'll have features such as online ordering, inventory management, maybe a basic
 * System dependencies: none yet
 
 * Database creation `rake db:create db:migrate db:seed`
+
+* Editing Environment Credentials `EDITOR=nano rails credentials:edit --environment development`

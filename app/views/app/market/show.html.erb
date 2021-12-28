@@ -1,11 +1,5 @@
 <% content_for :title, "Market #{@market.display_name}" %>
 
-<div class="content-body">
-  <section id="market-show">
+<%= turbo_frame_tag @market, src: app_market_path, loading: :lazy do %>
 
-    <%= turbo_frame_tag @market, src: app_market_path, loading: :lazy do %>
-
-    <% end %>
-
-  </section>
-</div>
+<% end %>

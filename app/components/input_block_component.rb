@@ -20,7 +20,7 @@ class InputBlockComponent < ViewComponent::Base
   def initialize(**options)
     super
 
-    @id = options[:id]
+    @id = options[:id].blank? ? SecureRandom.alphanumeric(5) : options[:id]
     @name = options[:name]
     @title = options[:title]
     @value = options[:value]

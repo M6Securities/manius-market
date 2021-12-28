@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_21_192925) do
+ActiveRecord::Schema.define(version: 2021_12_28_195612) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 2021_12_21_192925) do
     t.string "email", default: ""
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "stripe_publishable_key"
+    t.string "stripe_secret_key"
   end
 
   create_table "old_passwords", force: :cascade do |t|
