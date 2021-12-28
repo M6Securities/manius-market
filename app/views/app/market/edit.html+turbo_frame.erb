@@ -25,6 +25,9 @@
       </div>
     </div>
 
+    <%= render FormFlashComponent.new %>
+    <%= render(FormErrorComponent.new(@market.errors.messages)) %>
+
     <div class="card">
       <div class="card-content">
         <div class="card-body">
@@ -35,6 +38,11 @@
               <%= render InputBlockComponent.new(name: 'update[display_name]', title: 'Market Name', placeholder: @market.display_name, value: @market.display_name) %>
               <%= render InputBlockComponent.new(name: 'update[path_name]', title: 'Market Path', placeholder: @market.path_name, value: @market.path_name) %>
               <%= render InputBlockComponent.new(name: 'update[email]', title: 'Market Email', placeholder: @market.email, value: @market.email) %>
+            </div>
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+              <%= render InputBlockComponent.new(name: 'update[stripe_publishable_key]', title: 'Stripe Publishable Key', placeholder: 'pk_live_adsibasdas...', helper_text: 'You cannot view the current keys, but you can replace them if needed.', required: false) %>
+              <%= render InputBlockComponent.new(name: 'update[stripe_secret_key]', title: 'Stripe Secret Key', placeholder: 'sk_live_adsibasdas...', helper_text: 'Both keys are encrypted and only shown to Market Owners', required: false) %>
             </div>
 
           </div>

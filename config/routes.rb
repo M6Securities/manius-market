@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
       resources :dashboard, only: %i[index]
 
-      resources :market, only: %i[new create show edit]
+      resources :market
 
       resources :product
       get 'product_datatable' => 'product#datatable'

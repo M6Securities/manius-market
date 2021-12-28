@@ -6,7 +6,23 @@
     </label>
   <% end %>
 
-  <input type="<%= @type %>" class="<%= @input_classes %>" id="<%= @id %>" name="<%= @name %>" placeholder="<%= @placeholder %>" <%= "value=#{@value}" unless @value.blank? %> <%= 'required' if @required %> <%= 'readonly' if @read_only %> <%= 'disabled' if @disabled %> <%= 'autofocus' if @autofocus %> <%= "autofocus=\"#{@autofocus}\"" unless @autofocus.blank? %>>
+  <input
+    type="<%= @type %>"
+    class="<%= @input_classes %>"
+    id="<%= @id %>"
+    name="<%= @name %>"
+    placeholder="<%= @placeholder %>"
+    <% unless @value.blank? %>
+      value="<%= @value %>"
+    <% end %>
+    <%= 'required' if @required %>
+    <%= 'readonly' if @read_only %>
+    <%= 'disabled' if @disabled %>
+    <%= 'autofocus' if @autofocus %>
+    <% unless @autofocus.blank? %>
+      autofocus="<%= @autofocus %>"
+    <% end %>
+  >
 
   <% unless @helper_text.blank? %>
     <p>
