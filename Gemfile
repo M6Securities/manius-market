@@ -89,3 +89,9 @@ gem 'phonelib'
 
 # error handling
 gem 'gaffe'
+
+# job processing
+gem 'sidekiq'
+gem 'sidekiq-scheduler'
+gem 'sidekiq-status'
+gem 'sidekiq-unique-jobs'
