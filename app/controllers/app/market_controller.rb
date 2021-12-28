@@ -3,13 +3,14 @@
 module App
   # Handles user facing market stuff
   class MarketController < AppController
+    before_action :find_market, except: %i[index datatable new create]
 
     def new
       @market = Market.new
     end
 
     def create
-      safe_params = params.require(:create).permit(:display_name, :path_name, :email)
+      safe_params = params.require(:create).permit(:display_name, :path_name, :email, :stripe_publishable_key, :stripe_secret_key)
 
       @market = Market.new(safe_params)
 
@@ -30,6 +31,12 @@ module App
     end
 
     def show
+      @market = Market.find params[:id]
+    end
+
+    private
+
+    def find_market
       @market = Market.find params[:id]
     end
 

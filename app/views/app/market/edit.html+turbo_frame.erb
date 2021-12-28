@@ -1,0 +1,48 @@
+<%= turbo_frame_tag @market do %>
+  <form action="<%= app_market_path @market %>" method="patch">
+    <!-- rails authenticity token -->
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+    <div class="d-flex justify-content-between">
+      <div>
+        <h1>Edit Market</h1>
+        <p class="text-muted">
+          <%= @market.display_name %>
+        </p>
+      </div>
+
+      <div class="d-flex justify-content-end">
+
+        <a href="<%= app_market_path @market %>" class="btn btn-outline-danger mx-1" data-turbo-action="advance" style="height: 39px;">
+          <i data-feather="x"></i>
+          Cancel
+        </a>
+
+        <button type="submit" class="btn btn-success ms-1" style="height: 39px;">
+          <i data-feather="save"></i>
+          <%= t('global.wording.save') %>
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+              <%= render InputBlockComponent.new(name: 'update[display_name]', title: 'Market Name', placeholder: @market.display_name, value: @market.display_name) %>
+              <%= render InputBlockComponent.new(name: 'update[path_name]', title: 'Market Path', placeholder: @market.path_name, value: @market.path_name) %>
+              <%= render InputBlockComponent.new(name: 'update[email]', title: 'Market Email', placeholder: @market.email, value: @market.email) %>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+<% end %>
