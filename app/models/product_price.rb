@@ -1,6 +1,8 @@
 # easier than working with timezones I'll tell you what
 class ProductPrice < ApplicationRecord
 
+  # this makes :price an attribute that returns/updates a Money object
+  # https://github.com/RubyMoney/money-rails
   monetize :price_cents
 
   # Associations

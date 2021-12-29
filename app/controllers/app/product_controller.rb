@@ -25,7 +25,9 @@ module App
     end
 
     def update
-      safe_params = params.require(:update).permit(:name, :sku, :stock, :tax_code, :description, product_price: [:price, :currency])
+      safe_params = params.require(:update).permit(:name, :sku, :stock, :tax_code, :description, :enabled, product_price: [:price, :currency])
+
+      safe_params[:enabled] = safe_params[:enabled] == 'on'
 
       prices = []
       safe_params[:product_price].each do |product_price|
