@@ -16,9 +16,8 @@
       </div>
     </div>
 
-    <div>
-      <%= render(FormErrorComponent.new(@product.errors.messages)) %>
-    </div>
+    <%= render FormFlashComponent.new %>
+    <%= render(FormErrorComponent.new(@product.errors.messages)) %>
 
     <div class="card">
       <div class="card-content">
@@ -30,9 +29,14 @@
 
             <div class="col-12 col-lg-6 col-md-6 col-sm-12">
 
-              <%= render InputBlockComponent.new(id: 'product-name', name: 'create[name]', title: 'Product Name', placeholder: 'Name', value: @product.name) %>
+              <%= render InputBlockComponent.new(name: 'create[name]', title: 'Product Name', placeholder: 'Name', value: @product.name) %>
 
-              <%= render InputBlockComponent.new(id: 'product-sku', name: 'create[sku]', title: 'SKU', placeholder: '', value: @product.sku, helper_text: 'SKU must be only uppercase alphanumeric characters only') %>
+              <%= render InputBlockComponent.new(name: 'create[sku]', title: 'SKU', placeholder: '', value: @product.sku, helper_text: 'SKU must be only uppercase alphanumeric characters only') %>
+
+              <div class="form-floating">
+                <textarea class="form-control" name="create[description]" placeholder="Description" id="create_product_description" rows="3"></textarea>
+                <label for="create_product_description">Description</label>
+              </div>
 
             </div>
 

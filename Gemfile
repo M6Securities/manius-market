@@ -95,3 +95,5 @@ gem 'sidekiq'
 gem 'sidekiq-scheduler'
 gem 'sidekiq-status'
 gem 'sidekiq-unique-jobs'
+
+gem 'stripe'

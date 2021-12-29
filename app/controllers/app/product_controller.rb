@@ -5,18 +5,17 @@ module App
   # view and edit products for current market
   class ProductController < AppController
     before_action :require_market
-    before_action :find_product
+    before_action :find_product, except: %i[index create datatable]
 
     def create
-      safe_params = params.require(:create).permit(:name, :sku, :price, :stock, :tax_code)
+      safe_params = params.require(:create).permit(:name, :sku, :price, :stock, :tax_code, :description)
 
       @product = Product.new safe_params
       @product.market = @current_market
 
       if @product.invalid?
-        return respond_to do |format|
-          format.html { render :new, status: :unprocessable_entity }
-        end
+        p @product.errors.messages
+        return render :new, status: :unprocessable_entity
       end
 
       @product.save
@@ -25,7 +24,7 @@ module App
     end
 
     def update
-      safe_params = params.require(:update).permit(:name, :sku, :price, :stock, :tax_code)
+      safe_params = params.require(:update).permit(:name, :sku, :price, :stock, :tax_code, :description)
 
       if @product.update safe_params
         render :show # don't redirect, just show the updated product
@@ -68,16 +67,6 @@ module App
                  else
                    Product.find_by(id: params[:id])
                  end
-
-      unless @product.id.nil?
-        # if the product doesn't exist
-        return redirect_to app_product_index_path if @product.nil?
-
-        # if the product exists but belongs to a different market
-        return redirect_to app_product_index_path unless @product.market_id == @current_market.id
-      end
-
-      @product
     end
 
   end

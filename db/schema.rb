@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_28_195612) do
+ActiveRecord::Schema.define(version: 2021_12_28_232935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,12 +39,17 @@ ActiveRecord::Schema.define(version: 2021_12_28_195612) do
     t.string "sku", default: ""
     t.decimal "price", precision: 8, scale: 2, default: "0.0"
     t.integer "stock", default: 0
-    t.string "tax_code", default: ""
+    t.string "tax_code", default: "txcd_99999999"
     t.bigint "market_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "stripe_id"
+    t.boolean "enabled", default: true
+    t.boolean "shippable", default: true
+    t.string "description", default: ""
     t.index ["market_id"], name: "index_products_on_market_id"
     t.index ["sku"], name: "index_products_on_sku"
+    t.index ["stripe_id"], name: "index_products_on_stripe_id", unique: true
   end
 
   create_table "receive_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

@@ -20,4 +20,6 @@ It'll have features such as online ordering, inventory management, maybe a basic
 
 * Database creation `rake db:create db:migrate db:seed`
 
+* To run sidekiq: `bundle exec sidekiq`
+
 * Editing Environment Credentials `EDITOR=nano rails credentials:edit --environment development`

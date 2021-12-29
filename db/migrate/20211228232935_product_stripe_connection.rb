@@ -8,5 +8,9 @@ class ProductStripeConnection < ActiveRecord::Migration[7.0]
 
     # product description
     add_column :products, :description, :string, default: ''
+
+    add_index :products, :stripe_id, unique: true
+
+    change_column_default :products, :tax_code, 'txcd_99999999' # general tax code; https://stripe.com/docs/tax/tax-codes
   end
 end

@@ -247,6 +247,7 @@ GEM
       sprockets (>= 3.0.0)
     stimulus-rails (1.0.2)
       railties (>= 6.0.0)
+    stripe (5.42.0)
     thor (1.1.0)
     thwait (0.2.0)
       e2mmap
@@ -312,6 +313,7 @@ DEPENDENCIES
   spring
   sprockets-rails
   stimulus-rails
+  stripe
   turbo-rails
   tzinfo-data
   view_component

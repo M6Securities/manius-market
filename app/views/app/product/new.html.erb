@@ -1,24 +1,5 @@
 <% content_for :title, 'New Product' %>
 
-<div class="content-body">
-  <section id="new-product">
+<%= turbo_frame_tag @product, target: '_top', src: new_app_product_path, loading: :lazy do %>
 
-    <%= turbo_frame_tag @product, target: '_top', src: new_app_product_path, loading: :lazy do %>
-
-    <% end %>
-
-  </section>
-
-</div>
-
-<script defer>
-
-  /*
-    document.addEventListener('turbo:submit-start', (event) => {
-        //console.log(event);
-        toastr.warning('Please wait...', 'Creating Product');
-    });
-
-   */
-
-</script>
+<% end %>
