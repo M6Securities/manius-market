@@ -19,6 +19,6 @@ class CreateStripeProductWorker
       tax_code: product.tax_code,
     )
 
-    product.update stripe_id: stripe_product.id
+    product.update stripe_product_id: stripe_product.id
   end
 end

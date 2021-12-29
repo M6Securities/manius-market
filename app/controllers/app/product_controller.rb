@@ -8,10 +8,11 @@ module App
     before_action :find_product, except: %i[index create datatable]
 
     def create
-      safe_params = params.require(:create).permit(:name, :sku, :price, :stock, :tax_code, :description)
+      safe_params = params.require(:create).permit(:name, :sku, :stock, :tax_code, :description)
 
       @product = Product.new safe_params
       @product.market = @current_market
+      @product.enabled = false # set to false until user adds pricing
 
       if @product.invalid?
         p @product.errors.messages
@@ -24,7 +25,7 @@ module App
     end
 
     def update
-      safe_params = params.require(:update).permit(:name, :sku, :price, :stock, :tax_code, :description)
+      safe_params = params.require(:update).permit(:name, :sku, :stock, :tax_code, :description)
 
       if @product.update safe_params
         render :show # don't redirect, just show the updated product

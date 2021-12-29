@@ -5,16 +5,12 @@ class Product < ApplicationRecord
 
   has_many :receive_items
   has_many :receives, through: :receive_items
+  has_many :product_prices
 
   after_create :create_stripe_product
 
   # validations
   validates :name, presence: true
-  validates :price,
-            presence: true,
-            numericality: {
-              greater_than_or_equal_to: 0
-            }
   validates :sku,
             presence: true,
             format: {

@@ -110,10 +110,10 @@ GEM
     debug_inspector (1.1.0)
     devise-encryptable (0.2.0)
       devise (>= 2.1.0)
-    devise-security (0.16.0)
-      devise (>= 4.3.0, < 5.0)
+    devise-security (0.17.0)
+      devise (>= 4.3.0)
     e2mmap (0.1.0)
-    email_address (0.2.1)
+    email_address (0.2.2)
       simpleidn
     erubi (1.10.0)
     et-orbi (1.2.6)
@@ -154,6 +154,15 @@ GEM
     mini_magick (4.11.0)
     mini_mime (1.1.2)
     minitest (5.15.0)
+    monetize (1.11.0)
+      money (~> 6.12)
+    money (6.16.0)
+      i18n (>= 0.6.4, <= 2)
+    money-rails (1.15.0)
+      activesupport (>= 3.0)
+      monetize (~> 1.9)
+      money (~> 6.13)
+      railties (>= 3.0)
     msgpack (1.4.2)
     nio4r (2.5.8)
     nokogiri (1.12.5-x86_64-darwin)
@@ -299,6 +308,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   kredis
+  money-rails
   pg (~> 1.1)
   phonelib
   puma (~> 5.0)

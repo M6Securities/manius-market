@@ -97,3 +97,5 @@ gem 'sidekiq-status'
 gem 'sidekiq-unique-jobs'
 
 gem 'stripe'
+
+gem 'money-rails'
