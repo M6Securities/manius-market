@@ -42,8 +42,6 @@
 
             <div class="col-12 col-lg-6 col-md-6 col-sm-12">
 
-              <%= render InputBlockComponent.new(id: 'product-price', name: 'create[price]', title: 'Price', placeholder: 0, value: @product.price, type: 'number') %>
-
               <%= render InputBlockComponent.new(id: 'product-quantity', name: 'create[stock]', title: 'Quantity in Stock', placeholder: 0, value: @product.stock, type: 'number') %>
 
               <%= render InputBlockComponent.new(id: 'product-tax-code', name: 'create[tax_code]', title: 'Tax Code', placeholder: t('global.wording.tax_code'), value: @product.tax_code, required: false) %>

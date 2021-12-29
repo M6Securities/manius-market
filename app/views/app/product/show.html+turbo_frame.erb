@@ -80,10 +80,42 @@
         </div>
 
       </div>
-
     </div>
-
   </div>
 
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">Prices</h4>
+    </div>
+    <div class="card-body">
+      <p class="card-text">
+        Prices are shown in the lowest unit of currency. For example, if the currency is USD, the price is shown in cents.
+      </p>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Currency Code</th>
+            <th>Created At</th>
+            <th>Updated At</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <% @product.product_prices.each do |product_price| %>
+            <tr>
+              <td><%= product_price.price.currency.iso_code %></td>
+              <td><%= product_price.created_at %></td>
+              <td><%= product_price.updated_at %></td>
+              <td><%= product_price.price.cents %></td>
+            </tr>
+          <% end %>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
 
 <% end %>

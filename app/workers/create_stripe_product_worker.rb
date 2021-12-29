@@ -16,7 +16,7 @@ class CreateStripeProductWorker
       active: true,
       description: product.description,
       shippable: product.shippable,
-      tax_code: product.tax_code,
+      tax_code: product.tax_code
     )
 
     product.update stripe_product_id: stripe_product.id

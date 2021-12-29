@@ -7,7 +7,7 @@ class Product < ApplicationRecord
   has_many :receives, through: :receive_items
   has_many :product_prices
 
-  after_create :create_stripe_product
+  after_commit :create_stripe_product, on: :create
 
   # validations
   validates :name, presence: true
