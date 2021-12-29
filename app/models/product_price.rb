@@ -1,3 +1,4 @@
+# easier than working with timezones I'll tell you what
 class ProductPrice < ApplicationRecord
 
   monetize :price_cents
@@ -16,7 +17,7 @@ class ProductPrice < ApplicationRecord
   private
 
   def unique_currency
-    errors.add(:currency, "must be unique") unless ProductPrice.where(product_id: product_id, price_currency: price_currency).size.zero?
+    errors.add(:currency, 'must be unique') unless ProductPrice.where(product_id: product_id, price_currency: price_currency).size.zero?
   end
 
 end

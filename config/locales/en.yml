@@ -67,6 +67,7 @@ en:
       current_sign_in_at: "Current Sign In At"
       last_sign_in_at: "Last Sign In At"
       cancel: "Cancel"
+      details: "Details"
   no_account: "Don't have an account?"
   app:
     site_admin:

@@ -25,7 +25,6 @@
                 <th>SKU</th>
                 <th>Name</th>
                 <th>Stock</th>
-                <th>Price</th>
                 <th>View</th>
               </tr>
             </thead>
@@ -37,7 +36,6 @@
                 <th>SKU</th>
                 <th>Name</th>
                 <th>Stock</th>
-                <th>Price</th>
                 <th>View</th>
               </tr>
             </tfoot>
@@ -72,7 +70,6 @@
                   { data: 'sku' },
                   { data: 'name' },
                   { data: 'stock' },
-                  { data: 'price' },
                   {
                       data: function (row, _type, _set) {
                           return `<a href="<%= app_product_index_path %>/${row.id}" class="btn btn-outline-primary my-0 mr-0">
@@ -85,8 +82,7 @@
                   { name: 'sku',   targets: 0 },
                   { name: 'name',  targets: 1 },
                   { name: 'stock', targets: 2 },
-                  { name: 'price', targets: 3 },
-                  { name: 'view',  targets: 4, 'orderable': false, 'searchable': false },
+                  { name: 'view',  targets: 3, 'orderable': false, 'searchable': false },
 
                   { targets: '_all', searchable: true, orderable: true}
               ],

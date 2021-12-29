@@ -34,18 +34,16 @@ class ApplicationController < ActionController::Base
     { locale: I18n.locale }
   end
 
-  protected
-
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:display_name])
-  end
-
-  private
-
   # from here:
   # https://www.colby.so/posts/turbo-frames-on-rails
   def turbo_frame_request_variant
     request.variant = :turbo_frame if turbo_frame_request?
+  end
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:display_name])
   end
 
 end
