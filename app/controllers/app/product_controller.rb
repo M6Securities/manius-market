@@ -38,6 +38,8 @@ module App
         product_price = @product.product_prices.find_by price_currency: price.currency.iso_code
         product_price = @product.product_prices.new if product_price.nil?
 
+        puts "\n\n\n Current Product price: #{product_price.price} \n New Product Price: #{price} \n\n\n"
+
         product_price.price = price
         product_price.save
       end
