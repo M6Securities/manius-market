@@ -9,6 +9,7 @@ class Product < ApplicationRecord
   has_many :product_prices, dependent: :destroy
 
   after_commit :create_stripe_product, on: :create
+  after_commit :update_stripe_product, on: :update
 
   # Validations
   # ------------------------------------------------------------
@@ -48,6 +49,10 @@ class Product < ApplicationRecord
 
   def create_stripe_product
     CreateStripeProductWorker.perform_async(id)
+  end
+
+  def update_stripe_product
+    UpdateStripeProductWorker.perform_async(id)
   end
 
 end
