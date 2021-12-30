@@ -1,15 +1,17 @@
 class Product < ApplicationRecord
 
-  # associations
+  # Associations
+  # ------------------------------------------------------------
   belongs_to :market
 
   has_many :receive_items
   has_many :receives, through: :receive_items
-  has_many :product_prices
+  has_many :product_prices, dependent: :destroy
 
   after_commit :create_stripe_product, on: :create
 
-  # validations
+  # Validations
+  # ------------------------------------------------------------
   validates :name, presence: true
   validates :sku,
             presence: true,
@@ -28,6 +30,14 @@ class Product < ApplicationRecord
   validates :shippable, inclusion: { in: [true, false] }
   validates :description, presence: true
 
+
+  # Methods
+  # ------------------------------------------------------------
+
+  def stripe_product_id
+    # stripe product ids are not globally unique, so we need to make it unique for us
+    "maniusmarket_#{market.path_name}_#{id}"
+  end
 
 
   private

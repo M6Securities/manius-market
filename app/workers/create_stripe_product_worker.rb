@@ -10,8 +10,7 @@ class CreateStripeProductWorker
     Stripe.api_key = product.market.stripe_secret_key
 
     stripe_product = Stripe::Product.create(
-      # stripe product ids are not globally unique, so we need to make it unique for us
-      id: "maniusmarket_#{product.market.path_name}_#{product.id}",
+      id: product.stripe_product_id,
       name: product.name,
       active: true,
       description: product.description,

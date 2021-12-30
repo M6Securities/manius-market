@@ -13,9 +13,6 @@ class CreateStripeProductPriceWorker
       currency: product_price.price.currency.iso_code.downcase
     )
 
-    p stripe_price
-    p stripe_price.id
-
     product_price.update stripe_price_id: stripe_price.id
   end
 end
