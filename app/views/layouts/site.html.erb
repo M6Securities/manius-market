@@ -19,29 +19,30 @@
     </style>
 
     <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="https://cdn.m6securities.com/vuexy_admin_8-0/app-assets/css/core/menu/menu-types/horizontal-menu.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.m6securities.com/vuexy_admin_8-0/app-assets/css/core/colors/palette-gradient.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.m6securities.com/vuexy_admin_8-0/app-assets/css/core/menu/menu-types/horizontal-menu.min.css">
     <!-- END: Page CSS-->
 
   </head>
 
   <body class="horizontal-layout horizontal-menu navbar-floating footer-static" data-open="hover" data-menu="horizontal-menu" data-col="">
 
-  <!-- BEGIN: Content-->
-  <div class="app-content content pt-2">
-    <div class="content-wrapper">
+    <%= render Site::NavbarComponent.new(current_user) %>
 
-      <div id="dumbass-menu-spacer"></div>
+    <!-- BEGIN: Content-->
+    <div class="app-content content pt-2">
+      <div class="content-wrapper">
 
-      <div>
+        <div id="dumbass-menu-spacer"></div>
+
+        <div>
+
+        </div>
+
+        <%= yield %>
 
       </div>
-
-      <%= yield %>
-
     </div>
-  </div>
-  <!-- END: Content-->
+    <!-- END: Content-->
 
 
   <%= render ThemeJavascriptComponent.new %>
