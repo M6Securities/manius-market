@@ -11,8 +11,14 @@ This is an online market place, with a focus on markets instead of products like
 
 It'll have features such as online ordering, inventory management, maybe a basic CMS system, and more. All payment processing will be done through Stripe, and will take full advantage of their API. I doubt that will change, working with PayPal is a pain.
 
+Currently, this is just a wrapper around Stripe, but I'm hoping to add more features in the future that will set it apart.
+
 
 ### Details
+
+* Domains
+  * [maniusmarket.com](https://maniusmarket.com)
+  * [manius.market](https://manius.market)
 
 * Ruby version: `3.1.0`, going to try to always keep this at the latest version
 

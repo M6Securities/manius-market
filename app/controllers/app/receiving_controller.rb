@@ -22,10 +22,15 @@ module App
 
       new_item = params[:new][:sku]
 
-      items = params[:update][:items]
+      items = if params[:update].nil?
+                []
+              else
+                params[:update][:items]
+              end
 
       items.each do |item|
         receive_item = ReceiveItem.find_by id: item[:id]
+
         item[:quantity] = item[:quantity].to_i
 
         if receive_item.nil?
@@ -61,7 +66,12 @@ module App
           receive_item.quantity += 1
         end
 
+        receive_item.product.stock += 1
+        receive_item.product.save
+
         receive_item.save
+
+        flash[:success] = 'Receiving updated'
       end
 
       render :edit
