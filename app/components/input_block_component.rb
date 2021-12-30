@@ -15,7 +15,7 @@ class InputBlockComponent < ViewComponent::Base
   #   read_only: default false
   #   disabled: default false
   # }
-  DEFAULT_DIV_CLASSES = 'mb-1'
+  DEFAULT_DIV_CLASSES = 'form-floating mt-2 mb-3'
 
   def initialize(**options)
     super

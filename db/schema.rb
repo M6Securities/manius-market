@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_28_195612) do
+ActiveRecord::Schema.define(version: 2021_12_29_174653) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,17 +34,31 @@ ActiveRecord::Schema.define(version: 2021_12_28_195612) do
     t.index ["password_archivable_type", "password_archivable_id"], name: "index_password_archivable"
   end
 
+  create_table "product_prices", force: :cascade do |t|
+    t.bigint "product_id"
+    t.integer "price_cents", default: 0, null: false
+    t.string "price_currency", default: "USD", null: false
+    t.string "stripe_price_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_product_prices_on_product_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name", default: ""
     t.string "sku", default: ""
-    t.decimal "price", precision: 8, scale: 2, default: "0.0"
     t.integer "stock", default: 0
-    t.string "tax_code", default: ""
+    t.string "tax_code", default: "txcd_99999999"
     t.bigint "market_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "stripe_product_id"
+    t.boolean "enabled", default: true
+    t.boolean "shippable", default: true
+    t.string "description", default: ""
     t.index ["market_id"], name: "index_products_on_market_id"
     t.index ["sku"], name: "index_products_on_sku"
+    t.index ["stripe_product_id"], name: "index_products_on_stripe_product_id", unique: true
   end
 
   create_table "receive_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

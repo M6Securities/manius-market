@@ -59,7 +59,7 @@ module App
     private
 
     def find_market
-      @market = Market.find params[:id]
+      @market = Market.find_by id: params[:id]
     end
 
   end

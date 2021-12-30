@@ -1,11 +1,5 @@
 <div class="<%= @div_classes %>">
 
-  <% unless @title.blank? %>
-    <label class="form-label" for="<%= @id %>">
-      <%= @title %>
-    </label>
-  <% end %>
-
   <input
     type="<%= @type %>"
     class="<%= @input_classes %>"
@@ -23,6 +17,12 @@
       autofocus="<%= @autofocus %>"
     <% end %>
   >
+
+  <% unless @title.blank? %>
+    <label class="form-label" for="<%= @id %>">
+      <%= @title %>
+    </label>
+  <% end %>
 
   <% unless @helper_text.blank? %>
     <p>

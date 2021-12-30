@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'sidekiq/web'
+require 'sidekiq-scheduler/web'
+
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # Defines the root path route ("/")
@@ -39,6 +42,11 @@ Rails.application.routes.draw do
         get 'user_datatable' => 'user#datatable'
         resources :market
         get 'market_datatable' => 'market#datatable'
+
+        # sidekiq
+        authenticate :user, lambda { |user| user.site_admin } do
+          mount Sidekiq::Web => '/sidekiq'
+        end
 
       end
       get '/site_admin' => 'site_admin#index'
