@@ -9,11 +9,9 @@ Rails.application.routes.draw do
   root 'root#index'
 
   scope '(:locale)', locale: /#{I18n.available_locales.join("|")}/ do
-
     devise_for :users
 
     namespace :app do
-
       resources :dashboard, only: %i[index]
 
       resources :market
@@ -35,25 +33,27 @@ Rails.application.routes.draw do
       end
       get 'receiving_datatable' => 'receiving#datatable'
 
-
       namespace :site_admin do
-
         resources :user
         get 'user_datatable' => 'user#datatable'
         resources :market
         get 'market_datatable' => 'market#datatable'
 
         # sidekiq
-        authenticate :user, lambda { |user| user.site_admin } do
+        authenticate :user, ->(user) { user.site_admin } do
           mount Sidekiq::Web => '/sidekiq'
         end
-
       end
       get '/site_admin' => 'site_admin#index'
-
     end
+
     get '/app' => 'app#index'
     match '/app/set_market' => 'app#set_market', via: %i[post put patch]
+
+    # everything under this scope is NOT prefixed with /site
+    scope module: :site do
+      resources :product, only: %i[index show]
+    end
   end
 
   # shortcuts
