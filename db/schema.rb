@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2021_12_29_174653) do
   end
 
   create_table "product_prices", force: :cascade do |t|
-    t.bigint "product_id"
+    t.uuid "product_id"
     t.integer "price_cents", default: 0, null: false
     t.string "price_currency", default: "USD", null: false
     t.string "stripe_price_id"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2021_12_29_174653) do
     t.index ["product_id"], name: "index_product_prices_on_product_id"
   end
 
-  create_table "products", force: :cascade do |t|
+  create_table "products", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", default: ""
     t.string "sku", default: ""
     t.integer "stock", default: 0
