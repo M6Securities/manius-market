@@ -45,6 +45,14 @@ class Product < ApplicationRecord
     "maniusmarket_#{market.path_name}_#{id}"
   end
 
+  def primary_image_icon_url
+    if primary_image.variable?
+      url_for(product.primary_image.variant(gravity: 'Center', resize: '200x200^', crop: '200x200+0+0'))
+    else
+      'https://cdn.m6securities.com/vuexy_admin_8-0/app-assets/images/icons/unknown.png'
+    end
+  end
+
   private
 
   def unique_sku
