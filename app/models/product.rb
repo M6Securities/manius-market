@@ -1,4 +1,10 @@
+# frozen_string_literal: true
+
+# Primary product object
 class Product < ApplicationRecord
+  # Attachments
+  # ------------------------------------------------------------
+  has_one_attached :primary_image
 
   # Associations
   # ------------------------------------------------------------
@@ -31,7 +37,6 @@ class Product < ApplicationRecord
   validates :shippable, inclusion: { in: [true, false] }
   validates :description, presence: true
 
-
   # Methods
   # ------------------------------------------------------------
 
@@ -39,7 +44,6 @@ class Product < ApplicationRecord
     # stripe product ids are not globally unique, so we need to make it unique for us
     "maniusmarket_#{market.path_name}_#{id}"
   end
-
 
   private
 
@@ -54,5 +58,4 @@ class Product < ApplicationRecord
   def update_stripe_product
     UpdateStripeProductWorker.perform_async(id)
   end
-
 end

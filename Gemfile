@@ -97,6 +97,8 @@ gem 'sidekiq-status'
 gem 'sidekiq-unique-jobs'
 
 # money
-gem 'stripe'
-gem 'money-rails'
 gem 'currency_select'
+gem 'monetize'
+gem 'money-heuristics'
+gem 'money-rails'
+gem 'stripe'

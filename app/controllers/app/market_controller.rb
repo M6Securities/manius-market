@@ -41,7 +41,7 @@ module App
     def update
       return render 'error/unauthorized', status: :unauthorized, layout: 'error' unless current_user.permission?(UserMarketPermission::OWNER, @market)
 
-      safe_params = params.require(:update).permit(:display_name, :path_name, :email, :stripe_publishable_key, :stripe_secret_key)
+      safe_params = params.require(:update).permit(:display_name, :email, :stripe_publishable_key, :stripe_secret_key)
 
       return render :edit, status: :unprocessable_entity unless @market.update safe_params.except(:stripe_publishable_key, :stripe_secret_key)
 
@@ -53,7 +53,6 @@ module App
 
       flash[:success] = 'Market updated'
       render :edit
-
     end
 
     private
@@ -61,7 +60,5 @@ module App
     def find_market
       @market = Market.find_by id: params[:id]
     end
-
   end
 end
-
