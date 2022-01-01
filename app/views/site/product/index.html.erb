@@ -86,7 +86,8 @@
       <section id="ecommerce-products" class="grid-view">
 
         <% @products.each do |product| %>
-          <div class="card ecommerce-card">
+          <% cache product do %>
+            <div class="card ecommerce-card">
             <div class="item-img text-center d-flex justify-content-center">
               <a href="<%= product_path product %>">
                 <img class="img-fluid card-img-top" src="<%= product.primary_image_icon_url %>" alt="<%= product.name %>"/>
@@ -136,6 +137,7 @@
               </a>
             </div>
           </div>
+          <% end %>
         <% end %>
 
       </section>
