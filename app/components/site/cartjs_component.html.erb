@@ -13,6 +13,13 @@
 
   console.log('cartjs_component.js');
 
+  /*
+   *  Wrote this in about 15 minutes with the help of Github Copilot.
+   *
+   *  Below is the cart object to interface with the cart.
+   *  The cart is stored in Local Storage with the help of the above library LocalDB.
+   *  Below that is the code that interfaces with the HTML to handle cart changes.
+   */
   Cart = {
       currentMarket: function () {
           const host = window.location.hostname;
@@ -37,7 +44,7 @@
                       quantity: 1
                   };
                   marketDB.save(item, function(_items) {
-                      console.log('New items:', _items);
+                      //console.log('New items:', _items);
                   });
               }
           });
@@ -57,7 +64,7 @@
                       quantity: quantity
                   };
                   marketDB.save(item, function(_items) {
-                      console.log('New items:', _items);
+                      //console.log('New items:', _items);
                   });
               }
           });
