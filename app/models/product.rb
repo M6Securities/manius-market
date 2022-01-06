@@ -12,7 +12,11 @@ class Product < ApplicationRecord
 
   has_many :receive_items
   has_many :receives, through: :receive_items
+
   has_many :product_prices, dependent: :destroy
+
+  has_many :cart_items, dependent: :destroy
+  has_many :customers, through: :cart_items
 
   after_commit :create_stripe_product, on: :create
   after_commit :update_stripe_product, on: :update

@@ -4,6 +4,9 @@
 class User < ApplicationRecord
   SYSTEM = -1
 
+  # Devise
+  # ---------------------------------------------------------------------------
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable,
@@ -23,13 +26,22 @@ class User < ApplicationRecord
 
   # before_create :check_if_first_user
 
-  validates_with EmailAddress::ActiveRecordValidator
-
+  # Associations
+  # ---------------------------------------------------------------------------
   has_many :user_market_permissions
   has_many :markets, through: :user_market_permissions
+  has_many :customers
+  has_many :cart_items, through: :customers
+
+  # Validations
+  # ---------------------------------------------------------------------------
+  validates_with EmailAddress::ActiveRecordValidator
 
   validates :display_name, presence: true
   validates :email, presence: true, uniqueness: true
+
+  # Methods
+  # ---------------------------------------------------------------------------
 
   def gravatar
     hash = email.nil? ? Digest::MD5.hexdigest(username) : Digest::MD5.hexdigest(email)
@@ -103,5 +115,4 @@ class User < ApplicationRecord
   def check_if_first_user
     site_admin = true if User.all.size.zero?
   end
-
 end

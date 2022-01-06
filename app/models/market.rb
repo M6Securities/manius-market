@@ -6,10 +6,12 @@ class Market < ApplicationRecord
   encrypts :stripe_secret_key
 
   # Associations
-  has_many :user_market_permissions
+  # ---------------------------------------------------------------------------
+  has_many :user_market_permissions, dependent: :destroy
   has_many :users, through: :user_market_permissions
-  has_many :products
-  has_many :receives
+  has_many :products, dependent: :destroy
+  has_many :receives, dependent: :destroy
+  has_many :customers, dependent: :destroy
 
   # Validations
   validates :display_name, presence: true, uniqueness: true
@@ -23,5 +25,4 @@ class Market < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :stripe_publishable_key, presence: true
   validates :stripe_secret_key, presence: true
-
 end
