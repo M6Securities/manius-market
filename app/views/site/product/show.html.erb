@@ -53,7 +53,7 @@
                 <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
                 <input type="hidden" name="add[product_id]" value="<%= @product.id %>">
                 <input type="hidden" name="add[quantity]" value="1">
-                <button type="button" class="btn btn-primary btn-cart me-0 me-sm-1 mb-1 mb-sm-0" onclick="product.addToCart()">
+                <button type="button" class="btn btn-primary btn-cart me-0 me-sm-1 mb-1 mb-sm-0" onclick="product.addToCart('<%= @product.id %>')">
                   <i data-feather="shopping-cart" class="me-50"></i>
                   <span class="add-to-cart">Add to cart</span>
                 </button>
@@ -102,9 +102,9 @@
 <script async>
 
   product = {
-      addToCart: function() {
+      addToCart: function(productID) {
           console.log('adding to cart');
-          const id = 'add-to-cart-form-<%= @product.id %>';
+          const id = `add-to-cart-form-${productID}`;
 
           const formElement = document.getElementById(id);
           const url = '<%= cart_update_item_path %>';
@@ -119,7 +119,8 @@
               type: 'POST',
               success: function (data) {
                   //console.log(data)
-                  document.getElementById('customer_<%= @current_customer.id %>').reload()
+                  document.getElementById('customer_<%= @current_customer.id %>').src = '<%= cart_navbar_path %>';
+                  document.getElementById('customer_<%= @current_customer.id %>').reload();
               }
           });
 

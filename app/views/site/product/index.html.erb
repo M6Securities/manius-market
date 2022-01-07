@@ -131,10 +131,17 @@
                 <i data-feather="heart"></i>
                 <span>Wishlist</span>
               </a>
-              <a href="#" class="btn btn-primary btn-cart">
-                <i data-feather="shopping-cart"></i>
-                <span class="add-to-cart">Add to cart</span>
-              </a>
+
+              <form method="post" action="<%= cart_update_item_path %>" id="add-to-cart-form-<%= product.id %>">
+                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                <input type="hidden" name="add[product_id]" value="<%= product.id %>">
+                <input type="hidden" name="add[quantity]" value="1">
+                <button type="button" class="btn btn-primary btn-cart" onclick="product.addToCart('<%= product.id %>')">
+                  <i data-feather="shopping-cart" class="me-50"></i>
+                  <span class="add-to-cart">Add to cart</span>
+                </button>
+              </form>
+
             </div>
           </div>
           <% end %>
@@ -441,5 +448,34 @@
     </div>
   </div>
 </div>
+
+<script async>
+
+    product = {
+        addToCart: function(productID) {
+            console.log('adding to cart');
+            const id = `add-to-cart-form-${productID}`;
+
+            const formElement = document.getElementById(id);
+            const url = '<%= cart_update_item_path %>';
+            const form = new FormData(formElement);
+
+            const postForm = $.ajax({
+                url: url,
+                data: form,
+                cache: false,
+                processData: false,
+                contentType: false,
+                type: 'POST',
+                success: function (data) {
+                    //console.log(data)
+                    document.getElementById('customer_<%= @current_customer.id %>').src = '<%= cart_navbar_path %>';
+                    document.getElementById('customer_<%= @current_customer.id %>').reload();
+                }
+            });
+        }
+    }
+
+</script>
 
 
