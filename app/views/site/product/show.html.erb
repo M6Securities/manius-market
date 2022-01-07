@@ -14,8 +14,10 @@
             </div>
           </div>
           <div class="col-12 col-md-7">
-            <h4>Apple Watch Series 5</h4>
-            <span class="card-text item-company">By <a href="#" class="company-name">Apple</a></span>
+            <h4>
+              <%= @product.name %>
+            </h4>
+
             <div class="ecommerce-details-price d-flex flex-wrap mt-1">
               <h4 class="item-price me-1">
                 <%= @product.product_prices.first.price.format %>
@@ -42,14 +44,21 @@
                 <span>EMI options available</span>
               </li>
             </ul>
-            <hr />
 
-            <hr />
+            <hr>
+
             <div class="d-flex flex-column flex-sm-row pt-1">
-              <a href="#" class="btn btn-primary btn-cart me-0 me-sm-1 mb-1 mb-sm-0">
-                <i data-feather="shopping-cart" class="me-50"></i>
-                <span class="add-to-cart">Add to cart</span>
-              </a>
+
+              <form method="post" action="<%= cart_update_item_path %>" id="add-to-cart-form-<%= @product.id %>">
+                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                <input type="hidden" name="add[product_id]" value="<%= @product.id %>">
+                <input type="hidden" name="add[quantity]" value="1">
+                <button type="button" class="btn btn-primary btn-cart me-0 me-sm-1 mb-1 mb-sm-0" onclick="product.addToCart()">
+                  <i data-feather="shopping-cart" class="me-50"></i>
+                  <span class="add-to-cart">Add to cart</span>
+                </button>
+              </form>
+
               <a href="#" class="btn btn-outline-secondary btn-wishlist me-0 me-sm-1 mb-1 mb-sm-0">
                 <i data-feather="heart" class="me-50"></i>
                 <span>Wishlist</span>
@@ -89,5 +98,35 @@
   </section>
 
 </div>
+
+<script async>
+
+  product = {
+      addToCart: function() {
+          console.log('adding to cart');
+          const id = 'add-to-cart-form-<%= @product.id %>';
+
+          const formElement = document.getElementById(id);
+          const url = '<%= cart_update_item_path %>';
+          const form = new FormData(formElement);
+
+          const postForm = $.ajax({
+              url: url,
+              data: form,
+              cache: false,
+              processData: false,
+              contentType: false,
+              type: 'POST',
+              success: function (data) {
+                  console.log(data)
+              }
+          });
+
+
+
+      }
+  }
+
+</script>
 
 

@@ -43,9 +43,9 @@ ActiveRecord::Schema.define(version: 2022_01_06_202829) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "cart_items", force: :cascade do |t|
-    t.bigint "product_id"
-    t.bigint "customer_id"
+  create_table "cart_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "product_id"
+    t.uuid "customer_id"
     t.integer "quantity", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 2022_01_06_202829) do
     t.index ["product_id"], name: "index_cart_items_on_product_id"
   end
 
-  create_table "customers", force: :cascade do |t|
+  create_table "customers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "market_id"
     t.boolean "real", default: false
