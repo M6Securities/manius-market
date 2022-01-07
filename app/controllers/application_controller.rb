@@ -4,8 +4,6 @@
 class ApplicationController < ActionController::Base
   add_flash_types :info, :error, :warning, :success
 
-  layout 'site'
-
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :turbo_frame_request_variant
 
@@ -47,5 +45,4 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:display_name])
   end
-
 end

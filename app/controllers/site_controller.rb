@@ -5,6 +5,8 @@ class SiteController < ApplicationController
   before_action :current_market
   before_action :current_customer
 
+  layout 'site'
+
   def current_market
     puts session.to_h
     @current_market = Market.find_by(path_name: request.subdomain)
