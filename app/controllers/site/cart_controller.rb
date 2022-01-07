@@ -22,10 +22,42 @@ module Site
       if cart_item.nil?
         @current_customer.cart_items.create(product_id: product.id, quantity: quantity)
       else
+        quantity += cart_item.quantity
         cart_item.update(quantity: quantity)
       end
 
       render status: :ok, json: { message: 'Product added to cart' }
+    end
+
+    def update_cart
+      # so params[:update] may or may not exist. So if it doesn't exist, we'll just assume the cart is empty and wipe it
+
+      if params[:update].nil?
+        @current_customer.cart_items.destroy_all
+        return render :navbar, status: :ok, layout: false
+      end
+
+      param_cart_item_ids = []
+      params[:update][:cart_items].each do |param_cart_item|
+        param_cart_item_ids << param_cart_item[:id]
+
+        cart_item = CartItem.find_by id: param_cart_item[:id]
+
+        return render status: :bad_request, json: { message: 'Cart item not found' } if cart_item.nil?
+
+        if param_cart_item[:quantity].to_i.zero?
+          cart_item.destroy
+        else
+          cart_item.update(quantity: param_cart_item[:quantity])
+        end
+      end
+
+      @current_customer.cart_items.each do |cart_item|
+        cart_item.destroy unless param_cart_item_ids.include?(cart_item.id)
+      end
+
+      @show_navbar_cart = true
+      render :navbar, status: :ok, layout: false
     end
   end
 end

@@ -1,5 +1,5 @@
 <%= turbo_frame_tag @current_customer do %>
-  <a class="nav-link" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+  <a class="nav-link <%= 'show' if @show_navbar_cart %>" href="#" data-bs-toggle="dropdown" aria-expanded="<%= @show_navbar_cart ? 'true' : 'false' %>">
     <i class="ficon" data-feather='shopping-cart'></i>
     <% if @current_customer.cart_items.size > 0 %>
       <span class="badge rounded-pill bg-primary badge-up cart-item-count">
@@ -8,7 +8,7 @@
     <% end %>
   </a>
 
-  <ul class="dropdown-menu dropdown-menu-media dropdown-menu-end">
+  <ul id="cart-navbar-dropdown-item" class="dropdown-menu dropdown-menu-media dropdown-menu-end <%= 'show' if @show_navbar_cart %>">
 
     <li class="dropdown-menu-header">
       <div class="dropdown-header d-flex">
@@ -17,55 +17,92 @@
       </div>
     </li>
 
-    <li class="scrollable-container media-list ps">
+    <form action="<%= cart_update_cart_path %>" method="post">
+      <li class="scrollable-container media-list ps">
 
-      <% @current_customer.cart_items.each do |cart_item| %>
-        <div class="list-item align-items-center">
+        <% @current_customer.cart_items.limit(5).each do |cart_item| %>
+          <% cache cart_item do %>
+            <div class="list-item align-items-center">
 
-          <img class="d-block rounded me-1" src="<%= cart_item.product.primary_image_icon_url %>" alt="<%= cart_item.product.name %>" width="62">
+              <img class="d-block rounded me-1" src="<%= cart_item.product.primary_image_icon_url %>" alt="<%= cart_item.product.name %>" width="62">
 
-          <div class="list-item-body flex-grow-1">
+              <div class="list-item-body flex-grow-1">
 
-            <i class="ficon cart-item-remove" data-feather="x"></i>
+                <i class="ficon cart-item-remove" data-feather="x"></i>
 
-            <div class="media-heading">
-              <h6 class="cart-item-title">
-                <a class="text-body" href="app-ecommerce-details.html">
-                  <%= cart_item.product.name %>
-                </a>
-              </h6>
+                <div class="media-heading">
+                  <h6 class="cart-item-title">
+                    <a class="text-body" href="app-ecommerce-details.html">
+                      <%= cart_item.product.name %>
+                    </a>
+                  </h6>
+                </div>
 
-            </div>
-            <div class="cart-item-qty">
-              <div class="input-group">
-                <input class="touchspin-cart" type="number" value="<%= cart_item.quantity %>" step="1" min="1">
+                <input type="hidden" name="update[cart_items][][id]" value="<%= cart_item.id %>">
+
+                <div class="cart-item-qty">
+                  <div class="input-group">
+                    <input class="touchspin-cart cart-navbar-input"  name="update[cart_items][][quantity]" type="number" value="<%= cart_item.quantity %>" step="1" min="1">
+                  </div>
+                </div>
+
+                <h5 class="cart-item-price">
+                  <%= cart_item.product.product_prices.first.price.format %>
+                </h5>
+
               </div>
             </div>
+          <% end %>
 
-            <h5 class="cart-item-price">
-              <%= cart_item.product.product_prices.first.price.format %>
-            </h5>
+        <% end %>
+      </li>
 
-          </div>
+      <li class="dropdown-menu-footer">
+
+        <div id="navbar-cart-update-div" style="display: none;">
+          <button type="submit" class="btn btn-success w-100 mb-1" id="navbar-cart-update">
+            Save Cart
+          </button>
         </div>
-      <% end %>
-    </li>
 
-    <li class="dropdown-menu-footer">
-      <div class="d-flex justify-content-between mb-1">
-        <h6 class="fw-bolder mb-0">
-          Total:
-        </h6>
-        <h6 class="text-primary fw-bolder mb-0">
-          <%= @current_customer.cart_total.format %>
-        </h6>
-      </div>
-      <a class="btn btn-primary w-100 waves-effect waves-float waves-light" href="app-ecommerce-checkout.html">Checkout</a>
-    </li>
+        <div class="d-flex justify-content-between mb-1">
+          <h6 class="fw-bolder mb-0">
+            Total:
+          </h6>
+          <h6 class="text-primary fw-bolder mb-0">
+            <%= @current_customer.cart_total.format %>
+          </h6>
+        </div>
+        <a class="btn btn-primary w-100 waves-effect waves-float waves-light" href="app-ecommerce-checkout.html">Checkout</a>
+      </li>
+    </form>
+
 
   </ul>
 
   <script>
       $('.touchspin-cart').TouchSpin();
+
+      cartNavbar = {
+          update: function () {
+              console.log('cartNavbar.update');
+          }
+      }
+
+      $(function() {
+
+          // Prevents menu from closing when clicked inside
+          document.getElementById('cart-navbar-dropdown-item').addEventListener('click', function (event) {
+              event.stopPropagation();
+          });
+
+
+
+          $('.cart-navbar-input').change(function() {
+              //cartNavbar.update();
+              $('#navbar-cart-update-div').show();
+          });
+
+      })
   </script>
 <% end %>

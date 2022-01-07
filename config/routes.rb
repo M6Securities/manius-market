@@ -58,6 +58,7 @@ Rails.application.routes.draw do
         get '' => 'cart#index'
         get 'navbar' => 'cart#navbar'
         match 'update_item' => 'cart#update_item', via: %i[post patch put]
+        match 'update_cart' => 'cart#update_cart', via: %i[post patch put]
       end
     end
   end

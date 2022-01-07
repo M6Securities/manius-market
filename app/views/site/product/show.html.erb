@@ -118,7 +118,8 @@
               contentType: false,
               type: 'POST',
               success: function (data) {
-                  console.log(data)
+                  //console.log(data)
+                  document.getElementById('customer_<%= @current_customer.id %>').reload()
               }
           });
 
