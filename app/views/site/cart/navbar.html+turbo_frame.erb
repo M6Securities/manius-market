@@ -83,12 +83,9 @@
       </li>
     </form>
 
-
   </ul>
 
   <script>
-      $('.touchspin-cart').TouchSpin();
-
       function cartNavbarRemoveItem(cart_item_id) {
           const element = $(`#cart-item-div-${cart_item_id}`);
           element.slideUp();
@@ -97,6 +94,7 @@
       }
 
       $(function() {
+          $('.touchspin-cart').TouchSpin();
 
           let open = <%= @show_navbar_cart ? 'true' : 'false' %>;
 
@@ -119,8 +117,6 @@
                   open = true;
               }
           });
-
-
 
           $('.cart-navbar-input').change(function() {
               //cartNavbar.update();
