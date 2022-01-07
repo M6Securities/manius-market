@@ -26,7 +26,7 @@
 
   <body class="horizontal-layout horizontal-menu navbar-floating footer-static" data-open="hover" data-menu="horizontal-menu" data-col="">
 
-    <%= render Site::NavbarComponent.new(current_user) %>
+    <%= render Site::NavbarComponent.new(current_user, @current_market) %>
 
     <!-- BEGIN: Content-->
     <div class="app-content content pt-2 ecommerce-application">

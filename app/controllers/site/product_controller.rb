@@ -9,6 +9,8 @@ module Site
 
     def show
       @product = Product.find(params[:id])
+
+      redirect_to :index unless @product.market.id == @current_market.id
     end
   end
 end
