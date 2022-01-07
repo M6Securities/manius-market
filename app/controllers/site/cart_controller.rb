@@ -3,9 +3,8 @@
 module Site
   # handles everything cart related on the front end
   class CartController < SiteController
-    layout 'application'
-
     def navbar
+      layout 'application'
       @show_navbar_cart = params[:show_cart] == 'true'
     end
 
