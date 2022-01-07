@@ -38,7 +38,7 @@
             </div>
             <div class="cart-item-qty">
               <div class="input-group">
-                <input class="touchspin-cart" type="number" value="<%= cart_item.quantity %>">
+                <input class="touchspin-cart" type="number" value="<%= cart_item.quantity %>" step="1" min="1">
               </div>
             </div>
 
@@ -49,9 +49,6 @@
           </div>
         </div>
       <% end %>
-
-
-
     </li>
 
     <li class="dropdown-menu-footer">
@@ -67,4 +64,8 @@
     </li>
 
   </ul>
+
+  <script>
+      $('.touchspin-cart').TouchSpin();
+  </script>
 <% end %>

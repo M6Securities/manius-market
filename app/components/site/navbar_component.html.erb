@@ -67,7 +67,8 @@
       <!-- cart -->
       <li class="nav-item dropdown dropdown-cart me-25">
 
-        <turbo-frame loading="lazy" id="customer_<%= @customer.id %>" src="<%= cart_navbar_path %>">
+        <!-- hacky but turbo frame does not work in components -->
+        <turbo-frame id="customer_<%= @customer.id %>" src="<%= cart_navbar_path %>">
 
         </turbo-frame>
 
