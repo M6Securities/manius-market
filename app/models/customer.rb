@@ -17,6 +17,7 @@ class Customer < ApplicationRecord
   belongs_to :market, optional: false
 
   has_many :cart_items, dependent: :destroy
+  has_many :orders, dependent: :destroy
 
   # Validations
   # ------------------------------------------------------------

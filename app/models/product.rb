@@ -18,6 +18,9 @@ class Product < ApplicationRecord
   has_many :cart_items, dependent: :destroy
   has_many :customers, through: :cart_items
 
+  has_many :order_items
+  has_many :orders, through: :order_items
+
   after_commit :create_stripe_product, on: :create
   after_commit :update_stripe_product, on: :update
 

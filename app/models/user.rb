@@ -32,6 +32,7 @@ class User < ApplicationRecord
   has_many :markets, through: :user_market_permissions
   has_many :customers
   has_many :cart_items, through: :customers
+  has_many :orders, through: :customers
 
   # Validations
   # ---------------------------------------------------------------------------
