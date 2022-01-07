@@ -56,9 +56,12 @@ ActiveRecord::Schema.define(version: 2022_01_06_202829) do
   create_table "customers", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "market_id"
+    t.boolean "real", default: false
+    t.string "session_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["market_id"], name: "index_customers_on_market_id"
+    t.index ["session_id"], name: "index_customers_on_session_id", unique: true
     t.index ["user_id"], name: "index_customers_on_user_id"
   end
 

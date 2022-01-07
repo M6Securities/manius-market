@@ -53,6 +53,8 @@ Rails.application.routes.draw do
     # everything under this scope is NOT prefixed with /site
     scope module: :site do
       resources :product, only: %i[index show]
+      resources :cart
+      get 'cart_navbar' => 'cart#navbar'
     end
   end
 
