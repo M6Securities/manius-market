@@ -4,8 +4,11 @@ module Site
   # handles everything cart related on the front end
   class CartController < SiteController
     def navbar
-      layout 'application'
       @show_navbar_cart = params[:show_cart] == 'true'
+
+      # https://api.rubyonrails.org/classes/ActionView/Layouts.html -> Types of Layouts
+      # Basically this renders itself but without a layout...
+      render action: :navbar, layout: false
     end
 
     def update_item

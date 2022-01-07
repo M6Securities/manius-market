@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.m6securities.com/vuexy_admin_8-0/app-assets/css/pages/app-ecommerce.min.css">
-
+<script src="https://cdn.m6securities.com/vuexy_admin_8-0/app-assets/js/scripts/pages/app-ecommerce-checkout.min.js"></script>
 
 <div class="container">
   <!-- Checkout Place order starts -->
@@ -38,6 +38,7 @@
 
               </div>
               <span class="text-success mb-1">In Stock</span>
+
               <div class="item-quantity">
                 <span class="quantity-title">Qty:</span>
                 <div class="quantity-counter-wrapper">
@@ -46,6 +47,7 @@
                   </div>
                 </div>
               </div>
+
               <span class="delivery-date text-muted">Delivery by, Wed Apr 25</span>
               <span class="text-success">17% off 4 offers Available</span>
             </div>
@@ -130,3 +132,9 @@
   </div>
   <!-- Checkout Place order Ends -->
 </div>
+
+<script defer>
+    $(function() {
+        $('.bootstrap-touchspin').TouchSpin();
+    });
+</script>
