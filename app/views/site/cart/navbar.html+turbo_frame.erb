@@ -18,17 +18,23 @@
     </li>
 
     <form action="<%= cart_update_cart_path %>" method="post">
+      <!-- rails authenticity token -->
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
       <li class="scrollable-container media-list ps">
 
         <% @current_customer.cart_items.limit(5).each do |cart_item| %>
           <% cache cart_item do %>
-            <div class="list-item align-items-center">
+            <div class="list-item align-items-center" id="cart-item-div-<%= cart_item.id %>">
 
               <img class="d-block rounded me-1" src="<%= cart_item.product.primary_image_icon_url %>" alt="<%= cart_item.product.name %>" width="62">
 
               <div class="list-item-body flex-grow-1">
 
-                <i class="ficon cart-item-remove" data-feather="x"></i>
+                <button type="button" class="btn btn-sm cart-item-remove" onclick="cartNavbarRemoveItem('<%= cart_item.id %>')">
+                  <i class="ficon" data-feather="x"></i>
+                </button>
+
 
                 <div class="media-heading">
                   <h6 class="cart-item-title">
@@ -83,10 +89,11 @@
   <script>
       $('.touchspin-cart').TouchSpin();
 
-      cartNavbar = {
-          update: function () {
-              console.log('cartNavbar.update');
-          }
+      function cartNavbarRemoveItem(cart_item_id) {
+          const element = $(`#cart-item-div-${cart_item_id}`);
+          element.slideUp();
+          element.remove();
+          $('#navbar-cart-update-div').show();
       }
 
       $(function() {

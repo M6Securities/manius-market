@@ -5,7 +5,9 @@ module Site
   class CartController < SiteController
     layout 'application'
 
-    def navbar; end
+    def navbar
+      @show_navbar_cart = params[:show_cart] == 'true'
+    end
 
     def update_item
       safe_params = params.require(:add).permit(:product_id, :quantity)
@@ -57,7 +59,7 @@ module Site
       end
 
       @show_navbar_cart = true
-      render :navbar, status: :ok, layout: false
+      redirect_to cart_navbar_path(show_cart: true)
     end
   end
 end

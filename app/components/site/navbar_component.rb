@@ -5,7 +5,11 @@ module Site
     def initialize(customer, market)
       super
       @customer = customer
-      @user = @customer.user
+      @user = if @customer.nil?
+                nil
+              else
+                @customer.user
+              end
       @market = market
     end
   end

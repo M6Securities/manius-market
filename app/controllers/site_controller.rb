@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Parent controller for everything public facing
 class SiteController < ApplicationController
   before_action :current_market
   before_action :current_customer
