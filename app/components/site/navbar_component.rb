@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
-class Site::NavbarComponent < ViewComponent::Base
-  def initialize(user, market)
-    @user = user
-    @market = market
+module Site
+  class NavbarComponent < ViewComponent::Base
+    def initialize(customer, market)
+      super
+      @customer = customer
+      @user = @customer.user
+      @market = market
+    end
   end
 end

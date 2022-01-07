@@ -1,5 +1,10 @@
+# frozen_string_literal: true
+
 module Site
+  # handles everything cart related on the front end
   class CartController < SiteController
+    layout 'application'
+
     def navbar; end
 
     def update_item

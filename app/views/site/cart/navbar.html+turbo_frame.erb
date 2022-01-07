@@ -1,0 +1,70 @@
+<%= turbo_frame_tag @current_customer do %>
+  <a class="nav-link" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+    <i class="ficon" data-feather='shopping-cart'></i>
+    <% if @current_customer.cart_items.size > 0 %>
+      <span class="badge rounded-pill bg-primary badge-up cart-item-count">
+        <%= @current_customer.cart_items.size %>
+      </span>
+    <% end %>
+  </a>
+
+  <ul class="dropdown-menu dropdown-menu-media dropdown-menu-end">
+
+    <li class="dropdown-menu-header">
+      <div class="dropdown-header d-flex">
+        <h4 class="notification-title mb-0 me-auto">My Cart</h4>
+        <div class="badge rounded-pill badge-light-primary"><%= @current_customer.cart_items.size %> Items</div>
+      </div>
+    </li>
+
+    <li class="scrollable-container media-list ps">
+
+      <% @current_customer.cart_items.each do |cart_item| %>
+        <div class="list-item align-items-center">
+
+          <img class="d-block rounded me-1" src="<%= cart_item.product.primary_image_icon_url %>" alt="<%= cart_item.product.name %>" width="62">
+
+          <div class="list-item-body flex-grow-1">
+
+            <i class="ficon cart-item-remove" data-feather="x"></i>
+
+            <div class="media-heading">
+              <h6 class="cart-item-title">
+                <a class="text-body" href="app-ecommerce-details.html">
+                  <%= cart_item.product.name %>
+                </a>
+              </h6>
+
+            </div>
+            <div class="cart-item-qty">
+              <div class="input-group">
+                <input class="touchspin-cart" type="number" value="<%= cart_item.quantity %>">
+              </div>
+            </div>
+
+            <h5 class="cart-item-price">
+              <%= cart_item.product.product_prices.first.price.format %>
+            </h5>
+
+          </div>
+        </div>
+      <% end %>
+
+
+
+    </li>
+
+    <li class="dropdown-menu-footer">
+      <div class="d-flex justify-content-between mb-1">
+        <h6 class="fw-bolder mb-0">
+          Total:
+        </h6>
+        <h6 class="text-primary fw-bolder mb-0">
+          <%= @current_customer.cart_total.format %>
+        </h6>
+      </div>
+      <a class="btn btn-primary w-100 waves-effect waves-float waves-light" href="app-ecommerce-checkout.html">Checkout</a>
+    </li>
+
+  </ul>
+<% end %>
