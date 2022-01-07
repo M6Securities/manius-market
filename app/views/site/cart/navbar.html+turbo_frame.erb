@@ -1,5 +1,5 @@
 <%= turbo_frame_tag @current_customer do %>
-  <a class="nav-link <%= 'show' if @show_navbar_cart %>" href="#" data-bs-toggle="dropdown" aria-expanded="<%= @show_navbar_cart ? 'true' : 'false' %>">
+  <a class="nav-link <%= 'show' if @show_navbar_cart %>" href="#" id="cart-navbar-dropdown-button" data-bs-toggle="dropdown" aria-expanded="<%= @show_navbar_cart ? 'true' : 'false' %>">
     <i class="ficon" data-feather='shopping-cart'></i>
     <% if @current_customer.cart_items.size > 0 %>
       <span class="badge rounded-pill bg-primary badge-up cart-item-count">
@@ -8,7 +8,7 @@
     <% end %>
   </a>
 
-  <ul id="cart-navbar-dropdown-item" class="dropdown-menu dropdown-menu-media dropdown-menu-end <%= 'show' if @show_navbar_cart %>">
+  <ul id="cart-navbar-dropdown-items" class="dropdown-menu dropdown-menu-media dropdown-menu-end <%= 'show' if @show_navbar_cart %>">
 
     <li class="dropdown-menu-header">
       <div class="dropdown-header d-flex">
@@ -38,7 +38,7 @@
 
                 <div class="media-heading">
                   <h6 class="cart-item-title">
-                    <a class="text-body" href="app-ecommerce-details.html">
+                    <a class="text-body" href="<%= product_path cart_item.product %>">
                       <%= cart_item.product.name %>
                     </a>
                   </h6>
@@ -98,9 +98,26 @@
 
       $(function() {
 
+          let open = <%= @show_navbar_cart ? 'true' : 'false' %>;
+
           // Prevents menu from closing when clicked inside
-          document.getElementById('cart-navbar-dropdown-item').addEventListener('click', function (event) {
+          document.getElementById('cart-navbar-dropdown-items').addEventListener('click', function (event) {
               event.stopPropagation();
+          });
+
+          const cardNavbarDropdownButton = $('#cart-navbar-dropdown-button');
+          cardNavbarDropdownButton.on('click', function () {
+              if (open) {
+                  cardNavbarDropdownButton.removeClass('show');
+                  cardNavbarDropdownButton.attr('aria-expanded', 'false');
+                  $('#cart-navbar-dropdown-items').removeClass('show');
+                  open = false;
+              } else {
+                  cardNavbarDropdownButton.addClass('show');
+                  cardNavbarDropdownButton.attr('aria-expanded', 'true');
+                  $('#cart-navbar-dropdown-items').addClass('show');
+                  open = true;
+              }
           });
 
 
