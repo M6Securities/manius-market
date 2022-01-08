@@ -53,7 +53,7 @@
                 </div>
 
                 <h5 class="cart-item-price">
-                  <%= cart_item.product.product_prices.first.price.format %>
+                  <%= cart_item.product.product_price_from_currency(@current_market.default_currency).price.format %>
                 </h5>
 
               </div>
@@ -79,7 +79,9 @@
             <%= @current_customer.cart_total.format %>
           </h6>
         </div>
-        <a class="btn btn-primary w-100 waves-effect waves-float waves-light" href="app-ecommerce-checkout.html">Checkout</a>
+        <a href="<%= cart_path %>" class="btn btn-primary w-100 waves-effect waves-float waves-light">
+          Checkout
+        </a>
       </li>
     </form>
 

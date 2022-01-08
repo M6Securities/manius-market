@@ -1,0 +1,220 @@
+<link rel="stylesheet" type="text/css" href="https://cdn.m6securities.com/vuexy_admin_8-0/app-assets/css/pages/app-ecommerce.min.css">
+<script src="https://cdn.m6securities.com/vuexy_admin_8-0/app-assets/js/scripts/pages/app-ecommerce-checkout.min.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
+
+<div class="container">
+  <!-- Checkout Place order starts -->
+  <div id="place-order" class="list-view product-checkout">
+    <!-- Checkout Place Order Left starts -->
+    <div class="checkout-items">
+
+      <% @current_customer.cart_items.each do |cart_item| %>
+        <% cache cart_item do %>
+          <div class="card ecommerce-card">
+
+            <div class="item-img">
+              <a href="<%= product_path cart_item.product %>">
+                <img src="<%= cart_item.product.primary_image_icon_url %>" alt="img-placeholder" />
+              </a>
+            </div>
+
+            <div class="card-body">
+              <div class="item-name">
+
+                <h6 class="mb-0">
+                  <a href="<%= product_path cart_item.product %>" class="text-body">
+                    <%= cart_item.product.name %>
+                  </a>
+                </h6>
+
+                <div class="item-rating">
+                  <ul class="unstyled-list list-inline">
+                    <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
+                    <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
+                    <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
+                    <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
+                    <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
+                  </ul>
+                </div>
+
+              </div>
+              <span class="text-success mb-1">In Stock</span>
+
+              <div class="item-quantity">
+                <span class="quantity-title">Qty:</span>
+                <div class="quantity-counter-wrapper">
+                  <div class="input-group">
+                    <input type="text" class="quantity-counter" value="<%= cart_item.quantity %>" />
+                  </div>
+                </div>
+              </div>
+
+              <span class="delivery-date text-muted">Delivery by, Wed Apr 25</span>
+              <span class="text-success">17% off 4 offers Available</span>
+            </div>
+
+            <div class="item-options text-center">
+              <div class="item-wrapper">
+                <div class="item-cost">
+                  <h4 class="item-price">
+                    <%= cart_item.product.product_price_from_currency(@current_market.default_currency).price.format %>
+                  </h4>
+                  <p class="card-text shipping">
+                    <span class="badge rounded-pill badge-light-success">Free Shipping</span>
+                  </p>
+                </div>
+              </div>
+              <button type="button" class="btn btn-light mt-1 remove-wishlist">
+                <i data-feather="x" class="align-middle me-25"></i>
+                <span>Remove</span>
+              </button>
+              <button type="button" class="btn btn-primary btn-cart move-cart">
+                <i data-feather="heart" class="align-middle me-25"></i>
+                <span class="text-truncate">Add to Wishlist</span>
+              </button>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <!-- Checkout Place Order Left ends -->
+
+    <!-- Checkout Place Order Right starts -->
+    <div class="checkout-options">
+      <div class="card">
+        <div class="card-body">
+          <label class="section-label form-label mb-1">Options</label>
+          <div class="coupons input-group input-group-merge">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Coupons"
+              aria-label="Coupons"
+              aria-describedby="input-coupons"
+              />
+            <span class="input-group-text text-primary ps-1" id="input-coupons">Apply</span>
+          </div>
+          <hr />
+          <div class="price-details">
+            <h6 class="price-title">Price Details</h6>
+            <ul class="list-unstyled">
+              <li class="price-detail">
+                <div class="detail-title">Total MRP</div>
+                <div class="detail-amt">
+                  <%= @current_customer.cart_total.format %>
+                </div>
+              </li>
+              <!--
+              <li class="price-detail">
+                <div class="detail-title">Bag Discount</div>
+                <div class="detail-amt discount-amt text-success">-25$</div>
+              </li>
+              -->
+            </ul>
+
+            <hr>
+
+            <ul class="list-unstyled">
+              <li class="price-detail">
+                <div class="detail-title detail-total">Total</div>
+                <div class="detail-amt fw-bolder">
+                  <%= @current_customer.cart_total.format %>
+                </div>
+              </li>
+              <small>
+                Tax and shipping will be calculated at the time of checkout. An email address is required.
+              </small>
+            </ul>
+
+
+
+            <form id="place-order-form">
+              <!-- rails authenticity token -->
+              <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
+
+              <%= render InputBlockComponent.new(type: :email, name: 'create[email]', title: 'Email', placeholder: 'Email', div_classes: 'form-floating my-2', id: 'place-order-email', value: (@current_customer.email)) %>
+
+              <button type="button" class="btn btn-primary w-100 btn-next place-order disabled" id="place-order-button" onclick="placeOrder()">
+                Place Order
+              </button>
+            </form>
+
+
+          </div>
+        </div>
+      </div>
+      <!-- Checkout Place Order Right ends -->
+    </div>
+  </div>
+  <!-- Checkout Place order Ends -->
+</div>
+
+<script defer>
+    $(function() {
+        $('.bootstrap-touchspin').TouchSpin();
+
+        const placeOrderButton = $('#place-order-button');
+        const placeOrderEmail = $('#place-order-email');
+
+        // this way it gets triggered if it's pre-filled
+        if (validateEmail(placeOrderEmail.val())) {
+            placeOrderButton.removeClass('disabled');
+        } else {
+            placeOrderButton.addClass('disabled');
+        }
+
+        placeOrderEmail.change(function () {
+            if (validateEmail(placeOrderEmail.val())) {
+                placeOrderButton.removeClass('disabled');
+            } else {
+                placeOrderButton.addClass('disabled');
+            }
+        });
+
+    });
+
+    function placeOrder() {
+        const stripe = Stripe('<%= @current_market.stripe_publishable_key %>');
+
+        const formElement = document.getElementById('place-order-form');
+        const formData = new FormData(formElement);
+
+        // Create a new Checkout Session using the server-side endpoint you
+        // created in step 3.
+        fetch('<%= stripe_checkout_create_path %>', {
+            method: 'POST',
+            body: formData
+        })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (session) {
+            console.log(session)
+
+            return stripe.redirectToCheckout({
+                sessionId: session.id
+            });
+
+        })
+        .then(function (result) {
+            console.log(result)
+            // If `redirectToCheckout` fails due to a browser or network
+            // error, you should display the localized error message to your
+            // customer using `error.message`.
+            if (result.error) {
+                alert(result.error.message);
+            }
+        })
+        .catch(function (error) {
+            console.error('Error:', error);
+        });
+    }
+
+    // https://stackoverflow.com/a/9204568
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+
+</script>

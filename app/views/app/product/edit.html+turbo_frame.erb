@@ -122,7 +122,7 @@
                <div class="mb-1 d-flex flex-nowrap">
 
                   <select name="update[product_price][][currency]" class="form-control" required>
-                    <%= options_for_select(currency_code_select_array, 'USD') %>
+                    <%= options_for_select(currency_code_select_array, @current_market.default_currency) %>
                   </select>
 
                   <input type="number" class="form-control mx-1"  name="update[product_price][][price]" placeholder="Price in cents" min="0" step="1" required>

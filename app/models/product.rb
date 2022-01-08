@@ -18,6 +18,9 @@ class Product < ApplicationRecord
   has_many :cart_items, dependent: :destroy
   has_many :customers, through: :cart_items
 
+  has_many :order_items
+  has_many :orders, through: :order_items
+
   after_commit :create_stripe_product, on: :create
   after_commit :update_stripe_product, on: :update
 
@@ -46,7 +49,7 @@ class Product < ApplicationRecord
 
   def stripe_product_id
     # stripe product ids are not globally unique, so we need to make it unique for us
-    "maniusmarket_#{market.path_name}_#{id}"
+    "maniusmarket_#{market.id}_#{id}"
   end
 
   def primary_image_icon_url
@@ -55,6 +58,10 @@ class Product < ApplicationRecord
     else
       'https://cdn.m6securities.com/vuexy_admin_8-0/app-assets/images/icons/unknown.png'
     end
+  end
+
+  def product_price_from_currency(currency_code)
+    product_prices.find_by(price_currency: currency_code)
   end
 
   private

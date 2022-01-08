@@ -4,6 +4,7 @@ class Market < ApplicationRecord
   # Encrypted Attributes
   encrypts :stripe_publishable_key
   encrypts :stripe_secret_key
+  encrypts :stripe_webhook_secret
 
   # Associations
   # ---------------------------------------------------------------------------
@@ -12,6 +13,7 @@ class Market < ApplicationRecord
   has_many :products, dependent: :destroy
   has_many :receives, dependent: :destroy
   has_many :customers, dependent: :destroy
+  has_many :orders, through: :customers
 
   # Validations
   validates :display_name, presence: true, uniqueness: true
@@ -25,4 +27,5 @@ class Market < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :stripe_publishable_key, presence: true
   validates :stripe_secret_key, presence: true
+  validates :stripe_webhook_secret, presence: true
 end

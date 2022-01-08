@@ -26,6 +26,8 @@
 
   <body class="horizontal-layout horizontal-menu navbar-floating footer-static" data-open="hover" data-menu="horizontal-menu" data-col="">
 
+    <%= render ThemeJavascriptComponent.new, cached: true %>
+
     <%= render Site::NavbarComponent.new(@current_customer, @current_market) %>
 
     <!-- BEGIN: Content-->
@@ -39,9 +41,6 @@
       </div>
     </div>
     <!-- END: Content-->
-
-
-    <%= render ThemeJavascriptComponent.new, cached: true %>
 
   </body>
 </html>

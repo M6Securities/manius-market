@@ -8,7 +8,6 @@ class SiteController < ApplicationController
   layout 'site'
 
   def current_market
-    puts session.to_h
     @current_market = Market.find_by(path_name: request.subdomain)
     @current_market = Market.first if @current_market.nil?
   end
@@ -20,7 +19,7 @@ class SiteController < ApplicationController
       @current_customer = @current_market.customers.create(session_id: session[:session_id], real: false) if @current_customer.nil?
     else
       @current_customer = current_user.customers.find_by(market_id: @current_market.id)
-      @current_customer = @current_market.customers.create(session_id: session[:session_id], user_id: current_user.id, real: true) if @current_customer.nil?
+      @current_customer = @current_market.customers.create(session_id: session[:session_id], user_id: current_user.id, real: true, email: current_user.email) if @current_customer.nil?
     end
   end
 end

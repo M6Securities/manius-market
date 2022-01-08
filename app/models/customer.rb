@@ -17,11 +17,21 @@ class Customer < ApplicationRecord
   belongs_to :market, optional: false
 
   has_many :cart_items, dependent: :destroy
+  has_many :orders, dependent: :destroy
 
   # Validations
   # ------------------------------------------------------------
   validates_presence_of :market
   validates :real, inclusion: { in: [true, false] }
+  validates :email,
+            presence: true,
+            uniqueness: {
+              scope: :market_id
+            },
+            allow_blank: true,
+            format: {
+              with: URI::MailTo::EMAIL_REGEXP
+            }
 
   # Methods
   # ------------------------------------------------------------
@@ -30,7 +40,7 @@ class Customer < ApplicationRecord
   def cart_total
     total = 0
     cart_items.each do |item|
-      total += item.product.product_prices.first.price.cents * item.quantity
+      total += item.product.product_price_from_currency(market.default_currency).price.cents * item.quantity
     end
 
     Money.new(total, 'USD')

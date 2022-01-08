@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_06_202829) do
+ActiveRecord::Schema.define(version: 2022_01_08_194111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,8 @@ ActiveRecord::Schema.define(version: 2022_01_06_202829) do
     t.string "session_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "stripe_customer_id"
+    t.string "email"
     t.index ["market_id"], name: "index_customers_on_market_id"
     t.index ["session_id"], name: "index_customers_on_session_id", unique: true
     t.index ["user_id"], name: "index_customers_on_user_id"
@@ -73,6 +75,8 @@ ActiveRecord::Schema.define(version: 2022_01_06_202829) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "stripe_publishable_key"
     t.string "stripe_secret_key"
+    t.string "default_currency", default: "USD"
+    t.string "stripe_webhook_secret"
   end
 
   create_table "old_passwords", force: :cascade do |t|
@@ -82,6 +86,33 @@ ActiveRecord::Schema.define(version: 2022_01_06_202829) do
     t.string "password_salt"
     t.datetime "created_at", precision: 6
     t.index ["password_archivable_type", "password_archivable_id"], name: "index_password_archivable"
+  end
+
+  create_table "order_items", force: :cascade do |t|
+    t.uuid "order_id"
+    t.uuid "product_id"
+    t.integer "quantity", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "stripe_line_item_id"
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+    t.index ["product_id"], name: "index_order_items_on_product_id"
+  end
+
+  create_table "orders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "customer_id"
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.string "country"
+    t.string "stripe_checkout_session_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "stripe_payment_intent_id"
+    t.integer "payment_status", default: 0
+    t.index ["customer_id"], name: "index_orders_on_customer_id"
   end
 
   create_table "product_prices", force: :cascade do |t|
