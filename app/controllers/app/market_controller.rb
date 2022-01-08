@@ -10,7 +10,7 @@ module App
     end
 
     def create
-      safe_params = params.require(:create).permit(:display_name, :path_name, :email, :stripe_publishable_key, :stripe_secret_key)
+      safe_params = params.require(:create).permit(:display_name, :path_name, :email, :stripe_publishable_key, :stripe_secret_key, :default_currency)
 
       @market = Market.new(safe_params)
 

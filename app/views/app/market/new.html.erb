@@ -47,6 +47,10 @@
                     <%= render InputBlockComponent.new(name: 'create[stripe_publishable_key]', title: 'Stripe Publishable Key', placeholder: 'pk_live_adsibasdas...', value: @market.stripe_publishable_key) %>
                     <%= render InputBlockComponent.new(name: 'create[stripe_secret_key]', title: 'Stripe Secret Key', placeholder: 'sk_live_adsibasdas...', value: @market.stripe_secret_key, helper_text: 'Both keys are encrypted and only shown to Market Owners') %>
 
+                    <select name="create[default_currency]" class="form-control" required>
+                      <%= options_for_select(currency_code_select_array, 'USD') %>
+                    </select>
+
                   </div>
 
                 </div>

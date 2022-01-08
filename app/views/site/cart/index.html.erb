@@ -56,7 +56,9 @@
             <div class="item-options text-center">
               <div class="item-wrapper">
                 <div class="item-cost">
-                  <h4 class="item-price">$19.99</h4>
+                  <h4 class="item-price">
+                    <%= cart_item.product.product_price_from_currency(@current_market.default_currency).price.format %>
+                  </h4>
                   <p class="card-text shipping">
                     <span class="badge rounded-pill badge-light-success">Free Shipping</span>
                   </p>
@@ -102,24 +104,16 @@
                   <%= @current_customer.cart_total.format %>
                 </div>
               </li>
+              <!--
               <li class="price-detail">
                 <div class="detail-title">Bag Discount</div>
                 <div class="detail-amt discount-amt text-success">-25$</div>
               </li>
-              <li class="price-detail">
-                <div class="detail-title">Estimated Tax</div>
-                <div class="detail-amt">$1.3</div>
-              </li>
-              <li class="price-detail">
-                <div class="detail-title">EMI Eligibility</div>
-                <a href="#" class="detail-amt text-primary">Details</a>
-              </li>
-              <li class="price-detail">
-                <div class="detail-title">Delivery Charges</div>
-                <div class="detail-amt discount-amt text-success">Free</div>
-              </li>
+              -->
             </ul>
-            <hr />
+
+            <hr>
+
             <ul class="list-unstyled">
               <li class="price-detail">
                 <div class="detail-title detail-total">Total</div>
@@ -127,6 +121,9 @@
                   <%= @current_customer.cart_total.format %>
                 </div>
               </li>
+              <small>
+                Tax and shipping will be calculated at the time of checkout.
+              </small>
             </ul>
             <button type="button" class="btn btn-primary w-100 btn-next place-order" onclick="placeOrder()">
               Place Order

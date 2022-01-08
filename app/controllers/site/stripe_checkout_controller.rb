@@ -35,6 +35,9 @@ module Site
       session = Stripe::Checkout::Session.create({
                                                    line_items: line_items,
                                                    mode: 'payment',
+                                                   automatic_tax: {
+                                                     enabled: true
+                                                   },
                                                    billing_address_collection: 'required',
                                                    success_url: stripe_checkout_success_url,
                                                    cancel_url: cart_url # stripe_checkout_cancel_url

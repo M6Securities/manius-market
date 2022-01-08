@@ -10,7 +10,8 @@ class CreateStripeProductPriceWorker
     stripe_price = Stripe::Price.create(
       product: product_price.product.stripe_product_id,
       unit_amount: product_price.price.cents,
-      currency: product_price.price.currency.iso_code.downcase
+      currency: product_price.price.currency.iso_code.downcase,
+      tax_behavior: 'exclusive'
     )
 
     product_price.update stripe_price_id: stripe_price.id

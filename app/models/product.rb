@@ -49,7 +49,7 @@ class Product < ApplicationRecord
 
   def stripe_product_id
     # stripe product ids are not globally unique, so we need to make it unique for us
-    "maniusmarket_#{market.path_name}_#{id}"
+    "maniusmarket_#{market.id}_#{id}"
   end
 
   def primary_image_icon_url
