@@ -11,7 +11,8 @@ module Api
           sig_header = request.env['HTTP_STRIPE_SIGNATURE']
           payload = request.body.read
 
-          puts payload
+          # only print this out if we're in development mode
+          puts payload if Rails.env.development?
 
           Stripe.api_key = @current_market.stripe_secret_key
           event = Stripe::Webhook.construct_event(payload, sig_header, @current_market.stripe_webhook_secret)
@@ -60,7 +61,8 @@ module Api
         checkout_session_id = event['data']['object']['id']
         order = Order.find_by stripe_checkout_session_id: checkout_session_id
 
-        # nothing to do here for now...
+        # clear the cart since the order was placed
+        order.customer.cart_items.destroy_all
       end
 
       def update_payment_intent(event)
