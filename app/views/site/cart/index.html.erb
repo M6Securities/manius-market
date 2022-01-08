@@ -98,7 +98,9 @@
             <ul class="list-unstyled">
               <li class="price-detail">
                 <div class="detail-title">Total MRP</div>
-                <div class="detail-amt">$598</div>
+                <div class="detail-amt">
+                  <%= @current_customer.cart_total.format %>
+                </div>
               </li>
               <li class="price-detail">
                 <div class="detail-title">Bag Discount</div>
@@ -121,7 +123,9 @@
             <ul class="list-unstyled">
               <li class="price-detail">
                 <div class="detail-title detail-total">Total</div>
-                <div class="detail-amt fw-bolder">$574</div>
+                <div class="detail-amt fw-bolder">
+                  <%= @current_customer.cart_total.format %>
+                </div>
               </li>
             </ul>
             <button type="button" class="btn btn-primary w-100 btn-next place-order" onclick="placeOrder()">
