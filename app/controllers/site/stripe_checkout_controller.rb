@@ -9,6 +9,28 @@ module Site
 
       order = @current_customer.orders.create payment_status: Order::PS_NONE
 
+      customer_email = params[:create][:email]
+
+      return render json: { error: 'Email is required' }, status: :unprocessable_entity unless customer_email.present?
+
+      possible_existing_customer = @current_customer.market.customers.find_by(email: customer_email)
+
+      if possible_existing_customer.nil?
+        # no customer exists with this email, so we use the current one
+        order.customer.email = customer_email
+        return render json: { error: 'Email is invalid' }, status: :unprocessable_entity unless order.customer.save
+      elsif possible_existing_customer.id != @current_customer.id
+        # if a customer already exists and it's NOT the same customer object, then we need to transfer over the cart to that one.
+        # This sitatution happens when a customer uses guest checkout twice, or isn't logged in. This way their orders are still tracked to their user
+        @current_customer.cart_items.each do |cart_item|
+          cart_item.update customer_id: possible_existing_customer.id
+        end
+        # then we destroy the old customer
+        possible_existing_customer.update session_id: @current_customer.session_id
+        @current_customer.destroy
+        @current_customer = possible_existing_customer
+      end
+
       @current_customer.cart_items.each do |cart_item|
         order.order_items.create(
           product_id: cart_item.product_id,
@@ -32,19 +54,27 @@ module Site
 
       Stripe.api_key = @current_customer.market.stripe_secret_key
 
-      session = Stripe::Checkout::Session.create({
-                                                   # rubocop:disable Style/HashSyntax
-                                                   # Bruh idk what's going on but rubocop keeps removing the line_items variable
-                                                   line_items: line_items,
-                                                   # rubocop:enable Style/HashSyntax
-                                                   mode: 'payment',
-                                                   automatic_tax: {
-                                                     enabled: true
-                                                   },
-                                                   billing_address_collection: 'required',
-                                                   success_url: stripe_checkout_success_url,
-                                                   cancel_url: cart_url # stripe_checkout_cancel_url
-                                                 })
+      checkout_session_object = {
+        # rubocop:disable Style/HashSyntax
+        # Bruh idk what's going on but rubocop keeps removing the line_items variable
+        line_items: line_items,
+        # rubocop:enable Style/HashSyntax
+        mode: 'payment',
+        automatic_tax: {
+          enabled: true
+        },
+        billing_address_collection: 'required',
+        success_url: stripe_checkout_success_url,
+        cancel_url: cart_url # stripe_checkout_cancel_url
+      }
+
+      if @current_customer.stripe_customer_id.present?
+        checkout_session_object[:customer] = @current_customer.stripe_customer_id
+      else
+        checkout_session_object[:customer_email] = @current_customer.email
+      end
+
+      session = Stripe::Checkout::Session.create(checkout_session_object)
       render json: { id: session.id }, status: :ok if order.update(stripe_checkout_session_id: session.id, stripe_payment_intent_id: session.payment_intent)
     end
   end

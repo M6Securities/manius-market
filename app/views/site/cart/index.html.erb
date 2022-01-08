@@ -122,12 +122,23 @@
                 </div>
               </li>
               <small>
-                Tax and shipping will be calculated at the time of checkout.
+                Tax and shipping will be calculated at the time of checkout. An email address is required.
               </small>
             </ul>
-            <button type="button" class="btn btn-primary w-100 btn-next place-order" onclick="placeOrder()">
-              Place Order
-            </button>
+
+
+
+            <form id="place-order-form">
+              <!-- rails authenticity token -->
+              <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
+
+              <%= render InputBlockComponent.new(type: :email, name: 'create[email]', title: 'Email', placeholder: 'Email', div_classes: 'form-floating my-2', id: 'place-order-email', value: (@current_customer.email)) %>
+
+              <button type="button" class="btn btn-primary w-100 btn-next place-order disabled" id="place-order-button" onclick="placeOrder()">
+                Place Order
+              </button>
+            </form>
+
 
           </div>
         </div>
@@ -141,13 +152,32 @@
 <script defer>
     $(function() {
         $('.bootstrap-touchspin').TouchSpin();
+
+        const placeOrderButton = $('#place-order-button');
+        const placeOrderEmail = $('#place-order-email');
+
+        // this way it gets triggered if it's pre-filled
+        if (validateEmail(placeOrderEmail.val())) {
+            placeOrderButton.removeClass('disabled');
+        } else {
+            placeOrderButton.addClass('disabled');
+        }
+
+        placeOrderEmail.change(function () {
+            if (validateEmail(placeOrderEmail.val())) {
+                placeOrderButton.removeClass('disabled');
+            } else {
+                placeOrderButton.addClass('disabled');
+            }
+        });
+
     });
 
     function placeOrder() {
         const stripe = Stripe('<%= @current_market.stripe_publishable_key %>');
 
-        const formData = new FormData();
-        formData.append('authenticity_token', '<%= form_authenticity_token %>');
+        const formElement = document.getElementById('place-order-form');
+        const formData = new FormData(formElement);
 
         // Create a new Checkout Session using the server-side endpoint you
         // created in step 3.
@@ -178,6 +208,12 @@
         .catch(function (error) {
             console.error('Error:', error);
         });
+    }
+
+    // https://stackoverflow.com/a/9204568
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
     }
 
 

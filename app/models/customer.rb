@@ -23,6 +23,15 @@ class Customer < ApplicationRecord
   # ------------------------------------------------------------
   validates_presence_of :market
   validates :real, inclusion: { in: [true, false] }
+  validates :email,
+            presence: true,
+            uniqueness: {
+              scope: :market_id
+            },
+            allow_blank: true,
+            format: {
+              with: URI::MailTo::EMAIL_REGEXP
+            }
 
   # Methods
   # ------------------------------------------------------------

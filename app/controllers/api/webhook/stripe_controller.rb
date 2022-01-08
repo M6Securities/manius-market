@@ -37,6 +37,8 @@ module Api
           # payment intent succeeded
           when 'payment_intent.succeeded'
             update_payment_intent event
+          when 'customer.created'
+            customer_created event
           end
         rescue JSON::ParserError => e
           # Invalid payload
@@ -55,14 +57,10 @@ module Api
       private
 
       def checkout_session_completed(event)
-        puts 'Here!!!!'
-
         checkout_session_id = event['data']['object']['id']
         order = Order.find_by stripe_checkout_session_id: checkout_session_id
 
-        order.customer.update real: true, stripe_customer_id: event['data']['object']['customer']
-
-        puts order
+        # nothing to do here for now...
       end
 
       def update_payment_intent(event)
@@ -88,6 +86,15 @@ module Api
           order.update payment_status: Order::PS_NONE
         end
       end
+
+      def customer_created(event)
+        # puts 'Customer Created event'
+        customer_id = event['data']['object']['id']
+        customer = Customer.find_by email: event['data']['object']['email']
+        customer.update real: true, stripe_customer_id: customer_id
+      end
+
+      # end of class
     end
   end
 end
