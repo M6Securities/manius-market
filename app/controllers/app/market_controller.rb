@@ -10,7 +10,7 @@ module App
     end
 
     def create
-      safe_params = params.require(:create).permit(:display_name, :path_name, :email, :stripe_publishable_key, :stripe_secret_key, :default_currency)
+      safe_params = params.require(:create).permit(:display_name, :path_name, :email, :stripe_publishable_key, :stripe_secret_key, :default_currency, :stripe_webhook_secret)
 
       @market = Market.new(safe_params)
 
@@ -41,17 +41,19 @@ module App
     def update
       return render 'error/unauthorized', status: :unauthorized, layout: 'error' unless current_user.permission?(UserMarketPermission::OWNER, @market)
 
-      safe_params = params.require(:update).permit(:display_name, :email, :stripe_publishable_key, :stripe_secret_key)
+      safe_params = params.require(:update).permit(:display_name, :email, :stripe_publishable_key, :stripe_secret_key, :default_currency, :stripe_webhook_secret)
 
-      return render :edit, status: :unprocessable_entity unless @market.update safe_params.except(:stripe_publishable_key, :stripe_secret_key)
+      return render :edit, status: :unprocessable_entity unless (@market.attributes = safe_params.except(:stripe_publishable_key, :stripe_secret_key, :stripe_webhook_secret))
 
       # only update the stripe keys if they are present
       if safe_params[:stripe_publishable_key].present? && safe_params[:stripe_secret_key].present?
-        @market.update_attribute(:stripe_publishable_key, safe_params[:stripe_publishable_key])
-        @market.update_attribute(:stripe_secret_key, safe_params[:stripe_secret_key])
+        @market.stripe_publishable_key = safe_params[:stripe_publishable_key]
+        @market.stripe_secret_key = safe_params[:stripe_secret_key]
       end
+      @market.stripe_webhook_secret = safe_params[:stripe_webhook_secret] if safe_params[:stripe_webhook_secret].present?
 
-      flash[:success] = 'Market updated'
+      flash[:success] = 'Market updated' if @market.save
+
       render :edit
     end
 

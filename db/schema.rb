@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_08_001517) do
+ActiveRecord::Schema.define(version: 2022_01_08_034019) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 2022_01_08_001517) do
     t.string "stripe_publishable_key"
     t.string "stripe_secret_key"
     t.string "default_currency", default: "USD"
+    t.string "stripe_webhook_secret"
   end
 
   create_table "old_passwords", force: :cascade do |t|
