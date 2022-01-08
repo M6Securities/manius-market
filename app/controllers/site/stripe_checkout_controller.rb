@@ -36,7 +36,6 @@ module Site
           product_id: cart_item.product_id,
           quantity: cart_item.quantity
         )
-        # cart_item.destroy
       end
 
       line_items = []

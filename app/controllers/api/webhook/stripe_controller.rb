@@ -67,9 +67,6 @@ module Api
         line_items = Stripe::Checkout::Session.list_line_items(checkout_session_id)['data']
 
         line_items.each do |line_item|
-          puts "New Line Item:\n\n\n"
-          puts line_item
-
           product = Product.find_by stripe_product_id: line_item['price']['product']
           order_item = order.order_items.find_by(product_id: product.id)
 
