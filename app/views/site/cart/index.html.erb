@@ -1,5 +1,6 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.m6securities.com/vuexy_admin_8-0/app-assets/css/pages/app-ecommerce.min.css">
 <script src="https://cdn.m6securities.com/vuexy_admin_8-0/app-assets/js/scripts/pages/app-ecommerce-checkout.min.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
 
 <div class="container">
   <!-- Checkout Place order starts -->
@@ -123,7 +124,10 @@
                 <div class="detail-amt fw-bolder">$574</div>
               </li>
             </ul>
-            <button type="button" class="btn btn-primary w-100 btn-next place-order">Place Order</button>
+            <button type="button" class="btn btn-primary w-100 btn-next place-order" onclick="placeOrder()">
+              Place Order
+            </button>
+
           </div>
         </div>
       </div>
@@ -137,4 +141,43 @@
     $(function() {
         $('.bootstrap-touchspin').TouchSpin();
     });
+
+    function placeOrder() {
+        const stripe = Stripe('<%= @current_market.stripe_publishable_key %>');
+
+        const formData = new FormData();
+        formData.append('authenticity_token', '<%= form_authenticity_token %>');
+
+        // Create a new Checkout Session using the server-side endpoint you
+        // created in step 3.
+        fetch('<%= stripe_checkout_create_path %>', {
+            method: 'POST',
+            body: formData
+        })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (session) {
+            console.log(session)
+
+            return stripe.redirectToCheckout({
+                sessionId: session.id
+            });
+
+        })
+        .then(function (result) {
+            console.log(result)
+            // If `redirectToCheckout` fails due to a browser or network
+            // error, you should display the localized error message to your
+            // customer using `error.message`.
+            if (result.error) {
+                alert(result.error.message);
+            }
+        })
+        .catch(function (error) {
+            console.error('Error:', error);
+        });
+    }
+
+
 </script>

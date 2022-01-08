@@ -106,7 +106,7 @@
                 </div>
                 <div>
                   <h6 class="item-price">
-                    <%= product.product_prices.first.price.format %>
+                    <%= product.product_price_from_currency(@current_market.default_currency).price.format %>
                   </h6>
                 </div>
               </div>
@@ -123,7 +123,7 @@
               <div class="item-wrapper">
                 <div class="item-cost">
                   <h4 class="item-price">
-                    <%= product.product_prices.first.price.format %>
+                    <%= product.product_price_from_currency(@current_market.default_currency).price.format %>
                   </h4>
                 </div>
               </div>

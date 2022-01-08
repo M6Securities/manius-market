@@ -53,7 +53,7 @@
                 </div>
 
                 <h5 class="cart-item-price">
-                  <%= cart_item.product.product_prices.first.price.format %>
+                  <%= cart_item.product.product_price_from_currency(@current_market.default_currency).price.format %>
                 </h5>
 
               </div>

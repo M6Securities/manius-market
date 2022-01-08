@@ -31,7 +31,7 @@ class Customer < ApplicationRecord
   def cart_total
     total = 0
     cart_items.each do |item|
-      total += item.product.product_prices.first.price.cents * item.quantity
+      total += item.product.product_price_from_currency(market.default_currency).price.cents * item.quantity
     end
 
     Money.new(total, 'USD')

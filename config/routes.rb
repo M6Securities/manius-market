@@ -60,6 +60,12 @@ Rails.application.routes.draw do
         match 'update_item' => 'cart#update_item', via: %i[post patch put]
         match 'update_cart' => 'cart#update_cart', via: %i[post patch put]
       end
+
+      scope :stripe_checkout, as: :stripe_checkout do
+        match 'create' => 'stripe_checkout#create', via: %i[post patch put]
+        get 'success' => 'stripe_checkout#success'
+        get 'cancel' => 'stripe_checkout#cancel'
+      end
     end
   end
 

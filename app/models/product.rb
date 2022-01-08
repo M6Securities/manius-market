@@ -60,6 +60,10 @@ class Product < ApplicationRecord
     end
   end
 
+  def product_price_from_currency(currency_code)
+    product_prices.find_by(price_currency: currency_code)
+  end
+
   private
 
   def unique_sku
