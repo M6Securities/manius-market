@@ -63,6 +63,23 @@ module Api
 
         # clear the cart since the order was placed
         order.customer.cart_items.destroy_all
+
+        line_items = Stripe::Checkout::Session.list_line_items(checkout_session_id)['data']
+
+        line_items.each do |line_item|
+          puts "New Line Item:\n\n\n"
+          puts line_item
+
+          product = Product.find_by stripe_product_id: line_item['price']['product']
+          order_item = order.order_items.find_by(product_id: product.id)
+
+          line_item_quantity = line_item['quantity']
+
+          order_item.stripe_line_item_id = line_item['id']
+          order_item.quantity = line_item_quantity if order_item.quantity != line_item_quantity
+
+          order_item.save
+        end
       end
 
       def update_payment_intent(event)
