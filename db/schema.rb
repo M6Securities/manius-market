@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_08_034019) do
+ActiveRecord::Schema.define(version: 2022_01_08_051410) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 2022_01_08_034019) do
     t.string "session_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "stripe_customer_id"
     t.index ["market_id"], name: "index_customers_on_market_id"
     t.index ["session_id"], name: "index_customers_on_session_id", unique: true
     t.index ["user_id"], name: "index_customers_on_user_id"
@@ -107,6 +108,8 @@ ActiveRecord::Schema.define(version: 2022_01_08_034019) do
     t.string "stripe_checkout_session_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "stripe_payment_intent_id"
+    t.integer "payment_status", default: 0
     t.index ["customer_id"], name: "index_orders_on_customer_id"
   end
 

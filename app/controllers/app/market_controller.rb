@@ -12,7 +12,7 @@ module App
     def create
       safe_params = params.require(:create).permit(:display_name, :path_name, :email, :stripe_publishable_key, :stripe_secret_key, :default_currency, :stripe_webhook_secret)
 
-      @market = Market.new(safe_params)
+      @market = Market.new safe_params
 
       if @market.invalid?
         return respond_to do |format|

@@ -7,7 +7,7 @@ module Site
       # at this point, we are in the checkout process
       # So we need to remove all items from the cart and create an order with it
 
-      order = @current_customer.orders.create
+      order = @current_customer.orders.create payment_status: Order::PS_NONE
 
       @current_customer.cart_items.each do |cart_item|
         order.order_items.create(
@@ -33,7 +33,10 @@ module Site
       Stripe.api_key = @current_customer.market.stripe_secret_key
 
       session = Stripe::Checkout::Session.create({
+                                                   # rubocop:disable Style/HashSyntax
+                                                   # Bruh idk what's going on but rubocop keeps removing the line_items variable
                                                    line_items: line_items,
+                                                   # rubocop:enable Style/HashSyntax
                                                    mode: 'payment',
                                                    automatic_tax: {
                                                      enabled: true
@@ -42,8 +45,7 @@ module Site
                                                    success_url: stripe_checkout_success_url,
                                                    cancel_url: cart_url # stripe_checkout_cancel_url
                                                  })
-
-      render json: { id: session.id }, status: :ok if order.update(stripe_checkout_session_id: session.id)
+      render json: { id: session.id }, status: :ok if order.update(stripe_checkout_session_id: session.id, stripe_payment_intent_id: session.payment_intent)
     end
   end
 end

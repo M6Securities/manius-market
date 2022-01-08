@@ -73,7 +73,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :webhook do
       scope :stripe, as: :stripe do
-        match 'checkout_session' => 'stripe#checkout_session', via: %i[post patch put]
+        match '/' => 'stripe#index', via: %i[post patch put]
       end
     end
   end

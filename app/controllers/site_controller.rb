@@ -8,7 +8,6 @@ class SiteController < ApplicationController
   layout 'site'
 
   def current_market
-    puts session.to_h
     @current_market = Market.find_by(path_name: request.subdomain)
     @current_market = Market.first if @current_market.nil?
   end
