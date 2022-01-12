@@ -13,6 +13,22 @@ module App
       render 'error/unauthorized', status: :unauthorized, layout: 'error' unless current_user.permission?(UserMarketPermission::VIEW_ORDERS, @current_market)
     end
 
+    def update
+      return render 'error/unauthorized', status: :unauthorized, layout: 'error' unless current_user.permission?(UserMarketPermission::EDIT_ORDERS, @current_market)
+
+      safe_params = params.require(:update).permit(:status)
+
+      @order.status = safe_params[:status]
+
+      if @order.save
+        flash[:success] = 'Order status updated'
+        render :edit
+      else
+        flash[:error] = 'Order status could not be updated'
+        render :edit, status: :unprocessable_entity
+      end
+    end
+
     def datatable
       requested_length = params[:length].to_i
       requested_start  = params[:start].to_i

@@ -43,14 +43,14 @@
                   <b>Updated at:</b> <%= @order.updated_at %>
                 </p>
 
-                <!-- status -->
-                <p>
-                  <b>Status:</b> <%= render App::OrderStatusComponent.new(@order.status), cached: true %>
-                </p>
-
                 <!-- payment status -->
                 <p>
                   <b>Payment status:</b> <%= render App::PaymentStatusComponent.new(@order.payment_status), cached: true %>
+                </p>
+
+                <!-- status -->
+                <p>
+                  <b>Status:</b> <%= render App::OrderStatusComponent.new(@order.status), cached: true %>
                 </p>
 
 
