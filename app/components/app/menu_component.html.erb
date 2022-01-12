@@ -34,6 +34,14 @@
           <span data-i18n="User Interface">Market</span>
         </li>
 
+        <% if @user.permission?(UserMarketPermission::VIEW_ORDERS) %>
+          <li class="nav-item">
+            <a href="<%= app_order_index_path %>">
+              <i data-feather='shopping-bag'></i><span class="menu-title">Orders</span>
+            </a>
+          </li>
+        <% end %>
+
         <% if @user.permission?(UserMarketPermission::VIEW_PRODUCTS) %>
           <li class="nav-item">
             <a href="<%= app_product_index_path %>">

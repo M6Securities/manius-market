@@ -33,7 +33,7 @@ class Order < ApplicationRecord
   OS_PROCESSING = 2
   OS_SHIPPED = 3
   OS_DELIVERED = 4
-  OS_CANCELED = 5
+  OS_CANCELLED = 5
 
   OS_ARRAY = [
     OS_NOT_ACKNOWLEDGED,
@@ -41,7 +41,7 @@ class Order < ApplicationRecord
     OS_PROCESSING,
     OS_SHIPPED,
     OS_DELIVERED,
-    OS_CANCELED
+    OS_CANCELLED
   ].freeze
 
   # Associations
@@ -53,6 +53,7 @@ class Order < ApplicationRecord
   # --------------------------------------------------------------------------------------------------------------------
   validates_presence_of :customer
   validates :payment_status, inclusion: { in: PS_ARRAY }
+  validates :order_status, inclusion: { in: OS_ARRAY }
 
   # Methods
   # --------------------------------------------------------------------------------------------------------------------
