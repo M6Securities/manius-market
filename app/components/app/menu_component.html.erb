@@ -71,6 +71,11 @@
       <% end %>
 
       <% if @user.permission? %>
+
+        <li class="navigation-header active">
+          <span data-i18n="User Interface">Site</span>
+        </li>
+
         <li class="nav-item">
           <a href="<%= app_site_admin_path %>">
             <i data-feather='server'></i><span class="menu-title">Site Admin</span>
