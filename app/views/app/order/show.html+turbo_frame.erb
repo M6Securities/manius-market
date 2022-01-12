@@ -86,8 +86,14 @@
 
         <% @order.order_items.each do |order_item| %>
           <tr>
-            <td><%= order_item.product.name %></td>
-            <td><%= order_item.quantity %></td>
+            <td>
+              <a href="<%= app_product_path order_item.product %>" target="_blank">
+                <i data-feather="external-link"></i> <%= order_item.product.name %>
+              </a>
+            </td>
+            <td>
+              <%= order_item.quantity %>
+            </td>
           </tr>
         <% end %>
 

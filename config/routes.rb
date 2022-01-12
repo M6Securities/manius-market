@@ -16,7 +16,9 @@ Rails.application.routes.draw do
 
       resources :market
 
-      resources :product
+      resources :product do
+        get 'orders_datatable'
+      end
       get 'product_datatable' => 'product#datatable'
 
       resources :user, except: %i[edit destroy] do

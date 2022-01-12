@@ -79,14 +79,47 @@ module App
       render json: payload, status: :ok
     end
 
+    def orders_datatable
+      requested_length = params[:length].to_i
+      requested_start = params[:start].to_i
+
+      sort_col = params['order']['0']['column'] # eg 0 for column 0
+      sort_dir = params['order']['0']['dir'] # 'desc' or 'asc'
+      sort_name = params['columns'][sort_col]['name'] # the column name set in the data table initialization. MUST equal the DB column name
+      search_value = params['search']['value']
+
+      return unless %w[orders.created_at orders.payment_status orders.status].include? sort_name
+
+      column_select = %w[orders.id orders.created_at orders.payment_status orders.status COUNT(order_items.order_id)].freeze
+      group_select = %w[orders.id order_items.order_id].freeze
+
+      filtered_count = @product.orders.size
+      records = @product.orders
+                        .left_joins(:order_items)
+                        .order(sort_name => sort_dir)
+                        .select(column_select)
+                        .group(group_select)
+                        .limit(requested_length)
+                        .offset(requested_start)
+
+      ActiveRecord::Base.include_root_in_json = false
+
+      payload = {
+        draw: params[:draw],
+        recordsTotal: @product.orders.size,
+        recordsFiltered: filtered_count,
+        data: records
+      }
+
+      render json: payload, status: :ok
+    end
+
     private
 
     def find_product
-      @product = if params[:id].blank?
-                   Product.new
-                 else
-                   @current_market.products.find_by(id: params[:id])
-                 end
+      @product = @current_market.products.find_by(id: params[:id])
+      @product ||= @current_market.products.find_by(id: params[:product_id])
+      @product ||= @current_market.products.new
     end
   end
 end
