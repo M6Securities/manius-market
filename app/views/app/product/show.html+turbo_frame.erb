@@ -74,7 +74,7 @@
 
         <div class="col-12 col-xl-6 col-lg-6 col-md-12 col-sm-12">
           <div class="form-floating">
-                  <textarea class="form-control" placeholder="Description" id="create_product_description" rows="3" readonly><%= @product.description %></textarea>
+            <textarea class="form-control" placeholder="Description" id="create_product_description" rows="3" readonly><%= @product.description %></textarea>
             <label for="create_product_description">Description</label>
           </div>
         </div>
@@ -127,34 +127,35 @@
   </div>
 
   <div class="card">
-    <div class="card-content">
-      <div class="card-body">
+    <div class="card-header">
+      <h4 class="card-title">Orders</h4>
+    </div>
+    <div class="card-body">
 
-        <table id="product-orders-table" class="table dataTable table-striped" style="width:100%">
-          <thead>
-          <tr>
-            <th>Date</th>
-            <th>Num of Products</th>
-            <th>Payment Status</th>
-            <th>Order Status</th>
-            <th>View</th>
-          </tr>
-          </thead>
+      <table id="product-orders-table" class="table dataTable table-striped" style="width:100%">
+        <thead>
+        <tr>
+          <th>Date</th>
+          <th>Num of Products</th>
+          <th>Payment Status</th>
+          <th>Order Status</th>
+          <th>View</th>
+        </tr>
+        </thead>
 
-          <tbody class="table-striped"></tbody>
+        <tbody class="table-striped"></tbody>
 
-          <tfoot>
-          <tr>
-            <th>Date</th>
-            <th>Num of Products</th>
-            <th>Payment Status</th>
-            <th>Order Status</th>
-            <th>View</th>
-          </tr>
-          </tfoot>
-        </table>
+        <tfoot>
+        <tr>
+          <th>Date</th>
+          <th>Num of Products</th>
+          <th>Payment Status</th>
+          <th>Order Status</th>
+          <th>View</th>
+        </tr>
+        </tfoot>
+      </table>
 
-      </div>
     </div>
   </div>
 
@@ -289,6 +290,8 @@
                   }
               ]
           });
+
+          //$("div.head-label").html('<h6 class="mb-0">Orders Table</h6>');
       })();
   </script>
 
