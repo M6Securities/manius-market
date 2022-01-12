@@ -1,0 +1,5 @@
+<% content_for :title, "Order #{@order.id}" %>
+
+<%= turbo_frame_tag @order, src: app_order_path, loading: :lazy do %>
+
+<% end %>

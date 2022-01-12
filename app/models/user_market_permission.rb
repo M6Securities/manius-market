@@ -5,6 +5,8 @@ class UserMarketPermission < ApplicationRecord
   VIEW_PRODUCTS = 3
   EDIT_PRODUCTS = 4
   RECEIVE_PRODUCTS = 5
+  VIEW_ORDERS = 6
+  EDIT_ORDERS = 7
 
   PERMISSIONS_ARRAY = [
     OWNER,
@@ -12,7 +14,9 @@ class UserMarketPermission < ApplicationRecord
     MEMBER,
     VIEW_PRODUCTS,
     EDIT_PRODUCTS,
-    RECEIVE_PRODUCTS
+    RECEIVE_PRODUCTS,
+    VIEW_ORDERS,
+    EDIT_ORDERS
   ].freeze
 
   after_update :update_cache

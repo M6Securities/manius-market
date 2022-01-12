@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_08_194111) do
+ActiveRecord::Schema.define(version: 2022_01_12_041256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,7 +112,9 @@ ActiveRecord::Schema.define(version: 2022_01_08_194111) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "stripe_payment_intent_id"
     t.integer "payment_status", default: 0
+    t.integer "status", default: 0
     t.index ["customer_id"], name: "index_orders_on_customer_id"
+    t.index ["status"], name: "index_orders_on_status"
   end
 
   create_table "product_prices", force: :cascade do |t|

@@ -16,7 +16,9 @@ Rails.application.routes.draw do
 
       resources :market
 
-      resources :product
+      resources :product do
+        get 'orders_datatable'
+      end
       get 'product_datatable' => 'product#datatable'
 
       resources :user, except: %i[edit destroy] do
@@ -32,6 +34,9 @@ Rails.application.routes.draw do
         get 'line_item/:receive_item' => 'receiving#receiving_item_line', as: :item_line
       end
       get 'receiving_datatable' => 'receiving#datatable'
+
+      resources :order, except: :destroy
+      get 'order_datatable' => 'order#datatable'
 
       namespace :site_admin do
         resources :user
