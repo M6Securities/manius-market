@@ -57,6 +57,8 @@ module Api
 
       private
 
+      # TODO: - move these to workers, so they can be executed in parallel
+
       def checkout_session_completed(event)
         checkout_session_id = event['data']['object']['id']
         order = Order.find_by stripe_checkout_session_id: checkout_session_id

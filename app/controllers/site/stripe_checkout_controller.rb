@@ -26,9 +26,10 @@ module Site
           cart_item.update customer_id: possible_existing_customer.id
         end
         # then we destroy the old customer
-        possible_existing_customer.update session_id: @current_customer.session_id
+        possible_existing_customer.session_id = @current_customer.session_id
         @current_customer.destroy
         @current_customer = possible_existing_customer
+        @current_customer.save
       end
 
       @current_customer.cart_items.each do |cart_item|
@@ -74,6 +75,9 @@ module Site
       end
 
       session = Stripe::Checkout::Session.create(checkout_session_object)
+
+      puts "Payment Intent: #{session.payment_intent} \n\n"
+
       render json: { id: session.id }, status: :ok if order.update(stripe_checkout_session_id: session.id, stripe_payment_intent_id: session.payment_intent)
     end
   end
