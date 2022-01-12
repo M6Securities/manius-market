@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module App
-
   # view and edit products for current market
   class ProductController < AppController
     before_action :require_market
@@ -25,7 +24,7 @@ module App
     end
 
     def update
-      safe_params = params.require(:update).permit(:name, :sku, :stock, :tax_code, :description, :enabled, :shippable, product_price: [:price, :currency])
+      safe_params = params.require(:update).permit(:name, :sku, :stock, :tax_code, :description, :enabled, :shippable, product_price: %i[price currency])
 
       # our toggable keys
       %i[enabled shippable].each do |key|
@@ -86,9 +85,8 @@ module App
       @product = if params[:id].blank?
                    Product.new
                  else
-                   Product.find_by(id: params[:id])
+                   @current_market.products.find_by(id: params[:id])
                  end
     end
-
   end
 end

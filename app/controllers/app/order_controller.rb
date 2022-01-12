@@ -3,8 +3,13 @@
 module App
   class OrderController < AppController
     before_action :require_market
+    before_action :find_order, only: %i[show edit update]
 
     def index
+      render 'error/unauthorized', status: :unauthorized, layout: 'error' unless current_user.permission?(UserMarketPermission::VIEW_ORDERS, @current_market)
+    end
+
+    def show
       render 'error/unauthorized', status: :unauthorized, layout: 'error' unless current_user.permission?(UserMarketPermission::VIEW_ORDERS, @current_market)
     end
 
@@ -40,6 +45,13 @@ module App
       }
 
       render json: payload, status: :ok
+    end
+
+    private
+
+    def find_order
+      @order = @current_market.orders.find_by(id: params[:id])
+      render 'error/not_found', status: :not_found, layout: 'error' unless @order
     end
   end
 end
