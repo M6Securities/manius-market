@@ -27,6 +27,23 @@ class Order < ApplicationRecord
     PS_SUCCEEDED
   ].freeze
 
+  # Order Status
+  OS_NOT_ACKNOWLEDGED = 0
+  OS_ACKNOWLEDGED = 1
+  OS_PROCESSING = 2
+  OS_SHIPPED = 3
+  OS_DELIVERED = 4
+  OS_CANCELED = 5
+
+  OS_ARRAY = [
+    OS_NOT_ACKNOWLEDGED,
+    OS_ACKNOWLEDGED,
+    OS_PROCESSING,
+    OS_SHIPPED,
+    OS_DELIVERED,
+    OS_CANCELED
+  ].freeze
+
   # Associations
   # --------------------------------------------------------------------------------------------------------------------
   belongs_to :customer

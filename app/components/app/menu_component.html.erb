@@ -29,6 +29,11 @@
       </li>
 
       <% if @user.has_market? %>
+
+        <li class="navigation-header active">
+          <span data-i18n="User Interface">Market</span>
+        </li>
+
         <% if @user.permission?(UserMarketPermission::VIEW_PRODUCTS) %>
           <li class="nav-item">
             <a href="<%= app_product_index_path %>">
