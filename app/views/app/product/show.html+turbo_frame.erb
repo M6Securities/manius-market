@@ -106,10 +106,18 @@
 
           <% @product.product_prices.each do |product_price| %>
             <tr>
-              <td><%= product_price.price.currency.iso_code %></td>
-              <td><%= product_price.created_at %></td>
-              <td><%= product_price.updated_at %></td>
-              <td><%= product_price.price.cents %></td>
+              <td>
+                <%= product_price.price.currency.iso_code %>
+              </td>
+              <td>
+                <%= product_price.created_at %>
+              </td>
+              <td>
+                <%= product_price.updated_at %>
+              </td>
+              <td>
+                <%= product_price.price.format %>
+              </td>
             </tr>
           <% end %>
 
