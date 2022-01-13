@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_12_041256) do
+ActiveRecord::Schema.define(version: 2022_01_13_031351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 2022_01_12_041256) do
     t.string "stripe_payment_intent_id"
     t.integer "payment_status", default: 0
     t.integer "status", default: 0
+    t.string "shipping_name"
     t.index ["customer_id"], name: "index_orders_on_customer_id"
     t.index ["status"], name: "index_orders_on_status"
   end

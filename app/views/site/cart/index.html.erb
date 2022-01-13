@@ -96,6 +96,7 @@
           </div>
           <hr />
           <div class="price-details">
+            <!--
             <h6 class="price-title">Price Details</h6>
             <ul class="list-unstyled">
               <li class="price-detail">
@@ -104,15 +105,12 @@
                   <%= @current_customer.cart_total.format %>
                 </div>
               </li>
-              <!--
               <li class="price-detail">
                 <div class="detail-title">Bag Discount</div>
                 <div class="detail-amt discount-amt text-success">-25$</div>
               </li>
-              -->
             </ul>
-
-            <hr>
+            -->
 
             <ul class="list-unstyled">
               <li class="price-detail">
@@ -122,25 +120,51 @@
                 </div>
               </li>
               <small>
-                Tax and shipping will be calculated at the time of checkout. An email address is required.
+                Tax and shipping will be calculated at the time of checkout. An email address and shipping address is required. Billing address may be required during checkout.
               </small>
             </ul>
-
-
-
-            <form id="place-order-form">
-              <!-- rails authenticity token -->
-              <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
-
-              <%= render InputBlockComponent.new(type: :email, name: 'create[email]', title: 'Email', placeholder: 'Email', div_classes: 'form-floating my-2', id: 'place-order-email', value: (@current_customer.email)) %>
-
-              <button type="button" class="btn btn-primary w-100 btn-next place-order disabled" id="place-order-button" onclick="placeOrder()">
-                Place Order
-              </button>
-            </form>
-
-
           </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h6 class="card-title">Shipping Address</h6>
+        </div>
+        <div class="card-body">
+          <form id="place-order-form">
+            <!-- rails authenticity token -->
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+            <%= render InputBlockComponent.new(name: 'create[shipping_name]', title: 'Name on Order', placeholder: 'Name', value: (@current_customer.display_name)) %>
+
+            <%= render InputBlockComponent.new(type: :email, name: 'create[email]', title: 'Email', placeholder: 'john.smith@example.com', id: 'place-order-email', value: (@current_customer.email)) %>
+
+            <%= render InputBlockComponent.new(name: 'create[address_line_1]', title: 'Address', placeholder: 'Address Line 1') %>
+
+            <%= render InputBlockComponent.new(name: 'create[address_line_2]', title: '', placeholder: 'Address Line 2', required: false) %>
+
+            <%= render InputBlockComponent.new(name: 'create[city]', title: 'City', placeholder: 'City') %>
+
+            <div class="row">
+              <div class="col-6">
+                <%= render InputBlockComponent.new(name: 'create[state]', title: 'State', placeholder: 'State') %>
+              </div>
+              <div class="col-6">
+                <%= render InputBlockComponent.new(name: 'create[zip]', title: 'Zip', placeholder: 'Zip') %>
+              </div>
+            </div>
+
+            <div>
+              <%= country_select(:create, :country, { priority_countries: %w[US CA], selected: 'US' }, { class: 'form-control' }) %>
+            </div>
+
+            <br>
+
+            <button type="button" class="btn btn-primary w-100 btn-next place-order disabled" id="place-order-button" onclick="placeOrder()">
+              Place Order
+            </button>
+          </form>
         </div>
       </div>
       <!-- Checkout Place Order Right ends -->
@@ -152,19 +176,19 @@
 <script defer>
     $(function() {
         $('.bootstrap-touchspin').TouchSpin();
+        $('select:not(.flatpickr-input)').select2();
 
         const placeOrderButton = $('#place-order-button');
-        const placeOrderEmail = $('#place-order-email');
 
         // this way it gets triggered if it's pre-filled
-        if (validateEmail(placeOrderEmail.val())) {
+        if (validOrderForm()) {
             placeOrderButton.removeClass('disabled');
         } else {
             placeOrderButton.addClass('disabled');
         }
 
-        placeOrderEmail.change(function () {
-            if (validateEmail(placeOrderEmail.val())) {
+        $("#place-order-form input").change(function () {
+            if (validOrderForm()) {
                 placeOrderButton.removeClass('disabled');
             } else {
                 placeOrderButton.addClass('disabled');
@@ -173,7 +197,45 @@
 
     });
 
+    function validOrderForm() {
+        let valid = true;
+        $("#place-order-form").find('input').each(function () {
+            const element = $(this);
+            if (element.prop('required')) {
+                if (element.prop('type') === 'text') {
+                    if (element.val() === '') {
+                        valid = false;
+
+                        element.addClass('is-invalid');
+                        element.removeClass('is-valid');
+                    } else {
+                        element.removeClass('is-invalid');
+                        element.addClass('is-valid');
+                    }
+                }
+            }
+        });
+
+        const placeOrderEmail = $('#place-order-email');
+        if (validateEmail(placeOrderEmail.val())) {
+            placeOrderEmail.removeClass('is-invalid');
+            placeOrderEmail.addClass('is-valid');
+        } else {
+            placeOrderEmail.addClass('is-invalid');
+            placeOrderEmail.removeClass('is-valid');
+            valid = false;
+        }
+
+        //console.log("Validating form: " + valid);
+
+        return valid;
+    }
+
     function placeOrder() {
+        if (!validOrderForm()) {
+            return null;
+        }
+
         const stripe = Stripe('<%= @current_market.stripe_publishable_key %>');
 
         const formElement = document.getElementById('place-order-form');
