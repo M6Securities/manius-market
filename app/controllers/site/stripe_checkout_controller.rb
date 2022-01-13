@@ -99,7 +99,7 @@ module Site
 
       # if the customer cancels, destroy the order, but only if they're the current customer on the order
       # That way, you can't just take an order ID and cancel it via a get request
-      order.destroy if order.customer_id == @current_customer.id
+      order.destroy if (order.customer_id == @current_customer.id) && order.status.zero? && order.payment_status.zero?
 
       redirect_to cart_path
     end
