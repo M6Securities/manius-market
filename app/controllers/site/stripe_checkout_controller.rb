@@ -34,6 +34,8 @@ module Site
         @current_customer.save
       end
 
+      order.save
+
       @current_customer.cart_items.each do |cart_item|
         order.order_items.create(
           product_id: cart_item.product_id,
@@ -74,7 +76,7 @@ module Site
         },
         billing_address_collection: 'required',
         success_url: stripe_checkout_success_url,
-        cancel_url: cart_url # stripe_checkout_cancel_url
+        cancel_url: stripe_checkout_cancel_url(order_id: order.id)
       }
 
       if @current_customer.stripe_customer_id.present?
@@ -88,6 +90,18 @@ module Site
       puts "Payment Intent: #{session.payment_intent} \n\n"
 
       render json: { id: session.id }, status: :ok if order.update(stripe_checkout_session_id: session.id, stripe_payment_intent_id: session.payment_intent)
+    end
+
+    def cancel
+      order = Order.find_by(id: params[:order_id])
+
+      return redirect_to cart_path if order.nil?
+
+      # if the customer cancels, destroy the order, but only if they're the current customer on the order
+      # That way, you can't just take an order ID and cancel it via a get request
+      order.destroy if order.customer_id == @current_customer.id
+
+      redirect_to cart_path
     end
   end
 end

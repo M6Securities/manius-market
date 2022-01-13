@@ -68,8 +68,8 @@ Rails.application.routes.draw do
 
       scope :stripe_checkout, as: :stripe_checkout do
         match 'create' => 'stripe_checkout#create', via: %i[post patch put]
-        get 'success' => 'stripe_checkout#success'
-        get 'cancel' => 'stripe_checkout#cancel'
+        get 'success' => 'stripe_checkout#success', as: :success
+        get 'cancel/:order_id' => 'stripe_checkout#cancel', as: :cancel
       end
     end
   end
