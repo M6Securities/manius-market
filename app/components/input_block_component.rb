@@ -2,7 +2,6 @@
 
 # standard input block
 class InputBlockComponent < ViewComponent::Base
-
   # options
   # {
   #   value: input value,
@@ -15,7 +14,8 @@ class InputBlockComponent < ViewComponent::Base
   #   read_only: default false
   #   disabled: default false
   # }
-  DEFAULT_DIV_CLASSES = 'form-floating mt-2 mb-3'
+  DEFAULT_DIV_CLASSES = 'mb-1'
+  DEFAULT_FLOATING_DIV_CLASSES = 'form-floating mt-2 mb-1'
 
   def initialize(**options)
     super
@@ -28,13 +28,20 @@ class InputBlockComponent < ViewComponent::Base
     @type = options[:type].blank? ? 'text' : options[:type]
     @required = options[:required].nil? ? true : options[:required]
     @helper_text = options[:helper_text]
-    @div_classes = options[:div_classes].nil? ? DEFAULT_DIV_CLASSES : options[:div_classes]
     @input_classes = options[:input_classes].nil? ? 'form-control' : options[:input_classes]
     @read_only = options[:read_only].nil? ? false : options[:read_only]
     @disabled = options[:disabled].nil? ? false : options[:disabled]
     @autofocus = options[:autofocus].nil? ? false : options[:autofocus].nil?
     @autocomplete = options[:autocomplete].blank? ? '' : options[:autocomplete]
-
+    @floating = options[:floating].nil? ? false : options[:floating]
+    @div_classes = if options[:div_classes].nil?
+                     if @floating
+                       DEFAULT_FLOATING_DIV_CLASSES
+                     else
+                       DEFAULT_DIV_CLASSES
+                     end
+                   else
+                     options[:div_classes]
+                   end
   end
-
 end

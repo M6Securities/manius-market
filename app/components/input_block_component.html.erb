@@ -1,5 +1,13 @@
 <div class="<%= @div_classes %>">
 
+  <% unless @floating %>
+    <% unless @title.blank? %>
+      <label class="form-label" for="<%= @id %>">
+        <%= @title %>
+      </label>
+    <% end %>
+  <% end %>
+
   <input
     type="<%= @type %>"
     class="<%= @input_classes %>"
@@ -18,10 +26,12 @@
     <% end %>
   >
 
-  <% unless @title.blank? %>
-    <label class="form-label" for="<%= @id %>">
-      <%= @title %>
-    </label>
+  <% if @floating %>
+    <% unless @title.blank? %>
+      <label class="form-label" for="<%= @id %>">
+        <%= @title %>
+      </label>
+    <% end %>
   <% end %>
 
   <% unless @helper_text.blank? %>

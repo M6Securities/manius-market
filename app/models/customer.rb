@@ -45,4 +45,8 @@ class Customer < ApplicationRecord
 
     Money.new(total, 'USD')
   end
+
+  def display_name
+    user.display_name if user
+  end
 end
