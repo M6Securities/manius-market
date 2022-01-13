@@ -147,7 +147,7 @@ ActiveRecord::Schema.define(version: 2022_01_13_031351) do
 
   create_table "receive_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "receive_id"
-    t.bigint "product_id"
+    t.uuid "product_id"
     t.integer "quantity", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

@@ -57,11 +57,15 @@
               <div class="item-wrapper">
                 <div class="item-cost">
                   <h4 class="item-price">
-                    <%= cart_item.product.product_price_from_currency(@current_market.default_currency).price.format %>
+                    <%= cart_item.price_total(@current_market.default_currency).format %>
                   </h4>
-                  <p class="card-text shipping">
-                    <span class="badge rounded-pill badge-light-success">Free Shipping</span>
-                  </p>
+
+                  <% if cart_item.quantity > 1 %>
+                    <span class="text-muted mt-1">
+                      <%= cart_item.product.product_price_from_currency(@current_market.default_currency).price.format %> Each
+                    </span>
+                  <% end %>
+
                 </div>
               </div>
               <button type="button" class="btn btn-light mt-1 remove-wishlist">

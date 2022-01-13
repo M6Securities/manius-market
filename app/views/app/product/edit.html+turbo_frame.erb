@@ -64,7 +64,7 @@
               </div>
 
               <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-12">
-                <%= render InputBlockComponent.new(id: 'product-tax-code', title: 'Tax Code', placeholder: t('global.wording.tax_code'), value: @product.tax_code, required: false, div_classes: 'form-floating mt-2') %>
+                <%= render InputBlockComponent.new(id: 'product-tax-code', title: 'Tax Code', placeholder: t('global.wording.tax_code'), value: @product.tax_code, required: true) %>
                 <a href="https://stripe.com/docs/tax/tax-codes" target="_blank">
                   <i data-feather="external-link"></i>
                   <small>

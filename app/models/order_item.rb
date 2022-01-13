@@ -16,4 +16,12 @@ class OrderItem < ApplicationRecord
               only_integer: true,
               greater_than: 0
             }
+
+  # Methods
+  # --------------------------------------------------------------------------------------------------------------------
+
+  # returns a money object of the price
+  def price_total(currency)
+    Money.from_cents((product.product_price_from_currency(currency).price.cents * quantity), currency)
+  end
 end

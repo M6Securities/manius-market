@@ -42,6 +42,11 @@
                       <%= cart_item.product.name %>
                     </a>
                   </h6>
+                  <% if cart_item.quantity > 1 %>
+                    <small class="cart-item-by">
+                      <%= cart_item.product.product_price_from_currency(@current_market.default_currency).price.format %> Each
+                    </small>
+                  <% end %>
                 </div>
 
                 <input type="hidden" name="update[cart_items][][id]" value="<%= cart_item.id %>">
@@ -53,7 +58,7 @@
                 </div>
 
                 <h5 class="cart-item-price">
-                  <%= cart_item.product.product_price_from_currency(@current_market.default_currency).price.format %>
+                  <%= cart_item.price_total(@current_market.default_currency).format %>
                 </h5>
 
               </div>

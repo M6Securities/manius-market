@@ -6,7 +6,6 @@ module App
     before_action :check_permissions
     before_action :find_receive, except: %i[index datatable]
 
-
     def new
       @receiving = Receive.new user_id: current_user.id, market_id: @current_market.id
       @receiving.save
@@ -61,10 +60,17 @@ module App
         receive_item = ReceiveItem.find_by receive_id: @receiving.id, product_id: product.id
 
         if receive_item.nil?
-          receive_item = @receiving.receive_items.new product_id: product.id, quantity: 1
+          receive_item = @receiving.receive_items.create product_id: product.id, quantity: 1
         else
           receive_item.quantity += 1
         end
+
+        puts product
+        puts receive_item
+        puts receive_item.quantity
+        puts receive_item.product_id
+        puts receive_item.product
+        puts 'Printed stuff'
 
         receive_item.product.stock += 1
         receive_item.product.save
@@ -124,6 +130,5 @@ module App
                      Receive.find_by(id: params[:id])
                    end
     end
-
   end
 end
