@@ -204,7 +204,6 @@
             if (element.prop('required')) {
                 if (element.prop('type') === 'text') {
                     if (element.val() === '') {
-                        //createToast('<%= t 'global.forms.errors.missing_input' %>', '<%= t 'global.forms.errors.missing_input_detailed' %>', "error");
                         valid = false;
 
                         element.addClass('is-invalid');

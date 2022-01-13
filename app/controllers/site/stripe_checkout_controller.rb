@@ -9,7 +9,9 @@ module Site
 
       order = @current_customer.orders.create payment_status: Order::PS_NONE
 
-      customer_email = params[:create][:email]
+      safe_params = params.require(:create).permit(:shipping_name, :email, :address_line_1, :address_line_2, :city, :state, :zip, :country)
+
+      customer_email = safe_params[:email]
 
       return render json: { error: 'Email is required' }, status: :unprocessable_entity unless customer_email.present?
 
@@ -37,6 +39,13 @@ module Site
           product_id: cart_item.product_id,
           quantity: cart_item.quantity
         )
+      end
+
+      order.assign_attributes safe_params.except(:email)
+
+      if order.invalid?
+        puts "Invalid Order: #{order.errors.messages}"
+        return render json: { error: 'Invalid Order' }, status: :unprocessable_entity
       end
 
       line_items = []

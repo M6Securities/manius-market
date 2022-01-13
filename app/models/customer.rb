@@ -47,6 +47,6 @@ class Customer < ApplicationRecord
   end
 
   def display_name
-    user.display_name if user
+    user&.display_name
   end
 end
