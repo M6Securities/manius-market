@@ -38,6 +38,9 @@ Rails.application.routes.draw do
       resources :order, except: :destroy
       get 'order_datatable' => 'order#datatable'
 
+      resources :customer, except: :destroy
+      get 'customer_datatable' => 'customer#datatable'
+
       namespace :site_admin do
         resources :user
         get 'user_datatable' => 'user#datatable'
