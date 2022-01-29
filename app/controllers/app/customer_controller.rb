@@ -6,7 +6,13 @@ module App
     before_action :require_market
     before_action :find_customer, except: %i[index create datatable]
 
+    def index
+      render 'error/unauthorized', status: :unauthorized, layout: 'error' unless current_user.permission?(UserMarketPermission::VIEW_CUSTOMERS, @current_market)
+    end
+
     def datatable
+      return render 'error/unauthorized', status: :unauthorized, layout: 'error' unless current_user.permission?(UserMarketPermission::VIEW_CUSTOMERS, @current_market)
+
       requested_length = params[:length].to_i
       requested_start  = params[:start].to_i
 

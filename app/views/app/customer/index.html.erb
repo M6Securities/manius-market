@@ -18,6 +18,7 @@
           <table id="customers-table" class="table dataTable table-striped" style="width:100%">
             <thead>
             <tr>
+              <th>ID</th>
               <th>Email</th>
               <th>Date Created</th>
               <th>View</th>
@@ -28,6 +29,7 @@
 
             <tfoot>
             <tr>
+              <th>ID</th>
               <th>Email</th>
               <th>Date Created</th>
               <th>View</th>
@@ -44,7 +46,7 @@
   <script defer>
 
       (function () {
-          const exportColumns = [0, 1]
+          const exportColumns = [0, 1, 2]
 
           const customerTable = $('#customers-table').DataTable({
               ajax: {
@@ -61,20 +63,22 @@
               responsive: true,
               order: [[ 0, 'desc' ]],
               columns: [
+                  { data: 'id' },
                   { data: 'email' },
                   { data: 'created_at' },
                   {
                       data: function (row, _type, _set) {
-                          return `<a href="<%= app_order_index_path %>/${row.id}" class="btn btn-outline-primary my-0 mr-0">
+                          return `<a href="<%= app_customer_index_path %>/${row.id}" class="btn btn-outline-primary my-0 mr-0">
                             <i data-feather="chevrons-right"></i>
                           </a>`;
                       }
                   }
               ],
               columnDefs: [
-                  { name: 'email', targets: 0 },
-                  { name: 'created_at', targets: 1 },
-                  { name: 'view',  targets: 2, 'orderable': false, 'searchable': false },
+                  { name: 'id', targets: 0 },
+                  { name: 'email', targets: 1 },
+                  { name: 'created_at', targets: 2 },
+                  { name: 'view',  targets: 3, 'orderable': false, 'searchable': false },
 
                   { targets: '_all', searchable: true, orderable: true}
               ],
