@@ -1,0 +1,89 @@
+<%= turbo_frame_tag @customer do %>
+
+  <div class="d-flex justify-content-between mb-2">
+
+    <div>
+      <h1 class="m-0" style="line-height: 39px;">
+        Customer
+      </h1>
+      <small class="text-muted">
+        <%= @customer.id %>
+      </small>
+    </div>
+
+    <div>
+      <a href="<%= edit_app_customer_path @customer %>" class="btn btn-success" data-turbo-action="advance">
+        <i data-feather="edit-3"></i> Edit
+      </a>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3 class="h3">
+        Details
+      </h3>
+    </div>
+    <div class="card-body">
+      <p>
+        <b>Email: </b>
+        <% if @customer.email.nil? %>
+          Not added yet
+        <% else %>
+          <a href="mailto:<%= @customer.email %>"><i data-feather="mail"></i> <%= @customer.email %></a>
+        <% end %>
+      </p>
+
+      <!-- created at -->
+      <p>
+        <b>Created at: </b>
+        <%= @customer.created_at.strftime("%d %b %Y %H:%M") %>
+      </p>
+
+      <!-- updated at -->
+      <p>
+        <b>Updated at: </b>
+        <%= @customer.updated_at.strftime("%d %b %Y %H:%M") %>
+      </p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">Cart Items</h4>
+    </div>
+    <div class="card-body">
+      <p class="card-text">
+        What the customer currently has in their cart.
+      </p>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Quantity</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <% @customer.cart_items.each do |cart_item| %>
+          <tr>
+            <td>
+              <a href="<%= app_product_path cart_item.product %>" target="_blank">
+                <i data-feather="external-link"></i> <%= cart_item.product.name %>
+              </a>
+            </td>
+            <td>
+              <%= cart_item.quantity %>
+            </td>
+          </tr>
+        <% end %>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<% end %>
