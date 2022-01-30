@@ -1,0 +1,38 @@
+<%= turbo_frame_tag @market do %>
+
+  <div class="d-flex justify-content-between mb-2">
+
+    <div class="d-flex">
+      <h1 class="m-0" style="line-height: 39px;">
+        <%= @market.display_name %>
+      </h1>
+    </div>
+
+    <div>
+      <a href="<%= edit_app_market_space_market_path(@market.id) %>" class="btn btn-success" data-turbo-action="advance">
+        <i data-feather="edit-3"></i> Edit
+      </a>
+    </div>
+
+  </div>
+
+
+  <div class="card">
+    <div class="card-content">
+      <div class="card-body">
+
+        <div class="row">
+
+          <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+            <%= render InputBlockComponent.new(id: 'market-display-name', name: 'show[display_name]', title: 'Market Name', placeholder: @market.display_name, value: @market.display_name, required: false, read_only: true) %>
+            <%= render InputBlockComponent.new(id: 'market-path-name', name: 'show[path_name]', title: 'Market Path', placeholder: @market.path_name, value: @market.path_name, required: false, read_only: true) %>
+            <%= render InputBlockComponent.new(id: 'market-Email', name: 'show[Email]', title: 'Market Email', placeholder: @market.email, value: @market.email, required: false, read_only: true) %>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+<% end %>

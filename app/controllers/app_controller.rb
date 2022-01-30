@@ -22,10 +22,10 @@ class AppController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_to app_market_path(market.id) }
+      format.html { redirect_to app_market_space_market_path(market.id) }
     end
 
-    redirect_to app_market_path(market.id)
+    redirect_to app_market_space_market_path(market.id)
   end
 
   def require_market
@@ -39,5 +39,4 @@ class AppController < ApplicationController
 
     'app'
   end
-
 end

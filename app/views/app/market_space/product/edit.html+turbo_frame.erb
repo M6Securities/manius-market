@@ -1,0 +1,147 @@
+<%= turbo_frame_tag @product do %>
+  <form id="edit_product<%= @product.id %>" action="<%= app_market_space_product_path %>"  method="patch">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <div class="d-flex justify-content-between">
+      <div>
+        <h1>
+          <%= @product.name %>
+        </h1>
+        <p class="text-muted">
+          <%= @product.sku %>
+        </p>
+      </div>
+
+      <div class="d-flex">
+
+        <a href="<%= app_market_space_product_path @product %>" class="btn btn-outline-danger mx-1" style="height: 39px;">
+          <i data-feather="x"></i>
+          Cancel
+        </a>
+
+        <button type="submit" class="btn btn-success ms-1" style="height: 39px;">
+          <i data-feather="save"></i>
+          <%= t('global.wording.save') %>
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <%= render(FormErrorComponent.new(@product.errors.messages)) %>
+    </div>
+
+    <div class="card">
+
+      <div class="card-body">
+
+        <h4 class="card-title">
+          <%= t('global.wording.edit') %>
+        </h4>
+
+        <div class="row">
+
+          <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+            <div class="row">
+              <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                <%= render InputBlockComponent.new(name: 'update[name]', title: 'Name', placeholder: @product.name, value: @product.name, required: true) %>
+              </div>
+
+              <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                <%= render InputBlockComponent.new(name: 'update[sku]', title: 'SKU', placeholder: @product.sku, value: @product.sku, required: true) %>
+              </div>
+
+              <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                <%= render InputBlockComponent.new(name: 'update[stock]', title: 'Stock', placeholder: @product.stock, value: @product.stock, required: true) %>
+              </div>
+
+              <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                <br>
+                <%= render SwitchBlockComponent.new(name: 'update[enabled]', title: 'Product Enabled', checked: @product.enabled, required: false) %>
+              </div>
+
+              <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                <br>
+                <%= render SwitchBlockComponent.new(name: 'update[shippable]', title: 'Product Shippable', checked: @product.shippable, required: false) %>
+              </div>
+
+              <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                <%= render InputBlockComponent.new(id: 'product-tax-code', title: 'Tax Code', placeholder: t('global.wording.tax_code'), value: @product.tax_code, required: true) %>
+                <a href="https://stripe.com/docs/tax/tax-codes" target="_blank">
+                  <i data-feather="external-link"></i>
+                  <small>
+                    Must be a valid Stripe tax code.
+                  </small>
+                </a>
+              </div>
+
+              <div class="col-12">
+                <div class="form-floating mt-3">
+                  <textarea class="form-control" name="update[description]" placeholder="Description" id="create_product_description" rows="3" required><%= @product.description %></textarea>
+                  <label for="create_product_description">Description</label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+            <h5 class="mb-1">
+              <i data-feather="dollar-sign"></i> Pricing
+            </h5>
+            <small class="mb-1">
+              The price is in the smallest unit of the currency. So for USD, the price is in cents.
+            </small>
+
+            <div id="price-list" class="mt-1">
+              <% @product.product_prices.each do |product_price| %>
+                <div class="mb-1 d-flex flex-nowrap">
+                  <input type="text" class="form-control" name="update[product_price][][currency]" value="<%= product_price.price.currency.iso_code %>" readonly required>
+                  <input type="number" class="form-control mx-1"  name="update[product_price][][price]" value="<%= product_price.price.cents %>" placeholder="Price in cents" min="0" step="1" required>
+                </div>
+
+              <% end %>
+
+            </div>
+
+            <button type="button" class="btn btn-outline-success w-100" onclick="editProduct.addPrice()">
+              <i data-feather="plus"></i>
+              Add Price
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+  <script defer>
+    editProduct = {
+        addPrice: function() {
+            const priceDiv = $('#price-list');
+            const html = `
+               <div class="mb-1 d-flex flex-nowrap">
+
+                  <select name="update[product_price][][currency]" class="form-control" required>
+                    <%= options_for_select(currency_code_select_array, @current_market.default_currency) %>
+                  </select>
+
+                  <input type="number" class="form-control mx-1"  name="update[product_price][][price]" placeholder="Price in cents" min="0" step="1" required>
+
+                  <button type="button" class="btn btn-danger" onclick="editProduct.deletePrice(this)">
+                    <i data-feather="trash"></i>
+                  </button>
+                </div>
+            `;
+            priceDiv.append(html);
+            updateFeather();
+            $('select:not(.flatpickr-input)').select2();
+        },
+
+        deletePrice: function (ele) {
+            const parent = $(ele).parent();
+            parent.remove();
+        }
+    }
+  </script>
+
+<% end %>

@@ -1,0 +1,5 @@
+<% content_for :title, "Customer #{@customer.id}" %>
+
+<%= turbo_frame_tag @customer, src: app_market_space_customer_path, loading: :lazy do %>
+
+<% end %>

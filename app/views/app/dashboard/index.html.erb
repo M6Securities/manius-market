@@ -3,11 +3,11 @@
 <br>
 
 <% if current_user.has_market? %>
-  <a href="<%= app_market_path current_user.markets.first.id %>" class="btn btn-success">
+  <a href="<%= app_market_space_market_path current_user.markets.first.id %>" class="btn btn-success">
     <i data-feather='link'></i> View Market
   </a>
 <% else %>
-  <a href="<%= new_app_market_path %>" class="btn btn-success">
+  <a href="<%= new_app_market_space_market_path %>" class="btn btn-success">
     <i data-feather="plus"></i> Create a New Market
   </a>
 <% end %>

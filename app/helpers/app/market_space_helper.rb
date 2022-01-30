@@ -1,0 +1,2 @@
+module App::MarketSpaceHelper
+end
