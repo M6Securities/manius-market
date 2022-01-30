@@ -61,7 +61,7 @@ module App
       private
 
       def find_market
-        @market = ApplicationRecord::Market.find_by id: params[:id]
+        @market = Market.find_by id: params[:id]
       end
     end
   end
