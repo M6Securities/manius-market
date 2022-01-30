@@ -50,6 +50,14 @@
           </li>
         <% end %>
 
+        <% if @user.permission?(UserMarketPermission::VIEW_ORDERS) %>
+          <li class="nav-item">
+            <a href="<%= app_customer_index_path %>">
+              <i data-feather='shopping-cart'></i><span class="menu-title">Customers</span>
+            </a>
+          </li>
+        <% end %>
+
         <% if @user.permission?(UserMarketPermission::RECEIVE_PRODUCTS) %>
           <li class="nav-item">
             <a href="<%= app_receiving_index_path %>">

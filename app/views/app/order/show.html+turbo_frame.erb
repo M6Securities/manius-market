@@ -12,6 +12,11 @@
     </div>
 
     <div>
+      <a href="<%= app_customer_path @order.customer %>" class="btn btn-primary me-1" data-turbo-frame="_top">
+        <i data-feather='shopping-cart'></i> Customer
+      </a>
+
+
       <a href="<%= edit_app_order_path @order %>" class="btn btn-success" data-turbo-action="advance">
         <i data-feather="edit-3"></i> Edit
       </a>
@@ -99,9 +104,6 @@
                   </div>
 
                 </div>
-
-
-
 
               </div>
             </div>
