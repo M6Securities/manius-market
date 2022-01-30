@@ -27,8 +27,9 @@ module App
 
       return unless %w[id email created_at].include? sort_name
 
-      filtered_count = @current_market.customers.size
+      filtered_count = @current_market.customers.where(real: true).size
       records = @current_market.customers
+                               .where(real: true)
                                .order(sort_name => sort_dir)
                                .select(:id, :email, :created_at)
                                .limit(requested_length)

@@ -12,9 +12,7 @@
     </div>
 
     <div>
-      <a href="<%= edit_app_customer_path @customer %>" class="btn btn-success" data-turbo-action="advance">
-        <i data-feather="edit-3"></i> Edit
-      </a>
+
     </div>
 
   </div>
@@ -193,8 +191,8 @@
                   },
                   {
                       data: function (row, _type, _set) {
-                          return `<a href="<%= app_order_index_path %>/${row.id}" class="btn btn-outline-primary my-0 mr-0" target="_blank">
-                            <i data-feather="external-link"></i>
+                          return `<a href="<%= app_order_index_path %>/${row.id}" class="btn btn-outline-primary my-0 mr-0" data-turbo-frame="_top">
+                            <i data-feather="chevrons-right"></i>
                           </a>`;
                       }
                   }
