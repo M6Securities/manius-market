@@ -1,0 +1,134 @@
+<!-- display a datatable of all markets -->
+<% content_for :title, 'Users' %>
+
+<div class="content-header d-flex mb-1 justify-content-between">
+  <h1 class="m-0" style="line-height: 39px;">
+    Users
+  </h1>
+</div>
+
+<div class="mb-2">
+  <%= turbo_frame_tag :invite_user, src: app_market_space_invite_user_to_market_path, loading: :lazy do %>
+
+  <% end %>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="card-body">
+
+      <table id="products-table" class="table dataTable table-striped" style="width:100%">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Last Activity At</th>
+          <th>View</th>
+        </tr>
+        </thead>
+
+        <tbody class="table-striped"></tbody>
+
+        <tfoot>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Last Activity At</th>
+          <th>View</th>
+        </tr>
+        </tfoot>
+      </table>
+
+    </div>
+  </div>
+</div>
+
+<script defer>
+
+    (function () {
+        const exportColumns = [0, 1, 2]
+
+        const branchTable = $('#products-table').DataTable({
+            ajax: {
+                'url': '<%= app_market_space_user_datatable_path %>',
+                'type': 'GET'
+            },
+
+            processing: true,
+            serverSide: true,
+            paging: true,
+            pagingType: 'full_numbers',
+            searching: true,
+            lengthChange: true,
+            responsive: true,
+            order: [[ 2, 'asc' ]],
+            columns: [
+                { data: 'display_name' },
+                { data: 'email' },
+                {
+                    data: function (row, _type, _set) {
+                        const date = new Date(row.last_activity_at);
+                        return date.toLocaleString();
+                    }
+                },
+                {
+                    data: function (row, _type, _set) {
+                        return `<a href="<%= app_market_space_user_index_path %>/${row.id}" class="btn btn-outline-primary my-0 mr-0">
+                                    <i data-feather="chevrons-right"></i>
+                                  </a>`;
+                    }
+                }
+            ],
+            columnDefs: [
+                { name: 'display_name', targets: 0 },
+                { name: 'email',    targets: 1 },
+                { name: 'last_activity_at', targets: 2 },
+                { name: 'view',         targets: 3, orderable: false, searchable: false },
+
+                { targets: '_all', searchable: true, orderable: true}
+            ],
+            drawCallback: function(_settings, _json) {
+                updateFeather();
+            },
+            initComplete: function(_settings, _json) {
+                const tableInput = $('div.dataTables_filter input');
+
+                tableInput.unbind();
+                tableInput.bind('keyup', function(e) {
+                    if(e.keyCode === 13) {
+                        branchTable.search(this.value).draw();
+                    }
+                });
+            },
+            dom: '<"card-header border-bottom p-1"<"head-label"><"dt-action-buttons text-right"B>><"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+            buttons: [
+                {
+                    extend: 'csv',
+                    exportOptions: {
+                        columns: exportColumns
+                    }
+                },
+                {
+                    extend: 'copy',
+                    exportOptions: {
+                        columns: exportColumns
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: exportColumns
+                    },
+                    orientation: 'landscape'
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: exportColumns
+                    }
+                }
+            ]
+        });
+    })();
+
+</script>

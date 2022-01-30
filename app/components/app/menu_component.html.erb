@@ -36,7 +36,7 @@
 
         <% if @user.permission?(UserMarketPermission::VIEW_ORDERS) %>
           <li class="nav-item">
-            <a href="<%= app_order_index_path %>">
+            <a href="<%= app_market_space_order_index_path %>">
               <i data-feather='shopping-bag'></i><span class="menu-title">Orders</span>
             </a>
           </li>
@@ -44,7 +44,7 @@
 
         <% if @user.permission?(UserMarketPermission::VIEW_PRODUCTS) %>
           <li class="nav-item">
-            <a href="<%= app_product_index_path %>">
+            <a href="<%= app_market_space_product_index_path %>">
               <i data-feather='grid'></i><span class="menu-title">Products</span>
             </a>
           </li>
@@ -52,7 +52,7 @@
 
         <% if @user.permission?(UserMarketPermission::VIEW_ORDERS) %>
           <li class="nav-item">
-            <a href="<%= app_customer_index_path %>">
+            <a href="<%= app_market_space_customer_index_path %>">
               <i data-feather='shopping-cart'></i><span class="menu-title">Customers</span>
             </a>
           </li>
@@ -60,7 +60,7 @@
 
         <% if @user.permission?(UserMarketPermission::RECEIVE_PRODUCTS) %>
           <li class="nav-item">
-            <a href="<%= app_receiving_index_path %>">
+            <a href="<%= app_market_space_receiving_index_path %>">
               <i data-feather='box'></i><span class="menu-title">Receiving</span>
             </a>
           </li>
@@ -69,7 +69,7 @@
 
         <% if @user.permission?(UserMarketPermission::ADMIN) %>
           <li class="nav-item">
-            <a href="<%= app_user_index_path %>">
+            <a href="<%= app_market_space_user_index_path %>">
               <i data-feather='users'></i><span class="menu-title">Users</span>
             </a>
           </li>

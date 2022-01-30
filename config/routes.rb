@@ -14,34 +14,36 @@ Rails.application.routes.draw do
     namespace :app do
       resources :dashboard, only: %i[index]
 
-      resources :market
+      scope path: :market, module: :market_space, as: :market_space do
+        resources :market
 
-      resources :product do
-        get 'orders_datatable'
+        resources :product do
+          get 'orders_datatable'
+        end
+        get 'product_datatable' => 'product#datatable'
+
+        resources :user, except: %i[edit destroy] do
+          get 'permissions'
+          get 'remove'
+          match 'remove' => 'user#remove_from_market', via: %i[post patch put delete]
+        end
+        get 'user_datatable' => 'user#datatable'
+        get 'invite_user_to_market' => 'user#invite_user_to_market_view'
+        match 'invite_user_to_market' => 'user#invite_user_to_market', via: %i[post patch put]
+
+        resources :receiving do
+          get 'line_item/:receive_item' => 'receiving#receiving_item_line', as: :item_line
+        end
+        get 'receiving_datatable' => 'receiving#datatable'
+
+        resources :order, except: :destroy
+        get 'order_datatable' => 'order#datatable'
+
+        resources :customer, except: %i[edit update destroy] do
+          get 'orders_datatable'
+        end
+        get 'customer_datatable' => 'customer#datatable'
       end
-      get 'product_datatable' => 'product#datatable'
-
-      resources :user, except: %i[edit destroy] do
-        get 'permissions'
-        get 'remove'
-        match 'remove' => 'user#remove_from_market', via: %i[post patch put delete]
-      end
-      get 'user_datatable' => 'user#datatable'
-      get 'invite_user_to_market' => 'user#invite_user_to_market_view'
-      match 'invite_user_to_market' => 'user#invite_user_to_market', via: %i[post patch put]
-
-      resources :receiving do
-        get 'line_item/:receive_item' => 'receiving#receiving_item_line', as: :item_line
-      end
-      get 'receiving_datatable' => 'receiving#datatable'
-
-      resources :order, except: :destroy
-      get 'order_datatable' => 'order#datatable'
-
-      resources :customer, except: %i[edit update destroy] do
-        get 'orders_datatable'
-      end
-      get 'customer_datatable' => 'customer#datatable'
 
       namespace :site_admin do
         resources :user

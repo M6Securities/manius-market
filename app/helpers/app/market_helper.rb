@@ -1,2 +1,0 @@
-module App::MarketHelper
-end

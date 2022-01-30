@@ -1,0 +1,43 @@
+<%= turbo_frame_tag "user_#{@user.id}_permissions" do %>
+  <form action="<%= app_market_space_user_path @user %>" method="patch">
+    <div class="card">
+      <div class="card-body">
+
+        <h3 class="card-title">
+          <i data-feather='user-check'></i>
+          Permissions
+        </h3>
+
+        <% if @user_market_permissions.nil? %>
+          <% flash[:error] = 'User does not belong to this market' %>
+        <% else %>
+          <%= render FormErrorComponent.new(@user_market_permissions.errors.messages) %>
+        <% end %>
+
+        <%= render FormFlashComponent.new %>
+
+        <hr>
+
+        <div class="d-flex justify-content-start">
+          <!-- owner -->
+          <%= render SwitchBlockComponent.new(title: 'Owner', name: 'update[owner]', checked: @user.permission?(UserMarketPermission::OWNER, @current_market)) %>
+          <!-- admin -->
+          <%= render SwitchBlockComponent.new(title: 'Admin', name: 'update[admin]', checked: @user.permission?(UserMarketPermission::ADMIN, @current_market), div_classes: "#{SwitchBlockComponent::DEFAULT_DIV_CLASSES} mx-2") %>
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <%= render SwitchBlockComponent.new(title: 'View Products', name: 'update[view_products]', checked: @user.permission?(UserMarketPermission::VIEW_PRODUCTS, @current_market)) %>
+          <!-- edit products -->
+          <%= render SwitchBlockComponent.new(title: 'Edit Products', name: 'update[edit_products]', checked: @user.permission?(UserMarketPermission::EDIT_PRODUCTS, @current_market)) %>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">
+          <i data-feather='save'></i>
+          Save
+        </button>
+
+      </div>
+    </div>
+  </form>
+<% end %>
+

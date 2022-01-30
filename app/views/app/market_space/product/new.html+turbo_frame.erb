@@ -1,0 +1,65 @@
+<%= turbo_frame_tag @product do %>
+  <form id="create_product" action="<%= app_market_space_product_index_path %>"  method="post">
+
+    <div class="d-flex justify-content-between mb-2">
+
+      <div class="d-flex">
+        <h1 class="m-0" style="line-height: 39px;">
+          New Product
+        </h1>
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-success">
+          <i data-feather="save"></i> Create
+        </button>
+      </div>
+    </div>
+
+    <%= render FormFlashComponent.new %>
+    <%= render(FormErrorComponent.new(@product.errors.messages)) %>
+
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+          <div class="row">
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+
+              <%= render InputBlockComponent.new(name: 'create[name]', title: 'Product Name', placeholder: 'Name', value: @product.name) %>
+
+              <%= render InputBlockComponent.new(name: 'create[sku]', title: 'SKU', placeholder: '', value: @product.sku, helper_text: 'SKU must be only uppercase alphanumeric characters only') %>
+
+              <div class="form-floating">
+                <textarea class="form-control" name="create[description]" placeholder="Description" id="create_product_description" rows="3"></textarea>
+                <label for="create_product_description">Description</label>
+              </div>
+
+            </div>
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+
+              <%= render InputBlockComponent.new(id: 'product-quantity', name: 'create[stock]', title: 'Quantity in Stock', placeholder: 0, value: @product.stock, type: 'number') %>
+
+              <%= render InputBlockComponent.new(id: 'product-tax-code', name: 'create[tax_code]', title: 'Tax Code', placeholder: t('global.wording.tax_code'), value: @product.tax_code, required: false) %>
+              <a href="https://stripe.com/docs/tax/tax-codes" target="_blank">
+                <i data-feather="external-link"></i>
+                <small>
+                  Must be a valid Stripe tax code.
+                </small>
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </form>
+<% end %>
+
