@@ -7,6 +7,7 @@ class AppController < ApplicationController
   before_action :authenticate_user!
   before_action :check_user_enabled
   before_action :current_market
+  before_action :get_user_market_permissions
 
   def current_market
     @current_market = Market.find session[:market_id] unless session[:market_id].blank?
@@ -30,6 +31,10 @@ class AppController < ApplicationController
 
   def require_market
     return redirect_to app_dashboard_index_path unless current_user.has_market?
+  end
+
+  def get_user_market_permissions
+    @user_market_permissions = current_user.user_market_permissions.find_by(market_id: @current_market.id)
   end
 
   private

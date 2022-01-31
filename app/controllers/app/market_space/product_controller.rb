@@ -48,7 +48,6 @@ module App
         end
 
         update_keys = %i[name sku stock tax_code description enabled shippable]
-        user_market_permission = @current_market.user_market_permissions.find_by market_id: @current_market.id
         update_keys.each do |key|
           next if safe_params[key].nil?
 
@@ -56,7 +55,7 @@ module App
 
           @product.action_logs.create(
             action: "Updated #{key} from #{@product[key]} to #{safe_params[key]}",
-            user_market_permission:
+            user_market_permission: @user_market_permissions
           )
           @product[key] = safe_params[key]
         end
