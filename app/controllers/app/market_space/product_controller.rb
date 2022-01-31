@@ -41,10 +41,24 @@ module App
           product_price = @product.product_prices.find_by price_currency: price.currency.iso_code
           product_price = @product.product_prices.new if product_price.nil?
 
-          puts "\n\n\n Current Product price: #{product_price.price} \n New Product Price: #{price} \n\n\n"
+          # puts "\n\n\n Current Product price: #{product_price.price} \n New Product Price: #{price} \n\n\n"
 
           product_price.price = price
           product_price.save
+        end
+
+        update_keys = %i[name sku stock tax_code description enabled shippable]
+        user_market_permission = @current_market.user_market_permissions.find_by market_id: @current_market.id
+        update_keys.each do |key|
+          next if safe_params[key].nil?
+
+          next if safe_params[key].to_s == @product[key].to_s
+
+          @product.action_logs.create(
+            action: "Updated #{key} from #{@product[key]} to #{safe_params[key]}",
+            user_market_permission:
+          )
+          @product[key] = safe_params[key]
         end
 
         if @product.update safe_params.except(:product_price)
