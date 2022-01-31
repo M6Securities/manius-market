@@ -118,9 +118,13 @@ module App
       private
 
       def find_product
-        @product = @current_market.products.find_by(id: params[:id])
-        @product ||= @current_market.products.find_by(id: params[:product_id])
-        @product ||= @current_market.products.new
+        @product = if !params[:id].blank?
+                     @current_market.products.find_by(id: params[:id])
+                   elsif !params[:product_id].blank?
+                     @current_market.products.find_by(id: params[:product_id])
+                   else
+                     @current_market.products.new
+                   end
       end
     end
   end

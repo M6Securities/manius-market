@@ -66,12 +66,12 @@ module App
             receive_item.quantity += 1
           end
 
-          puts product
-          puts receive_item
-          puts receive_item.quantity
-          puts receive_item.product_id
-          puts receive_item.product
-          puts 'Printed stuff'
+          # puts product
+          # puts receive_item
+          # puts receive_item.quantity
+          # puts receive_item.product_id
+          # puts receive_item.product
+          # puts 'Printed stuff'
 
           receive_item.product.stock += 1
           receive_item.product.save
@@ -96,7 +96,11 @@ module App
         return unless %w[id created_at user_id].include? sort_name
 
         filtered_count = Receive.where(market_id: @current_market.id).size
-        records = Receive.where(market_id: @current_market.id).order(sort_name => sort_dir).select(:id, :created_at, :user_id).limit(requested_length).offset(requested_start)
+        records = Receive.where(market_id: @current_market.id)
+                         .order(sort_name => sort_dir)
+                         .select(:id, :created_at, :user_id)
+                         .limit(requested_length)
+                         .offset(requested_start)
 
         ActiveRecord::Base.include_root_in_json = false
 
@@ -125,10 +129,10 @@ module App
       end
 
       def find_receive
-        @receiving = if params[:id].blank?
-                       Receive.new
+        @receiving = if !params[:id].blank?
+                       @current_market.receives.find_by id: params[:id]
                      else
-                       Receive.find_by(id: params[:id])
+                       @current_market.receives.new
                      end
       end
     end

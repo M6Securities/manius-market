@@ -141,8 +141,15 @@ module App
 
         user_columns_select = %w[user.id user.email user.display_name user.last_activity_at].freeze
 
-        filtered_count = UserMarketPermission.where(market_id: @current_market.id).joins(:user).where(user: { enabled: true }).size
-        records = UserMarketPermission.where(market_id: @current_market.id).joins(:user).where(user: { enabled: true }).select(user_columns_select).order(sort_name => sort_dir).limit(requested_length).offset(requested_start)
+        filtered_count = UserMarketPermission.where(market_id: @current_market.id)
+                                             .joins(:user).where(user: { enabled: true })
+                                             .size
+        records = UserMarketPermission.where(market_id: @current_market.id)
+                                      .joins(:user).where(user: { enabled: true })
+                                      .select(user_columns_select)
+                                      .order(sort_name => sort_dir)
+                                      .limit(requested_length)
+                                      .offset(requested_start)
 
         ActiveRecord::Base.include_root_in_json = false
 
