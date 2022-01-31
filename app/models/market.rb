@@ -14,6 +14,7 @@ class Market < ApplicationRecord
   has_many :receives, dependent: :destroy
   has_many :customers, dependent: :destroy
   has_many :orders, through: :customers
+  has_many :action_logs, as: :loggable, dependent: :destroy
 
   # Validations
   validates :display_name, presence: true, uniqueness: true
