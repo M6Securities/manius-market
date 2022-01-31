@@ -21,6 +21,8 @@ class Product < ApplicationRecord
   has_many :order_items
   has_many :orders, through: :order_items
 
+  has_many :action_logs, as: :loggable, dependent: :destroy
+
   after_commit :create_stripe_product, on: :create
   after_commit :update_stripe_product, on: :update
 
@@ -67,7 +69,7 @@ class Product < ApplicationRecord
   private
 
   def unique_sku
-    errors.add(:sku, 'sku already exists in this market') unless market.products.where(sku: sku).where.not(id: id).size.zero?
+    errors.add(:sku, 'sku already exists in this market') unless market.products.where(sku:).where.not(id:).size.zero?
   end
 
   def create_stripe_product

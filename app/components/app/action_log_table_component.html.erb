@@ -1,0 +1,117 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">Action Logs</h4>
+  </div>
+  <div class="card-body">
+
+    <table id="action-logs-table" class="table dataTable table-striped" style="width:100%">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Action</th>
+          <th>User</th>
+        </tr>
+      </thead>
+
+      <tbody class="table-striped"></tbody>
+
+      <tfoot>
+        <tr>
+          <th>Date</th>
+          <th>Action</th>
+          <th>User</th>
+        </tr>
+      </tfoot>
+    </table>
+
+  </div>
+</div>
+
+<script defer>
+    (function () {
+        const exportColumns = [0, 1, 2]
+
+        const actionLogsTable = $('#action-logs-table').DataTable({
+            ajax: {
+                'url': '<%= app_action_logs_datatable_path model: @model.model_name.name, model_id: @model.id %>',
+                'type': 'GET'
+            },
+
+            processing: true,
+            serverSide: true,
+            paging: true,
+            pagingType: 'full_numbers',
+            searching: true,
+            lengthChange: true,
+            responsive: true,
+            order: [[ 0, 'desc' ]],
+            columns: [
+                {
+                    data: function (row, _type, _set) {
+                        const date = new Date(row.created_at);
+                        return date.toLocaleString();
+                    }
+                },
+                { data: 'action' },
+                {
+                    data: function (row, _type, _set) {
+                        return `<a href="<%= app_market_space_user_index_path %>/${row.id}" class="btn btn-outline-primary my-0 mr-0" data-turbo-frame="_top">
+                            <i data-feather="user"></i>
+                          </a>`;
+                    }
+                }
+            ],
+            columnDefs: [
+                { name: 'created_at', targets: 0 },
+                { name: 'action', targets: 1, orderable: false, searchable: false },
+                { name: 'user',  targets: 2, orderable: false, searchable: false },
+
+                { targets: '_all', searchable: true, orderable: true}
+            ],
+            drawCallback: function(_settings, _json) {
+                updateFeather();
+            },
+            initComplete: function(_settings, _json) {
+                const tableInput = $('div.dataTables_filter input');
+
+                tableInput.unbind();
+                tableInput.bind('keyup', function(e) {
+                    if(e.keyCode === 13) {
+                        actionLogsTable.search(this.value).draw();
+                    }
+                });
+            },
+            dom: '<"card-header border-bottom p-1"<"head-label"><"dt-action-buttons text-right"B>><"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+            buttons: [
+                {
+                    extend: 'csv',
+                    exportOptions: {
+                        columns: exportColumns
+                    }
+                },
+                {
+                    extend: 'copy',
+                    exportOptions: {
+                        columns: exportColumns
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: exportColumns
+                    },
+                    orientation: 'landscape'
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: exportColumns
+                    }
+                }
+            ]
+        });
+
+        //$("div.head-label").html('<h6 class="mb-0">Orders Table</h6>');
+    })();
+</script>
+</script>

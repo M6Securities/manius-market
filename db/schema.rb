@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_13_031351) do
+ActiveRecord::Schema.define(version: 2022_01_31_004330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_logs", force: :cascade do |t|
+    t.string "loggable_type"
+    t.bigint "loggable_id"
+    t.string "action", default: "", null: false
+    t.bigint "user_market_permission_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["loggable_type", "loggable_id"], name: "index_action_logs_on_loggable"
+    t.index ["user_market_permission_id"], name: "index_action_logs_on_user_market_permission_id"
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false

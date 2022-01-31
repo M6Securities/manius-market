@@ -50,11 +50,20 @@ class User < ApplicationRecord
     "https://www.gravatar.com/avatar/#{hash}?d=identicon"
   end
 
-  def permission?(permission = nil, market = nil)
+  # given a permission constant, and a market OR permission object, check if the user has permission
+  def permission?(permission = nil, market_or_permissions = nil)
     # if the user is a site admin it will always return true
     return true if site_admin
 
-    return false if permission.nil? || market.nil?
+    return false if permission.nil? || market_or_permissions.nil?
+
+    if market_or_permissions.is_a? Market
+      market = market_or_permissions
+      market_permissions = market.user_market_permissions.find_by(user_id: id)
+    else
+      market_permissions = market_or_permissions
+      market = market_permissions.market
+    end
 
     key = "user_#{id}_market_#{market.id}_permission_#{permission}"
     expire = 5.minutes.freeze
@@ -65,7 +74,7 @@ class User < ApplicationRecord
     # if the user has no permissions with the market it will always return false
     return false unless markets.include? market
 
-    market_permissions = user_market_permissions.find_by(market_id: market.id).permissions
+    # market_permissions = user_market_permissions.find_by(market_id: market.id).permissions
 
     # if the user is an owner of the market return true
     if market_permissions.include? UserMarketPermission::OWNER

@@ -45,6 +45,8 @@ Rails.application.routes.draw do
         get 'customer_datatable' => 'customer#datatable'
       end
 
+      get 'action_logs' => 'action_logs#datatable', as: :action_logs_datatable
+
       namespace :site_admin do
         resources :user
         get 'user_datatable' => 'user#datatable'
