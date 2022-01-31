@@ -37,6 +37,24 @@ class AppController < ApplicationController
     @user_market_permissions = current_user.user_market_permissions.find_by(market_id: @current_market.id)
   end
 
+  # given an array of keys, a model object, a hash of the new attributes, and a user_market_permission object, update and log the changes
+  def log_model_updates(keys, model, changes, user_market_permission)
+    keys.each do |key|
+      next if changes[key].nil?
+
+      next if changes[key].to_s == model[key].to_s
+
+      model.action_logs.create(
+        action: "Updated \"#{key}\" from \"#{model[key]}\" to \"#{changes[key]}\"",
+        user_market_permission:
+      )
+
+      model[key] = changes[key]
+    end
+
+    model.save
+  end
+
   private
 
   def set_layout

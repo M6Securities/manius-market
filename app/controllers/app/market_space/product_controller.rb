@@ -48,19 +48,8 @@ module App
         end
 
         update_keys = %i[name sku stock tax_code description enabled shippable]
-        update_keys.each do |key|
-          next if safe_params[key].nil?
 
-          next if safe_params[key].to_s == @product[key].to_s
-
-          @product.action_logs.create(
-            action: "Updated #{key} from #{@product[key]} to #{safe_params[key]}",
-            user_market_permission: @user_market_permissions
-          )
-          @product[key] = safe_params[key]
-        end
-
-        if @product.update safe_params.except(:product_price)
+        if log_model_updates(update_keys, @product, safe_params, @user_market_permissions)
           render :show # don't redirect, just show the updated product
         else
           render :edit, status: :unprocessable_entity

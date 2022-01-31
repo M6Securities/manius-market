@@ -20,9 +20,9 @@ module App
 
         safe_params = params.require(:update).permit(:status)
 
-        @order.status = safe_params[:status]
+        # @order.status = safe_params[:status]
 
-        if @order.save
+        if log_model_updates(%i[status], @order, safe_params, @user_market_permissions)
           flash[:success] = 'Order status updated'
           render :edit
         else
