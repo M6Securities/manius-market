@@ -25,8 +25,13 @@ class UserMarketPermission < ApplicationRecord
 
   after_update :update_cache
 
+  # Associations
+  # --------------------------------------------------------------------------------------------------------------------
+
   belongs_to :user
   belongs_to :market
+
+  has_many :action_logs, as: :loggable
 
   validates :formatted_permissions, presence: true
   validate :valid_permissions
