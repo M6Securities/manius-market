@@ -47,7 +47,7 @@ module App
           product_price.save
         end
 
-        update_keys = %i[name sku stock tax_code description enabled shippable]
+        update_keys = %i[name sku stock tax_code description enabled shippable].freeze
 
         if log_model_updates(update_keys, @product, safe_params, @user_market_permissions)
           render :show # don't redirect, just show the updated product
