@@ -146,7 +146,7 @@ GEM
       concurrent-ruby (~> 1.0)
     i18n_data (0.15.0)
       simple_po_parser (~> 1.1)
-    image_processing (1.12.1)
+    image_processing (1.12.2)
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.17, < 3)
     importmap-rails (1.0.2)
@@ -204,7 +204,7 @@ GEM
     nio4r (2.5.8)
     nokogiri (1.13.1-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.13.0-x86_64-linux)
+    nokogiri (1.13.1-x86_64-linux)
       racc (~> 1.4)
     numerizer (0.1.1)
     orm_adapter (0.5.0)
@@ -353,7 +353,7 @@ DEPENDENCIES
   devise-security
   email_address
   gaffe
-  image_processing (~> 1.2)
+  image_processing (~> 1.12)
   importmap-rails
   jbuilder
   kredis
