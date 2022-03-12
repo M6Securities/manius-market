@@ -14,6 +14,13 @@ Rails.application.routes.draw do
     namespace :app do
       resources :dashboard, only: %i[index]
 
+      # everything is not prefixed with /user_space
+      scope module: :user_space, as: :user_space do
+        # so this would be /app/order
+        resources :order, except: %i[destroy]
+        get 'order_datatable' => 'order#datatable'
+      end
+
       scope path: :market, module: :market_space, as: :market_space do
         resources :market
 

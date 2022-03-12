@@ -15,7 +15,7 @@ module App
 
       sort_col = params['order']['0']['column'] # eg 0 for column 0
       sort_dir = params['order']['0']['dir'] # 'desc' or 'asc'
-      sort_name = params['columns'][sort_col]['name'] # the column name set in the data table initialization. MUST equal the DB column name
+      sort_name = params['columns'][sort_col]['name'].to_s # the column name set in the data table initialization. MUST equal the DB column name
       search_value = params['search']['value']
 
       return unless %w[created_at event].include? sort_name

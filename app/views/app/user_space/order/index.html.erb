@@ -1,10 +1,10 @@
 <!-- displays a datatable of orders -->
 
-<% content_for :title, 'Orders' %>
+<% content_for :title, 'Your Orders' %>
 
 <div class="content-header d-flex mb-1 justify-content-between">
   <h1 class="m-0" style="line-height: 39px;">
-    Orders
+    Your Orders
   </h1>
 </div>
 <div class="content-body">
@@ -20,7 +20,6 @@
               <tr>
                 <th>Date</th>
                 <th>Num of Products</th>
-                <th>Payment Status</th>
                 <th>Order Status</th>
                 <th>View</th>
               </tr>
@@ -32,7 +31,6 @@
               <tr>
                 <th>Date</th>
                 <th>Num of Products</th>
-                <th>Payment Status</th>
                 <th>Order Status</th>
                 <th>View</th>
               </tr>
@@ -48,11 +46,11 @@
   <script defer>
 
       (function () {
-          const exportColumns = [0, 1, 2, 3]
+          const exportColumns = [0, 1, 2]
 
           const ordersTable = $('#orders-table').DataTable({
               ajax: {
-                  'url': '<%= app_market_space_order_datatable_path %>',
+                  'url': '<%= app_user_space_order_datatable_path %>',
                   'type': 'GET'
               },
 
@@ -72,31 +70,6 @@
                       }
                   },
                   { data: 'count' },
-                  {
-                      data: function (row, _type, _set) {
-                          switch (row.payment_status) {
-                              case <%= Order::PS_NONE %>:
-                                  return '<span class="badge bg-danger">None</span>';
-                              case <%= Order::PS_REQUIRES_PAYMENT_METHOD %>:
-                                  return '<span class="badge badge-light-warning">Requires Payment Method</span>';
-                              case <%= Order::PS_REQUIRES_CONFIRMATION %>:
-                                  return '<span class="badge badge-light-warning">Requires Confirmation</span>';
-                              case <%= Order::PS_REQUIRES_ACTION %>:
-                                  return '<span class="badge bg-warning">Requires Action</span>';
-                              case <%= Order::PS_PROCESSING %>:
-                                  return '<span class="badge bg-info">Processing</span>';
-                              case <%= Order::PS_REQUIRES_CAPTURE %>:
-                                  return '<span class="badge bg-info">Requires Capture</span>';
-                              case <%= Order::PS_CANCELED %>:
-                                  return '<span class="badge bg-danger">Canceled</span>';
-                              case <%= Order::PS_SUCCEEDED %>:
-                                  return '<span class="badge bg-success">Succeeded</span>';
-
-                              default:
-                                  return '<span class="text-danger">Unknown</span>';
-                          }
-                      }
-                  },
                   {
                       data: function (row, _type, _set) {
                           switch (row.status) {
@@ -129,9 +102,8 @@
               columnDefs: [
                   { name: 'orders.created_at', targets: 0 },
                   { name: 'count', targets: 1 },
-                  { name: 'orders.payment_status', targets: 2 },
-                  { name: 'orders.status', targets: 3 },
-                  { name: 'view',  targets: 4, 'orderable': false, 'searchable': false },
+                  { name: 'orders.status', targets: 2 },
+                  { name: 'view',  targets: 3, 'orderable': false, 'searchable': false },
 
                   { targets: '_all', searchable: true, orderable: true}
               ],

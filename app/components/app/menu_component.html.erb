@@ -28,6 +28,16 @@
         </a>
       </li>
 
+      <li class="navigation-header active">
+        <span>You</span>
+      </li>
+
+      <li class="nav-item">
+        <a href="<%= app_user_space_order_index_path %>">
+          <i data-feather='shopping-bag'></i><span class="menu-title">Orders</span>
+        </a>
+      </li>
+
       <% if @user.has_market? %>
 
         <li class="navigation-header active">
