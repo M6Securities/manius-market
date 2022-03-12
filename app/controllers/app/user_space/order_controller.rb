@@ -3,6 +3,8 @@
 module App
   module UserSpace
     class OrderController < UserSpaceController
+      before_action :find_order, except: %i[index new create]
+
       def datatable
         requested_length = params[:length].to_i
         requested_start  = params[:start].to_i
@@ -36,6 +38,13 @@ module App
         }
 
         render json: payload, status: :ok
+      end
+
+      private
+
+      def find_order
+        @order = current_user.orders.find_by(id: params[:id])
+        render 'error/not_found', status: :not_found, layout: 'error' unless @order
       end
     end
   end
