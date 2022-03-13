@@ -22,6 +22,7 @@
                 <th>Num of Products</th>
                 <th>Payment Status</th>
                 <th>Order Status</th>
+                <th>Total Price</th>
                 <th>View</th>
               </tr>
             </thead>
@@ -34,6 +35,7 @@
                 <th>Num of Products</th>
                 <th>Payment Status</th>
                 <th>Order Status</th>
+                <th>Total Price</th>
                 <th>View</th>
               </tr>
             </tfoot>
@@ -120,6 +122,15 @@
                   },
                   {
                       data: function (row, _type, _set) {
+                          if (row.total_price === undefined) {
+                              return '<span class="badge badge-light-danger">Unknown</span>';
+                          } else {
+                              return `${row.total_price} ${row.total_price_currency}`;
+                          }
+                      }
+                  },
+                  {
+                      data: function (row, _type, _set) {
                           return `<a href="<%= app_market_space_order_index_path %>/${row.id}" class="btn btn-outline-primary my-0 mr-0">
                             <i data-feather="chevrons-right"></i>
                           </a>`;
@@ -131,7 +142,8 @@
                   { name: 'count', targets: 1 },
                   { name: 'orders.payment_status', targets: 2 },
                   { name: 'orders.status', targets: 3 },
-                  { name: 'view',  targets: 4, 'orderable': false, 'searchable': false },
+                  { name: 'orders.total_price_cents', targets: 4 },
+                  { name: 'view',  targets: 5, orderable: false, searchable: false },
 
                   { targets: '_all', searchable: true, orderable: true}
               ],

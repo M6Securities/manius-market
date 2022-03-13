@@ -79,6 +79,8 @@ class Order < ApplicationRecord
   # Methods
   # --------------------------------------------------------------------------------------------------------------------
 
+  monetize :total_price_cents, allow_nil: true
+
   def market
     customer.market
   end

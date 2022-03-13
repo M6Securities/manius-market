@@ -21,6 +21,7 @@
                 <th>Date</th>
                 <th>Num of Products</th>
                 <th>Order Status</th>
+                <th>Total Price</th>
                 <th>View</th>
               </tr>
             </thead>
@@ -32,6 +33,7 @@
                 <th>Date</th>
                 <th>Num of Products</th>
                 <th>Order Status</th>
+                <th>Total Price</th>
                 <th>View</th>
               </tr>
             </tfoot>
@@ -50,8 +52,8 @@
 
           const ordersTable = $('#orders-table').DataTable({
               ajax: {
-                  'url': '<%= app_user_space_order_datatable_path %>',
-                  'type': 'GET'
+                  url: '<%= app_user_space_order_datatable_path %>',
+                  type: 'GET'
               },
 
               processing: true,
@@ -93,6 +95,15 @@
                   },
                   {
                       data: function (row, _type, _set) {
+                          if (row.total_price === undefined) {
+                              return '<span class="badge badge-light-danger">Unknown</span>';
+                          } else {
+                              return `${row.total_price} ${row.total_price_currency}`;
+                          }
+                      }
+                  },
+                  {
+                      data: function (row, _type, _set) {
                           return `<a href="<%= app_user_space_order_index_path %>/${row.id}" class="btn btn-outline-primary my-0 mr-0">
                             <i data-feather="chevrons-right"></i>
                           </a>`;
@@ -103,7 +114,8 @@
                   { name: 'orders.created_at', targets: 0 },
                   { name: 'count', targets: 1 },
                   { name: 'orders.status', targets: 2 },
-                  { name: 'view',  targets: 3, 'orderable': false, 'searchable': false },
+                  { name: 'orders.total_price_cents', targets: 3 },
+                  { name: 'view',  targets: 4, 'orderable': false, 'searchable': false },
 
                   { targets: '_all', searchable: true, orderable: true}
               ],

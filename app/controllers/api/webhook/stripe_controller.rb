@@ -87,22 +87,28 @@ module Api
 
         case event['data']['object']['status']
         when 'requires_payment_method'
-          order.update payment_status: Order::PS_REQUIRES_PAYMENT_METHOD
+          order.assign_attributes payment_status: Order::PS_REQUIRES_PAYMENT_METHOD
         when 'requires_confirmation'
-          order.update payment_status: Order::PS_REQUIRES_CONFIRMATION
+          order.assign_attributes payment_status: Order::PS_REQUIRES_CONFIRMATION
         when 'requires_action'
-          order.update payment_status: Order::PS_REQUIRES_ACTION
+          order.assign_attributes payment_status: Order::PS_REQUIRES_ACTION
         when 'processing'
-          order.update payment_status: Order::PS_PROCESSING
+          order.assign_attributes payment_status: Order::PS_PROCESSING
         when 'requires_capture'
-          order.update payment_status: Order::PS_REQUIRES_CAPTURE
+          order.assign_attributes payment_status: Order::PS_REQUIRES_CAPTURE
         when 'succeeded'
-          order.update payment_status: Order::PS_SUCCEEDED
+          order.assign_attributes payment_status: Order::PS_SUCCEEDED
         when 'canceled'
-          order.update payment_status: Order::PS_CANCELED
+          order.assign_attributes payment_status: Order::PS_CANCELED
         else
-          order.update payment_status: Order::PS_NONE
+          order.assign_attributes payment_status: Order::PS_NONE
         end
+
+        total_price = Money.from_cents(event['data']['object']['amount'], event['data']['object']['currency'])
+
+        order.total_price = total_price
+
+        order.save
       end
 
       def customer_created(event)

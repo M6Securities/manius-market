@@ -41,6 +41,15 @@
                 <br>
                 <div class="row">
 
+                  <div class="col-12">
+                    <h5 class="h5">
+                      <%= @order.total_price.format %> <%= @order.total_price_currency %>
+                    </h5>
+                    <p>
+                      <br>
+                    </p>
+                  </div>
+
                   <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                     <h5 class="mb-1">
                       <i data-feather='info' class="m2-25"></i> Information
