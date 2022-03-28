@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.0'
+ruby '3.1.1'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.0.0'
@@ -66,6 +66,8 @@ group :development do
   # https://github.com/BetterErrors/better_errors
   gem 'better_errors'
   gem 'binding_of_caller'
+
+  gem 'rubocop'
 end
 
 group :test do

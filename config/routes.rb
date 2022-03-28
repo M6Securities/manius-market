@@ -64,6 +64,11 @@ Rails.application.routes.draw do
         authenticate :user, ->(user) { user.site_admin } do
           mount Sidekiq::Web => '/sidekiq'
         end
+
+        scope :settings, as: :settings do
+          get '/' => 'settings#edit'
+          match '/' => 'settings#update', via: %i[post patch put]
+        end
       end
       get '/site_admin' => 'site_admin#index'
     end

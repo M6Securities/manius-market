@@ -10,10 +10,10 @@ system_user = User.new(id: User::SYSTEM, display_name: 'System', email: 'cloud@m
 password = Rails.env.development? ? 'B83WC^?29CgzWGLk' : "#{SecureRandom.alphanumeric(24)}#^@" # needs symbols so...
 system_user.password = system_user.password_confirmation = password
 
-if system_user.invalid?
-  puts "Invalid Object: \n#{system_user.errors.messages}"
-end
+puts "Invalid Object: \n#{system_user.errors.messages}" if system_user.invalid?
 
 puts "System User Information; email: 'cloud@m6securities.com' password: #{password}"
 
 system_user.save unless User.exists?(system_user.id)
+
+Setting.create # create the default settings

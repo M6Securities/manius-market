@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_13_205914) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -174,6 +174,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_13_205914) do
     t.datetime "updated_at", null: false
     t.index ["market_id"], name: "index_receives_on_market_id"
     t.index ["user_id"], name: "index_receives_on_user_id"
+  end
+
+  create_table "settings", force: :cascade do |t|
+    t.string "app_name", default: "Manius Market"
+    t.boolean "allow_registration", default: true
+    t.boolean "allow_market_creation", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "user_market_permissions", force: :cascade do |t|
