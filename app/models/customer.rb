@@ -46,6 +46,11 @@ class Customer < ApplicationRecord
     Money.new(total, 'USD')
   end
 
+  # returns the number of cart items in the cart
+  def num_cart_items
+    cart_items.sum(:quantity)
+  end
+
   def display_name
     user&.display_name
   end

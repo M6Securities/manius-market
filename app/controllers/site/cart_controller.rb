@@ -3,6 +3,8 @@
 module Site
   # handles everything cart related on the front end
   class CartController < SiteController
+    before_action :fetch_numbers, only: %i[index navbar]
+
     def navbar
       @show_navbar_cart = params[:show_cart] == 'true'
 
@@ -24,10 +26,10 @@ module Site
       cart_item = @current_customer.cart_items.find_by(product_id: product.id)
 
       if cart_item.nil?
-        @current_customer.cart_items.create(product_id: product.id, quantity: quantity)
+        @current_customer.cart_items.create(product_id: product.id, quantity:)
       else
         quantity += cart_item.quantity
-        cart_item.update(quantity: quantity)
+        cart_item.update(quantity:)
       end
 
       render status: :ok, json: { message: 'Product added to cart' }
@@ -62,6 +64,13 @@ module Site
 
       @show_navbar_cart = true
       redirect_to cart_navbar_path(show_cart: true)
+    end
+
+    private
+
+    def fetch_numbers
+      @cart_items_count = @current_customer.num_cart_items
+      @cart_total = @current_customer.cart_total
     end
   end
 end

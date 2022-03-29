@@ -1,9 +1,9 @@
 <%= turbo_frame_tag @current_customer do %>
   <a class="nav-link <%= 'show' if @show_navbar_cart %>" href="#" id="cart-navbar-dropdown-button" data-bs-toggle="dropdown" aria-expanded="<%= @show_navbar_cart ? 'true' : 'false' %>">
     <i class="ficon" data-feather='shopping-cart'></i>
-    <% if @current_customer.cart_items.size > 0 %>
+    <% if @cart_items_count > 0 %>
       <span class="badge rounded-pill bg-primary badge-up cart-item-count">
-        <%= @current_customer.cart_items.size %>
+        <%= @cart_items_count %>
       </span>
     <% end %>
   </a>
@@ -13,7 +13,7 @@
     <li class="dropdown-menu-header">
       <div class="dropdown-header d-flex">
         <h4 class="notification-title mb-0 me-auto">My Cart</h4>
-        <div class="badge rounded-pill badge-light-primary"><%= @current_customer.cart_items.size %> Items</div>
+        <div class="badge rounded-pill badge-light-primary"><%= @cart_items_count %> Items</div>
       </div>
     </li>
 
@@ -81,7 +81,7 @@
             Total:
           </h6>
           <h6 class="text-primary fw-bolder mb-0">
-            <%= @current_customer.cart_total.format %>
+            <%= @cart_total.format %>
           </h6>
         </div>
         <a href="<%= cart_path %>" class="btn btn-primary w-100 waves-effect waves-float waves-light">
