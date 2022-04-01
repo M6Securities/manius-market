@@ -15,11 +15,28 @@
 # gem "pg"
 #
 default: &default
-  adapter: postgresql
-  encoding: unicode
+  adapter: cockroachdb
+  encoding: utf8
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+
+  <% if Rails.application.credentials.cockroachdb[:host].blank? || (ENV['local_cockroachdb'] == 'true') %>
+
+  url: "cockroachdb://root@localhost:26257?sslmode=disable"
+
+  <% else %>
+
+  # host: "<%= Rails.application.credentials.cockroachdb[:host] %>"
+  host: "free-tier.gcp-us-central1.cockroachlabs.cloud" # this is the only way it works? no idea why but the above line does not work, no matter how I manipulate it
+  port: <%= Rails.application.credentials.cockroachdb[:port] %>
+  username: <%= Rails.application.credentials.cockroachdb[:username] %>
+  password: <%= Rails.application.credentials.cockroachdb[:password] %>
+  options: "--cluster=<%= Rails.application.credentials.cockroachdb[:cluster] %>"
+  requiressl: true
+
+  <% end %>
 
 development:
   <<: *default

@@ -51,6 +51,8 @@ gem 'image_processing', '~> 1.12'
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]
+
+  gem 'figaro'
 end
 
 group :development do
@@ -107,3 +109,9 @@ gem 'stripe'
 
 # Country select
 gem 'country_select'
+
+# cockroachdb with rails 7 support
+#
+# main gem: https://github.com/cockroachdb/activerecord-cockroachdb-adapter
+# with support: https://github.com/keithdoggett/activerecord-cockroachdb-adapter/tree/ar-70
+gem 'activerecord-cockroachdb-adapter', github: 'keithdoggett/activerecord-cockroachdb-adapter', branch: 'ar-70'

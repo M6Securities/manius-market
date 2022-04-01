@@ -6,13 +6,14 @@ class AppController < ApplicationController
 
   before_action :authenticate_user!
   before_action :check_user_enabled
-  before_action :current_market
-  before_action :get_user_market_permissions
 
   def current_market
+    puts 'Current Market...'
     @current_market = Market.find session[:market_id] unless session[:market_id].blank?
     @current_market = nil unless current_user.markets.include?(@current_market) # unless @current_market.nil?
     @current_market = current_user.markets.first if @current_market.nil?
+
+    redirect_to new_app_market_space_market_path if @current_market.nil?
   end
 
   def set_market

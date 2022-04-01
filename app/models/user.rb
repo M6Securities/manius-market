@@ -2,7 +2,7 @@
 
 # user class
 class User < ApplicationRecord
-  SYSTEM = -1
+  SYSTEM_USER_ID = -1
 
   # Devise
   # ---------------------------------------------------------------------------

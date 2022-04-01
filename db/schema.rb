@@ -11,16 +11,13 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "action_logs", force: :cascade do |t|
     t.string "loggable_type"
     t.bigint "loggable_id"
     t.string "action", default: "", null: false
     t.bigint "user_market_permission_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["loggable_type", "loggable_id"], name: "index_action_logs_on_loggable"
     t.index ["user_market_permission_id"], name: "index_action_logs_on_user_market_permission_id"
   end
@@ -30,7 +27,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -43,7 +40,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
     t.string "service_name", null: false
     t.bigint "byte_size", null: false
     t.string "checksum"
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
@@ -56,9 +53,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
   create_table "cart_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "product_id"
     t.uuid "customer_id"
-    t.integer "quantity", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.bigint "quantity", default: 0
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["customer_id"], name: "index_cart_items_on_customer_id"
     t.index ["product_id"], name: "index_cart_items_on_product_id"
   end
@@ -68,8 +65,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
     t.bigint "market_id"
     t.boolean "real", default: false
     t.string "session_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "stripe_customer_id"
     t.string "email"
     t.index ["market_id"], name: "index_customers_on_market_id"
@@ -81,8 +78,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
     t.string "display_name", default: ""
     t.string "path_name", default: ""
     t.string "email", default: ""
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "stripe_publishable_key"
     t.string "stripe_secret_key"
     t.string "default_currency", default: "USD"
@@ -92,18 +89,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
   create_table "old_passwords", force: :cascade do |t|
     t.string "encrypted_password", null: false
     t.string "password_archivable_type", null: false
-    t.integer "password_archivable_id", null: false
+    t.bigint "password_archivable_id", null: false
     t.string "password_salt"
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
     t.index ["password_archivable_type", "password_archivable_id"], name: "index_password_archivable"
   end
 
   create_table "order_items", force: :cascade do |t|
     t.uuid "order_id"
     t.uuid "product_id"
-    t.integer "quantity", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.bigint "quantity", default: 0
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "stripe_line_item_id"
     t.index ["order_id"], name: "index_order_items_on_order_id"
     t.index ["product_id"], name: "index_order_items_on_product_id"
@@ -118,13 +115,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
     t.string "zip"
     t.string "country"
     t.string "stripe_checkout_session_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "stripe_payment_intent_id"
-    t.integer "payment_status", default: 0
-    t.integer "status", default: 0
+    t.bigint "payment_status", default: 0
+    t.bigint "status", default: 0
     t.string "shipping_name"
-    t.integer "total_price_cents"
+    t.bigint "total_price_cents"
     t.string "total_price_currency"
     t.index ["customer_id"], name: "index_orders_on_customer_id"
     t.index ["status"], name: "index_orders_on_status"
@@ -132,22 +129,22 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
 
   create_table "product_prices", force: :cascade do |t|
     t.uuid "product_id"
-    t.integer "price_cents", default: 0, null: false
+    t.bigint "price_cents", default: 0, null: false
     t.string "price_currency", default: "USD", null: false
     t.string "stripe_price_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["product_id"], name: "index_product_prices_on_product_id"
   end
 
   create_table "products", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", default: ""
     t.string "sku", default: ""
-    t.integer "stock", default: 0
+    t.bigint "stock", default: 0
     t.string "tax_code", default: "txcd_99999999"
     t.bigint "market_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "stripe_product_id"
     t.boolean "enabled", default: true
     t.boolean "shippable", default: true
@@ -160,9 +157,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
   create_table "receive_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "receive_id"
     t.uuid "product_id"
-    t.integer "quantity", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.bigint "quantity", default: 0
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["product_id"], name: "index_receive_items_on_product_id"
     t.index ["receive_id"], name: "index_receive_items_on_receive_id"
   end
@@ -170,8 +167,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
   create_table "receives", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.bigint "market_id"
     t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["market_id"], name: "index_receives_on_market_id"
     t.index ["user_id"], name: "index_receives_on_user_id"
   end
@@ -180,16 +177,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
     t.string "app_name", default: "Manius Market"
     t.boolean "allow_registration", default: true
     t.boolean "allow_market_creation", default: true
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "user_market_permissions", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "market_id"
     t.string "formatted_permissions", default: ""
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["market_id"], name: "index_user_market_permissions_on_market_id"
     t.index ["user_id"], name: "index_user_market_permissions_on_user_id"
   end
@@ -198,26 +195,26 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
+    t.bigint "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at", precision: nil
+    t.datetime "last_sign_in_at", precision: nil
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
     t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
+    t.datetime "confirmed_at", precision: nil
+    t.datetime "confirmation_sent_at", precision: nil
     t.string "unconfirmed_email"
-    t.integer "failed_attempts", default: 0, null: false
+    t.bigint "failed_attempts", default: 0, null: false
     t.string "unlock_token"
-    t.datetime "locked_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "locked_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "display_name", default: ""
-    t.datetime "password_changed_at"
-    t.datetime "last_activity_at"
-    t.datetime "expired_at"
+    t.datetime "password_changed_at", precision: nil
+    t.datetime "last_activity_at", precision: nil
+    t.datetime "expired_at", precision: nil
     t.string "unique_session_id"
     t.boolean "enabled", default: true
     t.boolean "site_admin", default: false

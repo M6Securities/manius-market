@@ -5,6 +5,7 @@ module App
     # Handles user facing market stuff
     class MarketController < MarketSpaceController
       before_action :find_market, except: %i[index datatable new create]
+      skip_before_action :current_market, :get_user_market_permissions, :require_market, only: %i[new create]
 
       def new
         @market = Market.new
@@ -61,6 +62,7 @@ module App
       private
 
       def find_market
+        puts 'Finding Market'
         @market = Market.find_by id: params[:id]
       end
     end

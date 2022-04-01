@@ -79,13 +79,18 @@ module Api
 
           order_item.save
         end
+        order.action_logs.create(
+          action: 'Order Placed',
+          user_id: User::SYSTEM_USER_ID
+        )
       end
 
       def update_payment_intent(event)
         payment_intent_id = event['data']['object']['id']
+        payment_intent_status = event['data']['object']['status']
         order = Order.find_by stripe_payment_intent_id: payment_intent_id
 
-        case event['data']['object']['status']
+        case payment_intent_status
         when 'requires_payment_method'
           order.assign_attributes payment_status: Order::PS_REQUIRES_PAYMENT_METHOD
         when 'requires_confirmation'
@@ -109,6 +114,11 @@ module Api
         order.total_price = total_price
 
         order.save
+
+        order.action_logs.create(
+          action: "Payment Intent Updated to #{payment_intent_status}",
+          user_id: User::SYSTEM_USER_ID
+        )
       end
 
       def customer_created(event)
