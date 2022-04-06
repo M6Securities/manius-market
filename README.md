@@ -7,11 +7,12 @@ This also doubles as a place for me to learn TurboJS, so the entire website is d
 
 ### What is Manius Market?
 
-This is an online market place, with a focus on markets instead of products like Amazon. This is probably similar to Shopify, but I've never used it so I have no idea what their tools are like, this is simply what I would like to see in a similar app. But this is not a Shopify clone.
+This is an online market place, with a focus on markets instead of products like Amazon. This is probably similar to Shopify or Etsy, but I've never used it so I have no idea what their tools are like, this is simply what I would like to see in a similar app. But this is not a Shopify clone.
 
 It'll have features such as online ordering, inventory management, maybe a basic CMS system, and more. All payment processing will be done through Stripe, and will take full advantage of their API. I doubt that will change, working with PayPal is a pain.
 
-Currently, this is just a wrapper around Stripe, but I'm hoping to add more features in the future that will set it apart.
+This is very reliant on Stripe, though in theory I could add other payment options.
+But that's not planned, as I like Stripe for their tax integration. 
 
 
 ### Details
@@ -49,6 +50,11 @@ In this mode you can view DB information at [http://localhost:8080/](http://loca
 
 To create the database, run `rake db:create db:migrate db:seed`
 
+### Stripe
+
+To test locally, you need to be running the local stripe API CLI tool or whatever it's called. 
+Once you have that set up, you can run it via `stripe listen --forward-to HOSTNAME/api/webhook/stripe`
+
 ### Environment Credentials
 
 There are quite a few environment credentials needed to run the app. 
@@ -67,6 +73,13 @@ cockroachdb:
   cluster: # your cluster name. It's the text before .defaultdb
   username: # username
   password: # password
+
+# FOR TESTING ONLY
+# Stripe information to use for running tests
+stripe:
+  publishable_key: # key
+  secret_key: # key
+  webhook_secret: # key
 ```
 
 ### Environment Variables

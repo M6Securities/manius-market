@@ -24,7 +24,7 @@ default: &default
 
   <% if Rails.application.credentials.cockroachdb[:host].blank? || (ENV['local_cockroachdb'] == 'true') %>
 
-  url: "cockroachdb://root@localhost:26257?sslmode=disable"
+  url: "cockroachdb://root@127.0.0.1:26257?sslmode=disable"
 
   <% else %>
 
