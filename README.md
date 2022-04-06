@@ -45,6 +45,8 @@ cockroach init --insecure --host=localhost:26257
 ```
 You can find more information about these commands [here](https://www.cockroachlabs.com/docs/stable/start-a-local-cluster.html).
 
+In this mode you can view DB information at [http://localhost:8080/](http://localhost:8080/).
+
 To create the database, run `rake db:create db:migrate db:seed`
 
 ### Environment Credentials
