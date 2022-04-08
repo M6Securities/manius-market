@@ -4,7 +4,7 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {
+test_market:
   id: 1
   display_name: 'Test Market'
   path_name: 'test'
@@ -12,8 +12,8 @@ one: {
   default_currency: 'USD'
   stripe_publishable_key: '<%= Rails.application.credentials.stripe[:publishable_key] %>'
   stripe_secret_key: '<%= Rails.application.credentials.stripe[:secret_key] %>'
-  webhook_secret: '<%= Rails.application.credentials.stripe[:webhook_secret] %>'
-}
+  stripe_webhook_secret: '<%= Rails.application.credentials.stripe[:webhook_secret] %>'
+
 # column: value
 #
 # two: {}

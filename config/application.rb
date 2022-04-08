@@ -18,7 +18,7 @@ module ManiusMarket
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-    config.hosts << 'dalen.m6securities.dev'
+    # config.hosts << '*.m6securities.dev'
 
     Money.locale_backend = :i18n
   end

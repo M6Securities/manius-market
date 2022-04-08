@@ -4,11 +4,13 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {
+system_user_permissions:
   user_id: -1
   market_id: 1
   formatted_permissions: 0
-}
+  user: system
+  market: test_market
+
 # column: value
 #
 # two: {}

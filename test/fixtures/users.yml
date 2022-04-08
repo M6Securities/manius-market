@@ -4,14 +4,13 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {
+system:
   id: -1 # this is User::SYSTEM_USER_ID
   display_name: 'System'
   email: 'cloud@m6securities.com'
   site_admin: true
-  password: 'B83WC^?29CgzWGLk'
-  password_confirmation: 'B83WC^?29CgzWGLk'
-}
+  encrypted_password: "<%= User.new(:password => 'B83WC^?29CgzWGLk').encrypted_password %>"
+
 # column: value
 #
 # two: {}
