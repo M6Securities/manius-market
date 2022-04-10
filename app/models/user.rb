@@ -36,10 +36,10 @@ class User < ApplicationRecord
 
   # Validations
   # ---------------------------------------------------------------------------
-  validates_with EmailAddress::ActiveRecordValidator, if: !Rails.env.test?
 
   validates :display_name, presence: true
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true, email: true, if: !Rails.env.test?
+  validates :encrypted_password, presence: true
 
   # Methods
   # ---------------------------------------------------------------------------

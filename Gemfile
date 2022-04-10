@@ -57,6 +57,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails'
+  gem 'rubocop-rspec'
 end
 
 group :development do
@@ -74,6 +75,8 @@ group :development do
   gem 'binding_of_caller'
 
   gem 'rubocop'
+  gem 'rubocop-rails'
+  gem 'rubocop-faker'
 end
 
 group :test do
@@ -92,7 +95,7 @@ gem 'devise-encryptable'
 gem 'devise-security'
 
 #  validations
-gem 'email_address'
+gem 'email_validator'
 gem 'phonelib'
 
 # error handling
