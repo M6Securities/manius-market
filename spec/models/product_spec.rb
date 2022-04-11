@@ -11,12 +11,12 @@ RSpec.describe Product, type: :model do
     expect(@product1).to be_valid
   end
 
-  it 'has a unique sku' do
-    product2 = FactoryBot.build(:product, sku: @product1.sku)
+  it 'has a unique sku to the market' do
+    product2 = FactoryBot.build(:product, sku: @product1.sku, market: @product1.market)
     expect(product2).to_not be_valid
   end
 
-  it 's invalid without a name' do
+  it 'is invalid without a name' do
     product2 = FactoryBot.build(:product, name: nil)
     expect(product2).to_not be_valid
   end
