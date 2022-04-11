@@ -6,10 +6,11 @@ class CartItem < ApplicationRecord
 
   # Validations
   # ------------------------------------------------------------
-  validates_presence_of :customer, :product
+  # validates_presence_of :customer, :product # technically not needed because it's done in validate_same_markets
   validates :quantity,
             presence: true,
             numericality: { greater_than: 0 }
+  validate :validate_same_markets
 
   def market
     customer.market
@@ -18,5 +19,14 @@ class CartItem < ApplicationRecord
   # returns a money object of the price
   def price_total(currency)
     Money.from_cents((product.product_price_from_currency(currency).price.cents * quantity), currency)
+  end
+
+  private
+
+  def validate_same_markets
+    return errors.add(:customer, 'must exist') if customer.nil?
+    return errors.add(:product, 'must exist') if product.nil?
+
+    errors.add(:base, 'customer and product must be from the same market') if customer.market != product.market
   end
 end

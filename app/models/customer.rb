@@ -29,9 +29,7 @@ class Customer < ApplicationRecord
               scope: :market_id
             },
             allow_blank: true,
-            format: {
-              with: URI::MailTo::EMAIL_REGEXP
-            }
+            email: true
 
   # Methods
   # ------------------------------------------------------------
