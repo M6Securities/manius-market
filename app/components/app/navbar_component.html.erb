@@ -43,32 +43,34 @@
       </li>
       -->
 
-      <% if @user.has_market? %>
-        <li class="nav-item dropdown dropdown-user">
-          <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-market-selection" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <div class="user-nav d-sm-flex d-none">
-              <span class="user-name font-weight-bolder m-0">
-                <%= @market.display_name %> <i data-feather='chevron-down'></i>
-              </span>
-            </div>
-          </a>
-
-          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user" data-bs-popper="none">
-
-            <% @user.markets.each do |market| %>
-              <div>
-                <form action="<%= app_set_market_path %>" method="post">
-                  <input type="hidden" value="<%= market.path_name %>" name="market[path]">
-                  <button type="submit" class="dropdown-item w-100">
-                    <%= market.display_name %>
-                  </button>
-                </form>
+      <% if @market_dropdown %>
+        <% if @user.has_market? %>
+          <li class="nav-item dropdown dropdown-user">
+            <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-market-selection" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <div class="user-nav d-sm-flex d-none">
+                <span class="user-name font-weight-bolder m-0">
+                  <%= @market.display_name %> <i data-feather='chevron-down'></i>
+                </span>
               </div>
+            </a>
 
-            <% end %>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user" data-bs-popper="none">
 
-          </div>
-        </li>
+              <% @user.markets.each do |market| %>
+                <div>
+                  <form action="<%= app_set_market_path %>" method="post">
+                    <input type="hidden" value="<%= market.path_name %>" name="market[path]">
+                    <button type="submit" class="dropdown-item w-100">
+                      <%= market.display_name %>
+                    </button>
+                  </form>
+                </div>
+
+              <% end %>
+
+            </div>
+          </li>
+        <% end %>
       <% end %>
 
 

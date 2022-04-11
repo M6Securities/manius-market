@@ -12,7 +12,8 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(_resource)
-    app_path # your path
+    # app_path # your path
+    app_dashboard_index_path
   end
 
   def check_user_site_admin
