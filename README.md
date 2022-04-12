@@ -7,12 +7,39 @@ This also doubles as a place for me to learn TurboJS, so the entire website is d
 
 ### What is Manius Market?
 
-This is an online market place, with a focus on markets instead of products like Amazon. This is probably similar to Shopify or Etsy, but I've never used it so I have no idea what their tools are like, this is simply what I would like to see in a similar app. But this is not a Shopify clone.
+This is an online market place, with a focus on markets instead of products like Amazon. This is probably similar to Shopify or Etsy, but I've never used them so I have no idea what their tools are like, this is simply what I would like to see in a similar app. But this does not aim to be a Shopify clone or Etsy clone.
 
 It'll have features such as online ordering, inventory management, maybe a basic CMS system, and more. All payment processing will be done through Stripe, and will take full advantage of their API. I doubt that will change, working with PayPal is a pain.
 
 This is very reliant on Stripe, though in theory I could add other payment options.
 But that's not planned, as I like Stripe for their tax integration. 
+
+### Features
+
+- [x] Basic Ordering and Cart System
+- [x] Easy Market Management
+- [x] Granular User Permissions
+- [x] Tax Integration on all orders
+- [x] Support for multiple currencies
+- [ ] Support for multiple countries
+- [ ] Rating system plus comments
+- [ ] In-depth product customization, like photos, descriptions, etc.
+- [ ] Market Theming
+- [ ] Searching
+- [ ] Basic CMS
+- [x] Basic Inventory Management
+- [ ] Invoicing for Business purchases
+- [ ] Digital Products
+- [ ] Order Tracking
+- [ ] Purchase Verification - aka they need to be a verified member of _**your**_ site to purchase
+- [ ] Support for multiple inventory locations
+- [ ] Digital product delivery (products that you download)
+- [ ] Basic Email Marketing
+- [ ] Easy self hosting
+- [ ] Easy provided hosting, aka a SaaS
+
+
+Note: Until this is actually released, if that ever happens, I will push breaking changes.
 
 
 ### Details

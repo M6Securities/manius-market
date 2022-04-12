@@ -1,4 +1,5 @@
-class CartItem < ApplicationRecord
+class
+CartItem < ApplicationRecord
   # Associations
   # ------------------------------------------------------------
   belongs_to :customer

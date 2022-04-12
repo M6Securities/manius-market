@@ -36,12 +36,14 @@ class Customer < ApplicationRecord
 
   # returns a money object of the cart total
   def cart_total
-    total = 0
+    # yes there's a clever way to do with .sum() in the database, but this is way more readable
+    #
+    # TODO cache this for faster page loads
+    total = Money.from_cents(0, market.default_currency)
     cart_items.each do |item|
-      total += item.product.product_price_from_currency(market.default_currency).price.cents * item.quantity
+      total += item.price_total(market.default_currency)
     end
-
-    Money.new(total, 'USD')
+    total
   end
 
   # returns the number of cart items in the cart

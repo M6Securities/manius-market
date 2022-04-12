@@ -4,9 +4,9 @@ require 'rails_helper'
 
 RSpec.describe CartItem, type: :model do
   before(:all) do
-    @cart_item = FactoryBot.build(:cart_item)
-    @cart_item.product.market = @cart_item.customer.market # cause there's no way to do this in the factory
-    @cart_item.save
+    @cart_item = FactoryBot.create(:cart_item)
+    # @cart_item.product.market = @cart_item.customer.market # cause there's no way to do this in the factory
+    # @cart_item.save
   end
 
   it 'has a valid factory' do

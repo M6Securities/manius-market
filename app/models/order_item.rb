@@ -10,7 +10,7 @@ class OrderItem < ApplicationRecord
 
   # Validations
   # --------------------------------------------------------------------------------------------------------------------
-  validates_presence_of :order
+  validates_presence_of :order, :product
   validates :quantity,
             numericality: {
               only_integer: true,
