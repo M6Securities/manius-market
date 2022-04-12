@@ -2,6 +2,11 @@
 
 require 'faker'
 
+# I didn't plan on putting all the factories in one file.
+# But it turns out it's needed when factories reference other factories, as seen in cart_items and order_items, where both parent objects need to share traits.
+# As in a order item's product and order both need to be part of the same market.
+
+# Rubocop: disable Metrics/BlockLength
 FactoryBot.define do
   factory :market do
     display_name { Faker::Company.name }
@@ -63,12 +68,10 @@ FactoryBot.define do
   end
 
   factory :cart_item do
-    market = create { :market }
-    customer = FactoryBot.create(:customer, market:)
-    product = FactoryBot.create(:product, market:)
+    market = FactoryBot.create(:market)
 
-    association customer: customer
-    association product: product
+    association :customer, factory: :customer, market: market
+    association :product, factory: :product, market: market
 
     quantity { Faker::Number.between(from: 1, to: 10) }
   end
@@ -85,11 +88,11 @@ FactoryBot.define do
   end
 
   factory :order_item do
-    order = FactoryBot.create(:order)
-    product = FactoryBot.create(:product, market: order.market)
+    market = FactoryBot.create(:market)
+    customer = FactoryBot.create(:customer, market:)
 
-    association order: order
-    association product: product
+    association :order, factory: :order, customer: customer
+    association :product, factory: :product, market: market
 
     quantity { Faker::Number.number(digits: 2) }
   end
