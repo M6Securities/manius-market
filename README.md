@@ -101,8 +101,8 @@ cockroachdb:
   username: # username
   password: # password
 
-# FOR TESTING ONLY
-# Stripe information to use for running tests
+# FOR TESTING AND DEV ONLY
+# Stripe information to use for generating factories
 stripe:
   publishable_key: # key
   secret_key: # key

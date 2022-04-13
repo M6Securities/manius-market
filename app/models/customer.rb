@@ -29,7 +29,8 @@ class Customer < ApplicationRecord
               scope: :market_id
             },
             allow_blank: true,
-            email: true
+            email: true,
+            unless: proc { |_c| Rails.env.test? }
 
   # Methods
   # ------------------------------------------------------------

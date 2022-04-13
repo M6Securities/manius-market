@@ -85,6 +85,9 @@ FactoryBot.define do
     state { Faker::Address.state }
     zip { Faker::Address.zip }
     country { Faker::Address.country }
+
+    payment_status { 0 }
+    status { 0 }
   end
 
   factory :order_item do

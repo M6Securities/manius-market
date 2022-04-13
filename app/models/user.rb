@@ -38,7 +38,10 @@ class User < ApplicationRecord
   # ---------------------------------------------------------------------------
 
   validates :display_name, presence: true
-  validates :email, presence: true, uniqueness: true, email: true, if: !Rails.env.test?
+  validates :email, presence: true,
+                    uniqueness: true,
+                    email: true,
+                    unless: proc { |_u| Rails.env.test? }
   validates :encrypted_password, presence: true
 
   # Methods
