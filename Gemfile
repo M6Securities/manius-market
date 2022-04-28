@@ -58,6 +58,8 @@ group :development, :test do
   gem 'faker'
   gem 'rspec-rails'
   gem 'rubocop-rspec'
+
+  gem 'launchy'
 end
 
 group :development do
