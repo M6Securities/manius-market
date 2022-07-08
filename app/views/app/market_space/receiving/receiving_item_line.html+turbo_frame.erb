@@ -1,0 +1,13 @@
+<%= turbo_frame_tag @item do %>
+  <tr>
+    <td>
+      <span class="text-muted">
+        <%= @item.product.sku %>
+      </span>
+
+    </td>
+    <td>
+      <%= @item.quantity %>
+    </td>
+  </tr>
+<% end %>

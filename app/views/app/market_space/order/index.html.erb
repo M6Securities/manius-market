@@ -1,0 +1,196 @@
+<!-- displays a datatable of orders -->
+
+<% content_for :title, 'Orders' %>
+
+<div class="content-header d-flex mb-1 justify-content-between">
+  <h1 class="m-0" style="line-height: 39px;">
+    Orders
+  </h1>
+</div>
+<div class="content-body">
+
+  <section id="products-index">
+
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+
+          <table id="orders-table" class="table dataTable table-striped" style="width:100%">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Num of Products</th>
+                <th>Payment Status</th>
+                <th>Order Status</th>
+                <th>Total Price</th>
+                <th>View</th>
+              </tr>
+            </thead>
+
+            <tbody class="table-striped"></tbody>
+
+            <tfoot>
+              <tr>
+                <th>Date</th>
+                <th>Num of Products</th>
+                <th>Payment Status</th>
+                <th>Order Status</th>
+                <th>Total Price</th>
+                <th>View</th>
+              </tr>
+            </tfoot>
+          </table>
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <script defer>
+
+      (function () {
+          const exportColumns = [0, 1, 2, 3]
+
+          const ordersTable = $('#orders-table').DataTable({
+              ajax: {
+                  'url': '<%= app_market_space_order_datatable_path %>',
+                  'type': 'GET'
+              },
+
+              processing: true,
+              serverSide: true,
+              paging: true,
+              pagingType: 'full_numbers',
+              searching: true,
+              lengthChange: true,
+              responsive: true,
+              order: [[ 0, 'desc' ]],
+              columns: [
+                  {
+                      data: function (row, _type, _set) {
+                          const date = new Date(row.created_at);
+                          return date.toLocaleString();
+                      }
+                  },
+                  { data: 'count' },
+                  {
+                      data: function (row, _type, _set) {
+                          switch (row.payment_status) {
+                              case <%= Order::PS_NONE %>:
+                                  return '<span class="badge bg-danger">None</span>';
+                              case <%= Order::PS_REQUIRES_PAYMENT_METHOD %>:
+                                  return '<span class="badge badge-light-warning">Requires Payment Method</span>';
+                              case <%= Order::PS_REQUIRES_CONFIRMATION %>:
+                                  return '<span class="badge badge-light-warning">Requires Confirmation</span>';
+                              case <%= Order::PS_REQUIRES_ACTION %>:
+                                  return '<span class="badge bg-warning">Requires Action</span>';
+                              case <%= Order::PS_PROCESSING %>:
+                                  return '<span class="badge bg-info">Processing</span>';
+                              case <%= Order::PS_REQUIRES_CAPTURE %>:
+                                  return '<span class="badge bg-info">Requires Capture</span>';
+                              case <%= Order::PS_CANCELED %>:
+                                  return '<span class="badge bg-danger">Canceled</span>';
+                              case <%= Order::PS_SUCCEEDED %>:
+                                  return '<span class="badge bg-success">Succeeded</span>';
+
+                              default:
+                                  return '<span class="text-danger">Unknown</span>';
+                          }
+                      }
+                  },
+                  {
+                      data: function (row, _type, _set) {
+                          switch (row.status) {
+                              case <%= Order::OS_NOT_ACKNOWLEDGED %>:
+                                  return `<span class="badge badge-light-warning">Not Acknowledged</span>`;
+                              case <%= Order::OS_ACKNOWLEDGED %>:
+                                  return `<span class="badge badge-light-success">Acknowledged</span>`;
+                              case <%= Order::OS_PROCESSING %>:
+                                  return `<span class="badge bg-info">Processing</span>`;
+                              case <%= Order::OS_SHIPPED %>:
+                                  return `<span class="badge badge-light-success">Shipped</span>`;
+                              case <%= Order::OS_DELIVERED %>:
+                                  return `<span class="badge bg-success">Delivered</span>`;
+                              case <%= Order::OS_CANCELLED %>:
+                                  return `<span class="badge badge-light-danger">Cancelled</span>`;
+
+                              default:
+                                  return '<span class="text-danger">Unknown</span>'
+                          }
+                      }
+                  },
+                  {
+                      data: function (row, _type, _set) {
+                          if (row.total_price === undefined) {
+                              return '<span class="badge badge-light-danger">Unknown</span>';
+                          } else {
+                              return `${row.total_price} ${row.total_price_currency}`;
+                          }
+                      }
+                  },
+                  {
+                      data: function (row, _type, _set) {
+                          return `<a href="<%= app_market_space_order_index_path %>/${row.id}" class="btn btn-outline-primary my-0 mr-0">
+                            <i data-feather="chevrons-right"></i>
+                          </a>`;
+                      }
+                  }
+              ],
+              columnDefs: [
+                  { name: 'orders.created_at', targets: 0 },
+                  { name: 'count', targets: 1 },
+                  { name: 'orders.payment_status', targets: 2 },
+                  { name: 'orders.status', targets: 3 },
+                  { name: 'orders.total_price_cents', targets: 4 },
+                  { name: 'view',  targets: 5, orderable: false, searchable: false },
+
+                  { targets: '_all', searchable: true, orderable: true}
+              ],
+              drawCallback: function(_settings, _json) {
+                  updateFeather();
+              },
+              initComplete: function(_settings, _json) {
+                  const tableInput = $('div.dataTables_filter input');
+
+                  tableInput.unbind();
+                  tableInput.bind('keyup', function(e) {
+                      if(e.keyCode === 13) {
+                          ordersTable.search(this.value).draw();
+                      }
+                  });
+              },
+              dom: '<"card-header border-bottom p-1"<"head-label"><"dt-action-buttons text-right"B>><"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+              buttons: [
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                          columns: exportColumns
+                      }
+                  },
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                          columns: exportColumns
+                      }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                          columns: exportColumns
+                      },
+                      orientation: 'landscape'
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                          columns: exportColumns
+                      }
+                  }
+              ]
+          });
+      })();
+
+  </script>
+
+</div>

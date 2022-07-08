@@ -1,0 +1,5 @@
+<% content_for :title, "User #{@user.id}" %>
+
+<%= turbo_frame_tag @user, src: app_site_admin_user_path, loading: :lazy, data: { 'turbo-action': :advance } do %>
+
+<% end %>

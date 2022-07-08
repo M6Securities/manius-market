@@ -1,0 +1,135 @@
+<%= turbo_frame_tag @current_customer do %>
+  <a class="nav-link <%= 'show' if @show_navbar_cart %>" href="#" id="cart-navbar-dropdown-button" data-bs-toggle="dropdown" aria-expanded="<%= @show_navbar_cart ? 'true' : 'false' %>">
+    <i class="ficon" data-feather='shopping-cart'></i>
+    <% if @cart_items_count > 0 %>
+      <span class="badge rounded-pill bg-primary badge-up cart-item-count">
+        <%= @cart_items_count %>
+      </span>
+    <% end %>
+  </a>
+
+  <ul id="cart-navbar-dropdown-items" class="dropdown-menu dropdown-menu-media dropdown-menu-end <%= 'show' if @show_navbar_cart %>">
+
+    <li class="dropdown-menu-header">
+      <div class="dropdown-header d-flex">
+        <h4 class="notification-title mb-0 me-auto">My Cart</h4>
+        <div class="badge rounded-pill badge-light-primary"><%= @cart_items_count %> Items</div>
+      </div>
+    </li>
+
+    <form action="<%= cart_update_cart_path %>" method="post">
+      <!-- rails authenticity token -->
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+      <li class="scrollable-container media-list ps">
+
+        <% @current_customer.cart_items.limit(5).each do |cart_item| %>
+          <% cache cart_item do %>
+            <div class="list-item align-items-center" id="cart-item-div-<%= cart_item.id %>">
+
+              <img class="d-block rounded me-1" src="<%= cart_item.product.primary_image_icon_url %>" alt="<%= cart_item.product.name %>" width="62">
+
+              <div class="list-item-body flex-grow-1">
+
+                <button type="button" class="btn btn-sm cart-item-remove" onclick="cartNavbarRemoveItem('<%= cart_item.id %>')">
+                  <i class="ficon" data-feather="x"></i>
+                </button>
+
+
+                <div class="media-heading">
+                  <h6 class="cart-item-title">
+                    <a class="text-body" href="<%= product_path cart_item.product %>">
+                      <%= cart_item.product.name %>
+                    </a>
+                  </h6>
+                  <% if cart_item.quantity > 1 %>
+                    <small class="cart-item-by">
+                      <%= cart_item.product.product_price_from_currency(@current_market.default_currency).price.format %> Each
+                    </small>
+                  <% end %>
+                </div>
+
+                <input type="hidden" name="update[cart_items][][id]" value="<%= cart_item.id %>">
+
+                <div class="cart-item-qty">
+                  <div class="input-group">
+                    <input class="touchspin-cart cart-navbar-input"  name="update[cart_items][][quantity]" type="number" value="<%= cart_item.quantity %>" step="1" min="1">
+                  </div>
+                </div>
+
+                <h5 class="cart-item-price">
+                  <%= cart_item.price_total(@current_market.default_currency).format %>
+                </h5>
+
+              </div>
+            </div>
+          <% end %>
+
+        <% end %>
+      </li>
+
+      <li class="dropdown-menu-footer">
+
+        <div id="navbar-cart-update-div" style="display: none;">
+          <button type="submit" class="btn btn-success w-100 mb-1" id="navbar-cart-update">
+            Save Cart
+          </button>
+        </div>
+
+        <div class="d-flex justify-content-between mb-1">
+          <h6 class="fw-bolder mb-0">
+            Total:
+          </h6>
+          <h6 class="text-primary fw-bolder mb-0">
+            <%= @cart_total.format %>
+          </h6>
+        </div>
+        <a href="<%= cart_path %>" class="btn btn-primary w-100 waves-effect waves-float waves-light">
+          Checkout
+        </a>
+      </li>
+    </form>
+
+  </ul>
+
+  <script>
+      function cartNavbarRemoveItem(cart_item_id) {
+          const element = $(`#cart-item-div-${cart_item_id}`);
+          element.slideUp();
+          element.remove();
+          $('#navbar-cart-update-div').show();
+      }
+
+      $(function() {
+          $('.touchspin-cart').TouchSpin();
+
+          let open = <%= @show_navbar_cart ? 'true' : 'false' %>;
+
+          // Prevents menu from closing when clicked inside
+          document.getElementById('cart-navbar-dropdown-items').addEventListener('click', function (event) {
+              event.stopPropagation();
+          });
+
+          const cardNavbarDropdownButton = $('#cart-navbar-dropdown-button');
+          cardNavbarDropdownButton.on('click', function () {
+              if (open) {
+                  cardNavbarDropdownButton.removeClass('show');
+                  cardNavbarDropdownButton.attr('aria-expanded', 'false');
+                  $('#cart-navbar-dropdown-items').removeClass('show');
+                  open = false;
+              } else {
+                  cardNavbarDropdownButton.addClass('show');
+                  cardNavbarDropdownButton.attr('aria-expanded', 'true');
+                  $('#cart-navbar-dropdown-items').addClass('show');
+                  open = true;
+              }
+          });
+
+          $('.cart-navbar-input').change(function() {
+              //cartNavbar.update();
+              $('#navbar-cart-update-div').show();
+          });
+
+      })
+  </script>
+<% end %>

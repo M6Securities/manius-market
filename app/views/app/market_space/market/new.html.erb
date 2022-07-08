@@ -1,0 +1,77 @@
+<% content_for :title, 'New Market' %>
+
+<div class="content-body">
+  <section id="market-new">
+
+
+    <%= turbo_frame_tag @market, target: '_top' do %>
+      <form id="create_market" action="<%= app_market_space_market_index_path %>" method="post">
+
+        <div class="d-flex justify-content-between mb-2">
+
+          <div class="d-flex">
+            <h1 class="m-0" style="line-height: 39px;">
+              New Market
+            </h1>
+          </div>
+
+          <div>
+            <button type="submit" class="btn btn-success">
+              <i data-feather="save"></i> Create
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <%= render(FormErrorComponent.new(@market.errors.messages)) %>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+
+                <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+                <div class="row">
+
+                  <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+
+                    <%= render InputBlockComponent.new(name: 'create[display_name]', title: 'Market Name', placeholder: 'Manius Market', value: @market.display_name) %>
+                    <%= render InputBlockComponent.new(name: 'create[path_name]', title: 'Path', placeholder: 'maniusmarket', value: @market.path_name, helper_text: 'Path should be alphabetical characters only, all lowercase.') %>
+                    <%= render InputBlockComponent.new(name: 'create[email]', title: 'Email', placeholder: 'support@maniusmarket.com', value: @market.email, type: 'email') %>
+
+                  </div>
+
+                  <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+
+                    <%= render InputBlockComponent.new(name: 'create[stripe_publishable_key]', title: 'Stripe Publishable Key', placeholder: 'pk_live_adsibasdas...', value: @market.stripe_publishable_key) %>
+                    <%= render InputBlockComponent.new(name: 'create[stripe_secret_key]', title: 'Stripe Secret Key', placeholder: 'sk_live_adsibasdas...', value: @market.stripe_secret_key, helper_text: 'Both keys are encrypted and only shown to Market Owners') %>
+                    <%= render InputBlockComponent.new(name: 'create[stripe_webhook_secret]', title: 'Stripe Webhook Secret', placeholder: 'whsec_adsibasdas...', value: @market.stripe_webhook_secret) %>
+
+                    <select name="create[default_currency]" class="form-control" required>
+                      <%= options_for_select(currency_code_select_array, 'USD') %>
+                    </select>
+
+                  </div>
+
+                </div>
+
+            </div>
+          </div>
+        </div>
+
+      </form>
+    <% end %>
+
+  </section>
+
+</div>
+
+<script>
+
+    document.addEventListener('turbo:submit-start', (event) => {
+        console.log(event);
+        toastr.warning('Please wait...', 'Creating Market');
+    });
+
+</script>

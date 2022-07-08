@@ -1,0 +1,16 @@
+<% case @status %>
+<% when Order::OS_NOT_ACKNOWLEDGED %>
+  <span class="badge badge-light-warning">Not Acknowledged</span>
+<% when Order::OS_ACKNOWLEDGED %>
+  <span class="badge badge-light-success">Acknowledged</span>
+<% when Order::OS_PROCESSING %>
+  <span class="badge bg-info">Processing</span>
+<% when Order::OS_SHIPPED %>
+  <span class="badge badge-light-success">Shipped</span>
+<% when Order::OS_DELIVERED %>
+  <span class="badge bg-success">Delivered</span>
+<% when Order::OS_CANCELLED %>
+  <span class="badge badge-light-danger">Cancelled</span>
+<% else %>
+  <span class="text-danger">Unknown</span>
+<% end %>

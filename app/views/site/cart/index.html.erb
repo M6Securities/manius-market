@@ -1,0 +1,288 @@
+<link rel="stylesheet" type="text/css" href="https://cdn.m6securities.com/vuexy_admin_8-0/app-assets/css/pages/app-ecommerce.min.css">
+<script src="https://cdn.m6securities.com/vuexy_admin_8-0/app-assets/js/scripts/pages/app-ecommerce-checkout.min.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
+
+<div class="container">
+  <!-- Checkout Place order starts -->
+  <div id="place-order" class="list-view product-checkout">
+    <!-- Checkout Place Order Left starts -->
+    <div class="checkout-items">
+
+      <% @current_customer.cart_items.each do |cart_item| %>
+        <% cache cart_item do %>
+          <div class="card ecommerce-card">
+
+            <div class="item-img">
+              <a href="<%= product_path cart_item.product %>">
+                <img src="<%= cart_item.product.primary_image_icon_url %>" alt="img-placeholder" />
+              </a>
+            </div>
+
+            <div class="card-body">
+              <div class="item-name">
+
+                <h6 class="mb-0">
+                  <a href="<%= product_path cart_item.product %>" class="text-body">
+                    <%= cart_item.product.name %>
+                  </a>
+                </h6>
+
+                <div class="item-rating">
+                  <ul class="unstyled-list list-inline">
+                    <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
+                    <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
+                    <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
+                    <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
+                    <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
+                  </ul>
+                </div>
+
+              </div>
+              <span class="text-success mb-1">In Stock</span>
+
+              <div class="item-quantity">
+                <span class="quantity-title">Qty:</span>
+                <div class="quantity-counter-wrapper">
+                  <div class="input-group">
+                    <input type="text" class="quantity-counter" value="<%= cart_item.quantity %>" />
+                  </div>
+                </div>
+              </div>
+
+              <span class="delivery-date text-muted">Delivery by, Wed Apr 25</span>
+              <span class="text-success">17% off 4 offers Available</span>
+            </div>
+
+            <div class="item-options text-center">
+              <div class="item-wrapper">
+                <div class="item-cost">
+                  <h4 class="item-price">
+                    <%= cart_item.price_total(@current_market.default_currency).format %>
+                  </h4>
+
+                  <% if cart_item.quantity > 1 %>
+                    <span class="text-muted mt-1">
+                      <%= cart_item.product.product_price_from_currency(@current_market.default_currency).price.format %> Each
+                    </span>
+                  <% end %>
+
+                </div>
+              </div>
+              <button type="button" class="btn btn-light mt-1 remove-wishlist">
+                <i data-feather="x" class="align-middle me-25"></i>
+                <span>Remove</span>
+              </button>
+              <button type="button" class="btn btn-primary btn-cart move-cart">
+                <i data-feather="heart" class="align-middle me-25"></i>
+                <span class="text-truncate">Add to Wishlist</span>
+              </button>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <!-- Checkout Place Order Left ends -->
+
+    <!-- Checkout Place Order Right starts -->
+    <div class="checkout-options">
+      <div class="card">
+        <div class="card-body">
+          <label class="section-label form-label mb-1">Options</label>
+          <div class="coupons input-group input-group-merge">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Coupons"
+              aria-label="Coupons"
+              aria-describedby="input-coupons"
+              />
+            <span class="input-group-text text-primary ps-1" id="input-coupons">Apply</span>
+          </div>
+          <hr />
+          <div class="price-details">
+            <!--
+            <h6 class="price-title">Price Details</h6>
+            <ul class="list-unstyled">
+              <li class="price-detail">
+                <div class="detail-title">Total MRP</div>
+                <div class="detail-amt">
+                  <%= @current_customer.cart_total.format %>
+                </div>
+              </li>
+              <li class="price-detail">
+                <div class="detail-title">Bag Discount</div>
+                <div class="detail-amt discount-amt text-success">-25$</div>
+              </li>
+            </ul>
+            -->
+
+            <ul class="list-unstyled">
+              <li class="price-detail">
+                <div class="detail-title detail-total">Total</div>
+                <div class="detail-amt fw-bolder">
+                  <%= @cart_total.format %>
+                </div>
+              </li>
+              <small>
+                Tax and shipping will be calculated at the time of checkout. An email address and shipping address is required. Billing address may be required during checkout.
+              </small>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h6 class="card-title">Shipping Address</h6>
+        </div>
+        <div class="card-body">
+          <form id="place-order-form">
+            <!-- rails authenticity token -->
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+            <%= render InputBlockComponent.new(name: 'create[shipping_name]', title: 'Name on Order', placeholder: 'Name', value: (@current_customer.display_name)) %>
+
+            <%= render InputBlockComponent.new(type: :email, name: 'create[email]', title: 'Email', placeholder: 'john.smith@example.com', id: 'place-order-email', value: (@current_customer.email)) %>
+
+            <%= render InputBlockComponent.new(name: 'create[address_line_1]', title: 'Address', placeholder: 'Address Line 1') %>
+
+            <%= render InputBlockComponent.new(name: 'create[address_line_2]', title: '', placeholder: 'Address Line 2', required: false) %>
+
+            <%= render InputBlockComponent.new(name: 'create[city]', title: 'City', placeholder: 'City') %>
+
+            <div class="row">
+              <div class="col-6">
+                <%= render InputBlockComponent.new(name: 'create[state]', title: 'State', placeholder: 'State') %>
+              </div>
+              <div class="col-6">
+                <%= render InputBlockComponent.new(name: 'create[zip]', title: 'Zip', placeholder: 'Zip') %>
+              </div>
+            </div>
+
+            <div>
+              <%= country_select(:create, :country, { priority_countries: %w[US CA], selected: 'US' }, { class: 'form-control' }) %>
+            </div>
+
+            <br>
+
+            <button type="Submit" class="btn btn-primary w-100 btn-next place-order disabled" id="place-order-button">
+              Place Order
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- Checkout Place Order Right ends -->
+    </div>
+  </div>
+  <!-- Checkout Place order Ends -->
+</div>
+
+<script defer>
+    $(function() {
+        $('.bootstrap-touchspin').TouchSpin();
+        $('select:not(.flatpickr-input)').select2();
+
+        const placeOrderButton = $('#place-order-button');
+
+        // this way it gets triggered if it's pre-filled
+        if (validOrderForm()) {
+            placeOrderButton.removeClass('disabled');
+        } else {
+            placeOrderButton.addClass('disabled');
+        }
+
+        $("#place-order-form input").change(function () {
+            if (validOrderForm()) {
+                placeOrderButton.removeClass('disabled');
+            } else {
+                placeOrderButton.addClass('disabled');
+            }
+        });
+
+    });
+
+    function validOrderForm() {
+        let valid = true;
+        $("#place-order-form").find('input').each(function () {
+            const element = $(this);
+            if (element.prop('required')) {
+                if (element.prop('type') === 'text') {
+                    if (element.val() === '') {
+                        valid = false;
+
+                        element.addClass('is-invalid');
+                        element.removeClass('is-valid');
+                    } else {
+                        element.removeClass('is-invalid');
+                        element.addClass('is-valid');
+                    }
+                }
+            }
+        });
+
+        const placeOrderEmail = $('#place-order-email');
+        if (validateEmail(placeOrderEmail.val())) {
+            placeOrderEmail.removeClass('is-invalid');
+            placeOrderEmail.addClass('is-valid');
+        } else {
+            placeOrderEmail.addClass('is-invalid');
+            placeOrderEmail.removeClass('is-valid');
+            valid = false;
+        }
+
+        //console.log("Validating form: " + valid);
+
+        return valid;
+    }
+
+    $('#place-order-form').submit(function(e) {
+        e.preventDefault();
+
+        if (!validOrderForm()) {
+            return null;
+        }
+
+        const stripe = Stripe('<%= @current_market.stripe_publishable_key %>');
+
+        const formElement = document.getElementById('place-order-form');
+        const formData = new FormData(formElement);
+
+        // Create a new Checkout Session using the server-side endpoint you
+        // created in step 3.
+        fetch('<%= stripe_checkout_create_path %>', {
+            method: 'POST',
+            body: formData
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (session) {
+                console.log(session)
+
+                return stripe.redirectToCheckout({
+                    sessionId: session.id
+                });
+
+            })
+            .then(function (result) {
+                console.log(result)
+                // If `redirectToCheckout` fails due to a browser or network
+                // error, you should display the localized error message to your
+                // customer using `error.message`.
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            })
+            .catch(function (error) {
+                console.error('Error:', error);
+            });
+    });
+
+    // https://stackoverflow.com/a/9204568
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+
+</script>

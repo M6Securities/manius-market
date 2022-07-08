@@ -1,0 +1,44 @@
+<%= turbo_frame_tag @user do %>
+  <form id="edit_user<%= @user.id %>" action="<%= app_site_admin_user_path %>" method="patch">
+    <div class="d-flex justify-content-between">
+      <%= render App::SiteAdmin::UserComponent::TitleComponent.new(@user), cached: true %>
+
+      <div class="d-flex">
+
+        <a href="<%= app_site_admin_user_path @user %>" class="btn btn-outline-danger mx-1" style="height: 39px;">
+          <i data-feather="x"></i>
+          <%= t 'global.wording.cancel' %>
+        </a>
+
+        <button type="submit" class="btn btn-success ms-1" style="height: 39px;">
+          <i data-feather="save"></i>
+          <%= t('global.wording.save') %>
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">
+          <%= t('global.wording.edit') %>
+        </h3>
+
+        <div class="d-flex">
+          <div class="mr-1">
+            <%= render SwitchBlockComponent.new(title: 'Enabled', name: 'update[enabled]', checked: @user.enabled) %>
+          </div>
+
+          <div class="mx-1">
+            <%= render SwitchBlockComponent.new(title: 'Site Admin', name: 'update[site_admin]', checked: @user.site_admin) %>
+          </div>
+
+        </div>
+
+
+
+      </div>
+    </div>
+
+    <%= render App::SiteAdmin::UserComponent::DetailsComponent.new(@user), cached: true %>
+  </form>
+<% end %>

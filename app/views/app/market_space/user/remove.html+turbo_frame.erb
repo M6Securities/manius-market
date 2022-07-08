@@ -1,0 +1,17 @@
+<%= turbo_frame_tag "user_#{@user.id}_remove" do %>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Remove User</h5>
+
+      <%= render FormFlashComponent.new %>
+
+      <form action="<%= app_market_space_user_remove_path(@user) %>" method="delete">
+        <button type="submit" class="btn btn-danger w-100">
+          <i data-feather="trash"></i>
+          Remove from Market
+        </button>
+      </form>
+    </div>
+  </div>
+<% end %>
+

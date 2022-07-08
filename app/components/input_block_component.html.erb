@@ -1,0 +1,44 @@
+<div class="<%= @div_classes %>">
+
+  <% unless @floating %>
+    <% unless @title.blank? %>
+      <label class="form-label" for="<%= @id %>">
+        <%= @title %>
+      </label>
+    <% end %>
+  <% end %>
+
+  <input
+    type="<%= @type %>"
+    class="<%= @input_classes %>"
+    id="<%= @id %>"
+    name="<%= @name %>"
+    placeholder="<%= @placeholder %>"
+    <% unless @value.blank? %>
+      value="<%= @value %>"
+    <% end %>
+    <%= 'required' if @required %>
+    <%= 'readonly' if @read_only %>
+    <%= 'disabled' if @disabled %>
+    <%= 'autofocus' if @autofocus %>
+    <% unless @autofocus.blank? %>
+      autofocus="<%= @autofocus %>"
+    <% end %>
+  >
+
+  <% if @floating %>
+    <% unless @title.blank? %>
+      <label class="form-label" for="<%= @id %>">
+        <%= @title %>
+      </label>
+    <% end %>
+  <% end %>
+
+  <% unless @helper_text.blank? %>
+    <p>
+      <small class="text-muted">
+        <%= @helper_text %>
+      </small>
+    </p>
+  <% end %>
+</div>

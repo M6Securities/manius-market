@@ -1,0 +1,58 @@
+<!-- BEGIN: Main Menu-->
+<div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
+  <div class="navbar-header">
+    <ul class="nav navbar-nav flex-row">
+      <li class="nav-item mr-auto">
+        <a class="navbar-brand" href="<% app_dashboard_index_path %>">
+          <span class="brand-logo">
+            <img alt="" src="">
+          </span>
+          <h2 class="brand-text">Site Admin</h2>
+        </a>
+      </li>
+      <li class="nav-item nav-toggle">
+        <a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse">
+          <i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i>
+          <i class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary" data-feather="disc" data-ticon="disc"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="shadow-bottom"></div>
+  <div class="main-menu-content">
+    <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+
+      <li class="nav-item">
+        <a href="<%= app_dashboard_index_path %>">
+          <i data-feather="chevron-left"></i><span class="menu-title">Back</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="<%= app_site_admin_market_index_path %>">
+          <i data-feather="layout"></i><span class="menu-title">Markets</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="<%= app_site_admin_user_index_path %>">
+          <i data-feather="users"></i><span class="menu-title">Users</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="<%= app_site_admin_settings_path %>">
+          <i data-feather="settings"></i><span class="menu-title">Settings</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="<%= app_site_admin_sidekiq_web_path %>" data-external target="_blank">
+          <i data-feather="server"></i><span class="menu-title">Sidekiq</span>
+        </a>
+      </li>
+
+    </ul>
+  </div>
+</div>
+<!-- END: Main Menu-->

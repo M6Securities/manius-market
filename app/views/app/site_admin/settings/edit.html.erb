@@ -1,0 +1,5 @@
+<% content_for :title, "App Settings" %>
+
+<%= turbo_frame_tag Setting.first, src: app_site_admin_settings_path, loading: :lazy do %>
+
+<% end %>

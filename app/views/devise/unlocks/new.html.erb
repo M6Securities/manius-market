@@ -1,0 +1,40 @@
+<% content_for :title, t('global.wording.resend_unlock_instructions') %>
+
+<div class="d-flex mb-1">
+  <h2 class="card-title font-weight-bold mr-2 mb-0"><%= t('global.wording.resend_unlock_instructions') %></h2>
+</div>
+
+<%= render DeviseFlashComponent.new %>
+
+<form class="new_user" id="new_user" action="<%= user_unlock_path %>" accept-charset="UTF-8" method="post">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+  <%= render InputBlockComponent.new(title: t('global.wording.email'), name: 'user[email]', id: 'user_email', autocomplete: 'email', autofocus: true, type: 'email', placeholder: t('global.wording.email')) %>
+
+  <div class="actions">
+    <button type="submit" class="btn btn-primary w-100" name="commit">
+      <%= t('global.wording.resend_unlock_instructions') %>
+    </button>
+  </div>
+</form>
+
+<div class="row mt-2">
+
+  <div class="col-12 col-md-4">
+    <a href="<%= new_user_session_path %>" class="btn btn-outline-primary w-100">
+      <%= t 'global.wording.login' %>
+    </a>
+  </div>
+
+  <div class="col-12 col-md-4">
+    <a href="<%= new_user_registration_path %>" class="btn btn-outline-primary w-100">
+      <%= t 'global.wording.sign_up' %>
+    </a>
+  </div>
+
+  <div class="col-12 col-md-4">
+    <a href="<%= new_user_password_path %>" class="btn btn-outline-primary w-100">
+      <%= t 'global.wording.forgot_password_question' %>
+    </a>
+  </div>
+</div>

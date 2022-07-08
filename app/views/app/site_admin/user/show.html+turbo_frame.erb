@@ -1,0 +1,15 @@
+<%= turbo_frame_tag @user do %>
+
+  <div class="d-flex justify-content-between">
+    <%= render App::SiteAdmin::UserComponent::TitleComponent.new(@user), cached: true %>
+
+    <div class="d-flex">
+      <a href="<%= edit_app_site_admin_user_path(@user) %>" class="btn btn-success" rel="next" style="height: 39px;">
+        <i data-feather="edit-3"></i>
+        <%= t('global.wording.edit') %>
+      </a>
+    </div>
+  </div>
+
+  <%= render App::SiteAdmin::UserComponent::DetailsComponent.new(@user), cached: true %>
+<% end %>

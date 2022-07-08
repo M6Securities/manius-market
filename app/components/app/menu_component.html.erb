@@ -1,0 +1,108 @@
+<!-- BEGIN: Main Menu-->
+<div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
+  <div class="navbar-header">
+    <ul class="nav navbar-nav flex-row">
+      <li class="nav-item mr-auto">
+        <a class="navbar-brand" href="<% app_dashboard_index_path %>">
+          <span class="brand-logo">
+            <img alt="" src="">
+          </span>
+          <h2 class="brand-text">Manius Market</h2>
+        </a>
+      </li>
+      <li class="nav-item nav-toggle">
+        <a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse">
+          <i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i>
+          <i class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary" data-feather="disc" data-ticon="disc"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="shadow-bottom"></div>
+  <div class="main-menu-content">
+    <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+
+      <li class="nav-item">
+        <a href="<%= app_dashboard_index_path %>">
+          <i data-feather="home"></i><span class="menu-title">Dashboard</span>
+        </a>
+      </li>
+
+      <li class="navigation-header active">
+        <span>You</span>
+      </li>
+
+      <li class="nav-item">
+        <a href="<%= app_user_space_order_index_path %>">
+          <i data-feather='shopping-bag'></i><span class="menu-title">Orders</span>
+        </a>
+      </li>
+
+      <% if @user.has_market? %>
+
+        <li class="navigation-header active">
+          <span data-i18n="User Interface">Market</span>
+        </li>
+
+        <% if @user.permission?(UserMarketPermission::VIEW_ORDERS) %>
+          <li class="nav-item">
+            <a href="<%= app_market_space_order_index_path %>">
+              <i data-feather='shopping-bag'></i><span class="menu-title">Orders</span>
+            </a>
+          </li>
+        <% end %>
+
+        <% if @user.permission?(UserMarketPermission::VIEW_PRODUCTS) %>
+          <li class="nav-item">
+            <a href="<%= app_market_space_product_index_path %>">
+              <i data-feather='grid'></i><span class="menu-title">Products</span>
+            </a>
+          </li>
+        <% end %>
+
+        <% if @user.permission?(UserMarketPermission::VIEW_ORDERS) %>
+          <li class="nav-item">
+            <a href="<%= app_market_space_customer_index_path %>">
+              <i data-feather='shopping-cart'></i><span class="menu-title">Customers</span>
+            </a>
+          </li>
+        <% end %>
+
+        <% if @user.permission?(UserMarketPermission::RECEIVE_PRODUCTS) %>
+          <li class="nav-item">
+            <a href="<%= app_market_space_receiving_index_path %>">
+              <i data-feather='box'></i><span class="menu-title">Receiving</span>
+            </a>
+          </li>
+        <% end %>
+
+
+        <% if @user.permission?(UserMarketPermission::ADMIN) %>
+          <li class="nav-item">
+            <a href="<%= app_market_space_user_index_path %>">
+              <i data-feather='users'></i><span class="menu-title">Users</span>
+            </a>
+          </li>
+        <% end %>
+
+
+      <% end %>
+
+      <% if @user.permission? %>
+
+        <li class="navigation-header active">
+          <span data-i18n="User Interface">Site</span>
+        </li>
+
+        <li class="nav-item">
+          <a href="<%= app_site_admin_path %>">
+            <i data-feather='server'></i><span class="menu-title">Site Admin</span>
+          </a>
+        </li>
+      <% end %>
+
+
+    </ul>
+  </div>
+</div>
+<!-- END: Main Menu-->

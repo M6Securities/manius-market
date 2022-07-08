@@ -1,0 +1,132 @@
+
+
+<div class="container">
+
+
+  <section class="app-ecommerce-details">
+    <!-- Product Details starts -->
+    <div class="card">
+      <div class="card-body">
+        <div class="row my-2">
+          <div class="col-12 col-md-5 d-flex align-items-center justify-content-center mb-2 mb-md-0">
+            <div class="d-flex align-items-center justify-content-center">
+              <img src="<%= @product.primary_image_icon_url %>" class="img-fluid product-img" alt="product image" />
+            </div>
+          </div>
+          <div class="col-12 col-md-7">
+            <h4>
+              <%= @product.name %>
+            </h4>
+
+            <div class="ecommerce-details-price d-flex flex-wrap mt-1">
+              <h4 class="item-price me-1">
+                <%= @product.product_price_from_currency(@current_market.default_currency).price.format %>
+              </h4>
+              <ul class="unstyled-list list-inline ps-1 border-start">
+                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
+                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
+                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
+                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
+                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
+              </ul>
+            </div>
+            <p class="card-text">Available - <span class="text-success">In stock</span></p>
+            <p class="card-text">
+              <%= @product.description %>
+            </p>
+            <ul class="product-features list-unstyled">
+              <li>
+                <i data-feather="shopping-cart"></i>
+                <span>Free Shipping</span>
+              </li>
+              <li>
+                <i data-feather="dollar-sign"></i>
+                <span>EMI options available</span>
+              </li>
+            </ul>
+
+            <hr>
+
+            <div class="d-flex flex-column flex-sm-row pt-1">
+
+              <form method="post" action="<%= cart_update_item_path %>" id="add-to-cart-form-<%= @product.id %>">
+                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                <input type="hidden" name="add[product_id]" value="<%= @product.id %>">
+                <input type="hidden" name="add[quantity]" value="1">
+                <button type="button" class="btn btn-primary btn-cart me-0 me-sm-1 mb-1 mb-sm-0" onclick="product.addToCart('<%= @product.id %>')">
+                  <i data-feather="shopping-cart" class="me-50"></i>
+                  <span class="add-to-cart">Add to cart</span>
+                </button>
+              </form>
+
+              <a href="#" class="btn btn-outline-secondary btn-wishlist me-0 me-sm-1 mb-1 mb-sm-0">
+                <i data-feather="heart" class="me-50"></i>
+                <span>Wishlist</span>
+              </a>
+              <div class="btn-group dropdown-icon-wrapper btn-share">
+                <button
+                  type="button"
+                  class="btn btn-icon hide-arrow btn-outline-secondary dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i data-feather="share-2"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end">
+                  <a href="#" class="dropdown-item">
+                    <i data-feather="facebook"></i>
+                  </a>
+                  <a href="#" class="dropdown-item">
+                    <i data-feather="twitter"></i>
+                  </a>
+                  <a href="#" class="dropdown-item">
+                    <i data-feather="youtube"></i>
+                  </a>
+                  <a href="#" class="dropdown-item">
+                    <i data-feather="instagram"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Details ends -->
+  </section>
+
+</div>
+
+<script async>
+
+  product = {
+      addToCart: function(productID) {
+          console.log('adding to cart');
+          const id = `add-to-cart-form-${productID}`;
+
+          const formElement = document.getElementById(id);
+          const url = '<%= cart_update_item_path %>';
+          const form = new FormData(formElement);
+
+          const postForm = $.ajax({
+              url: url,
+              data: form,
+              cache: false,
+              processData: false,
+              contentType: false,
+              type: 'POST',
+              success: function (data) {
+                  //console.log(data)
+                  document.getElementById('customer_<%= @current_customer.id %>').src = '<%= cart_navbar_path %>';
+                  document.getElementById('customer_<%= @current_customer.id %>').reload();
+              }
+          });
+
+
+
+      }
+  }
+
+</script>

@@ -1,0 +1,29 @@
+<%= turbo_frame_tag Setting.first do %>
+
+  <h1>
+    App Settings
+  </h1>
+
+  <%= render FormFlashComponent.new %>
+
+  <div class="card">
+    <div class="card-body">
+
+      <form method="post">
+        <%= render InputBlockComponent.new(title: 'App Name', name: 'update[app_name]', value: Setting.first.app_name, placeholder: 'Manius Market') %>
+
+        <%= render SwitchBlockComponent.new(title: 'Allow User Registration', name: 'update[allow_registration]', checked: Setting.first.allow_registration) %>
+
+        <%= render SwitchBlockComponent.new(title: 'Allow Market Creation', name: 'update[allow_market_creation]', checked: Setting.first.allow_market_creation) %>
+
+        <button type="submit" class="btn btn-success">
+          Save
+        </button>
+      </form>
+
+
+
+    </div>
+  </div>
+
+<% end %>
