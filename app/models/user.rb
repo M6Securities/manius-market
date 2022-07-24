@@ -21,7 +21,7 @@ class User < ApplicationRecord
          # :password_expirable,
          :password_archivable,
          # :secure_validatable,
-         :expirable,
+         # :expirable,
          :session_limitable
 
   # before_create :check_if_first_user

@@ -48,8 +48,8 @@ Note: Until this is actually released, if that ever happens, I will push breakin
   * [maniusmarket.com](https://maniusmarket.com)
   * [manius.market](https://manius.market)
 
-* Ruby version: `3.1.1`, going to try to always keep this at the latest version
-* Rails Version: `7.0.0`, will also try to keep this at the latest version
+* Ruby version: `3.1.2`, going to try to always keep this at the latest version
+* Rails Version: `7.0.3.1`, will also try to keep this at the latest version
 
 * System dependencies: none yet
 
