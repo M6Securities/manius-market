@@ -13,8 +13,10 @@ class Order < ApplicationRecord
   PS_REQUIRES_ACTION = 3
   PS_PROCESSING = 4
   PS_REQUIRES_CAPTURE = 5
-  PS_CANCELED = 6
+  PS_CANCELLED = 6
   PS_SUCCEEDED = 7
+
+  enum :payment_status, %i[none requires_payment_method requires_confirmation requires_action processing requires_capture cancelled succeeded], prefix: :payment_status # ignore the warning this is right
 
   PS_ARRAY = [
     PS_NONE,
@@ -23,7 +25,7 @@ class Order < ApplicationRecord
     PS_REQUIRES_ACTION,
     PS_PROCESSING,
     PS_REQUIRES_CAPTURE,
-    PS_CANCELED,
+    PS_CANCELLED,
     PS_SUCCEEDED
   ].freeze
 
@@ -34,7 +36,7 @@ class Order < ApplicationRecord
     ['Requires Action', PS_REQUIRES_ACTION],
     ['Processing', PS_PROCESSING],
     ['Requires Capture', PS_REQUIRES_CAPTURE],
-    ['Canceled', PS_CANCELED],
+    ['Canceled', PS_CANCELLED],
     ['Succeeded', PS_SUCCEEDED]
   ].freeze
 
@@ -46,6 +48,8 @@ class Order < ApplicationRecord
   OS_DELIVERED = 4
   OS_CANCELLED = 5
 
+  enum :status, %i[waiting_acknowledgement acknowledged processing shipped delivered cancelled], prefix: :status # ignore the warning this is right
+
   OS_ARRAY = [
     OS_NOT_ACKNOWLEDGED,
     OS_ACKNOWLEDGED,
@@ -56,7 +60,7 @@ class Order < ApplicationRecord
   ].freeze
 
   OS_OPTIONS_ARRAY = [
-    ['Not Acknowledged', OS_NOT_ACKNOWLEDGED],
+    ['Waiting Acknowledgement', OS_NOT_ACKNOWLEDGED],
     ['Acknowledged', OS_ACKNOWLEDGED],
     ['Processing', OS_PROCESSING],
     ['Shipped', OS_SHIPPED],
@@ -74,7 +78,7 @@ class Order < ApplicationRecord
   # --------------------------------------------------------------------------------------------------------------------
   validates_presence_of :customer
   validates :payment_status, inclusion: { in: PS_ARRAY }
-  validates :status, inclusion: { in: OS_ARRAY }
+  validates :status, inclusion: { in: statuses.keys }
 
   # Methods
   # --------------------------------------------------------------------------------------------------------------------

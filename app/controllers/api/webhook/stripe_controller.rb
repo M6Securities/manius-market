@@ -104,7 +104,7 @@ module Api
         when 'succeeded'
           order.assign_attributes payment_status: Order::PS_SUCCEEDED
         when 'canceled'
-          order.assign_attributes payment_status: Order::PS_CANCELED
+          order.assign_attributes payment_status: Order::PS_CANCELLED
         else
           order.assign_attributes payment_status: Order::PS_NONE
         end
