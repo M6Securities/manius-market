@@ -12,11 +12,7 @@
   </a>
 </div>
 
-<div class="content-body"
-     data-controller="app--market-space--product--index"
-     data-app--market-space--product--index-url-value="<%= app_market_space_product_datatable_path %>"
-     data-app--market-space--product--index-item-path-value="<%= app_market_space_product_index_path %>"
->
+<div class="content-body">
 
   <section id="products-index">
 
@@ -24,7 +20,23 @@
       <div class="card-content">
         <div class="card-body">
 
-          <table id="products-table" class="table dataTable table-striped" style="width:100%">
+          <table id="products-table" class="table dataTable table-striped" style="width:100%"
+                 data-controller="datatable"
+                 data-datatable-config="<%= {
+                                              debug: true,
+                                              serverSide: true,
+                                              ajax: app_market_space_product_index_path,
+                                              dom: 'lfriptrip',
+                                              stateSave: true,
+                                              columns: [
+                                                { title: 'SKU', data: 'sku' },
+                                                { title: 'Name', data: 'name' },
+                                                { title: 'Stock', data: 'stock' },
+                                                { title: 'View', data: 'id' },
+                                              ],
+                                            }.to_json %>"
+
+          >
             <thead>
               <tr>
                 <th>SKU</th>

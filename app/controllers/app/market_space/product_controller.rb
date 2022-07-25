@@ -7,6 +7,13 @@ module App
       before_action :require_market
       before_action :find_product, except: %i[index create datatable]
 
+      def index
+        respond_to do |format|
+          format.html
+          format.json { render json: Market::ProductDatatable.new(params, market: @current_market) }
+        end
+      end
+
       def create
         safe_params = params.require(:create).permit(:name, :sku, :stock, :tax_code, :description)
 
