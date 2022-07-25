@@ -3,7 +3,7 @@
 module Site
   # handles everything cart related on the front end
   class CartController < SiteController
-    before_action :fetch_numbers, only: %i[index navbar]
+    before_action :fetch_numbers
 
     def navbar
       @show_navbar_cart = params[:show_cart] == 'true'
@@ -40,6 +40,10 @@ module Site
 
       if params[:update].nil?
         @current_customer.cart_items.destroy_all
+
+        @cart_items_count = 0
+        @cart_total = @current_customer.cart_total # can't manually set to 0.00
+
         return render :navbar, status: :ok, layout: false
       end
 
