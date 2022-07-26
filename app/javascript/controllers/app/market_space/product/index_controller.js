@@ -10,8 +10,6 @@ export default class extends StimulusDatatable {
   }
 
   config() {
-    const exportColumns = [0, 1, 2, 3];
-
     const datatableURL = this.urlValue;
     const itemPath = this.itemPathValue;
 
@@ -20,14 +18,6 @@ export default class extends StimulusDatatable {
         'url': datatableURL,
         'type': 'GET'
       },
-
-      processing: true,
-      serverSide: true,
-      paging: true,
-      pagingType: 'full_numbers',
-      searching: true,
-      lengthChange: true,
-      responsive: true,
       order: [[ 0, 'desc' ]],
       columns: [
         { data: 'sku' },
@@ -49,47 +39,7 @@ export default class extends StimulusDatatable {
 
         { targets: '_all', searchable: true, orderable: true}
       ],
-      drawCallback: function(_settings, _json) {
-        updateFeather();
-      },
-      initComplete: function(_settings, _json) {
-        const tableInput = $('div.dataTables_filter input');
-
-        tableInput.unbind();
-        tableInput.bind('keyup', function(e) {
-          if(e.keyCode === 13) {
-            branchTable.search(this.value).draw();
-          }
-        });
-      },
-      dom: '<"card-header border-bottom p-1"<"head-label"><"dt-action-buttons text-right"B>><"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-      buttons: [
-        {
-          extend: 'csv',
-          exportOptions: {
-            columns: exportColumns
-          }
-        },
-        {
-          extend: 'copy',
-          exportOptions: {
-            columns: exportColumns
-          }
-        },
-        {
-          extend: 'pdf',
-          exportOptions: {
-            columns: exportColumns
-          },
-          orientation: 'landscape'
-        },
-        {
-          extend: 'print',
-          exportOptions: {
-            columns: exportColumns
-          }
-        }
-      ]
+      exportColumns: [0, 1, 2, 3],
     };
   }
 }
