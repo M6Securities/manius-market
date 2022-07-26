@@ -1,28 +1,21 @@
 import { Controller } from "@hotwired/stimulus"
+import { StimulusDatatable } from "../../../datatable_controller";
 
 // Connects to data-controller="app--market-space--product--index"
-export default class extends Controller {
+export default class extends StimulusDatatable {
   static values = {
     url : String,
     itemPath: String,
-    branchTable: String,
-    tableLoaded: { type: Boolean, default: false }
+    branchTable: String
   }
 
-  initialize() {
-  }
-
-  connect() {
+  config() {
     const exportColumns = [0, 1, 2, 3];
 
     const datatableURL = this.urlValue;
     const itemPath = this.itemPathValue;
 
-    if (this.tableLoadedValue) {
-      return;
-    }
-
-    const branchTable = $('#products-table').DataTable({
+    return {
       ajax: {
         'url': datatableURL,
         'type': 'GET'
@@ -97,8 +90,6 @@ export default class extends Controller {
           }
         }
       ]
-    });
-
-    this.tableLoadedValue = true;
+    };
   }
 }
