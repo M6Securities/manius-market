@@ -1,5 +1,5 @@
 <% content_for :title, 'Edit Order' %>
 
 <%= turbo_frame_tag @order, src: edit_app_market_space_order_path, loading: :lazy do %>
-
+  <%= render SpinnerComponent.new, cached: true %>
 <% end %>

@@ -2,6 +2,6 @@
 
 <div class="content-body">
   <%= turbo_frame_tag @user, src: edit_app_site_admin_user_path, loading: :lazy, data: { 'turbo-action': :advance } do %>
-
+    <%= render SpinnerComponent.new, cached: true %>
   <% end %>
 </div>

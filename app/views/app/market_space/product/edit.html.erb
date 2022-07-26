@@ -4,7 +4,7 @@
   <section id="edit-product">
 
     <%= turbo_frame_tag @product, src: edit_app_market_space_product_path, loading: :lazy, data: { 'turbo-action': :advance } do %>
-
+      <%= render SpinnerComponent.new, cached: true %>
     <% end %>
 
   </section>

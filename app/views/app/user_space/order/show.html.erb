@@ -1,5 +1,5 @@
 <% content_for :title, "Order #{@order.id}" %>
 
 <%= turbo_frame_tag @order, src: app_user_space_order_path(@order), loading: :lazy do %>
-
+  <%= render SpinnerComponent.new, cached: true %>
 <% end %>

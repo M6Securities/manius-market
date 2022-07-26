@@ -69,7 +69,7 @@
 
         <!-- hacky but turbo frame does not work in components -->
         <turbo-frame id="customer_<%= @customer.id %>" src="<%= cart_navbar_path %>">
-
+          <%= render SpinnerComponent.new, cached: true %>
         </turbo-frame>
 
       </li>

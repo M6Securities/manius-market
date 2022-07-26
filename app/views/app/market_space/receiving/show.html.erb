@@ -1,5 +1,5 @@
 <% content_for :title, "Receiving" %>
 
 <%= turbo_frame_tag @receiving, src: app_market_space_receiving_path, loading: :lazy do %>
-
+  <%= render SpinnerComponent.new, cached: true %>
 <% end %>

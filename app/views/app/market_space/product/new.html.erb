@@ -1,5 +1,5 @@
 <% content_for :title, 'New Product' %>
 
 <%= turbo_frame_tag @product, target: '_top', src: new_app_market_space_product_path, loading: :lazy do %>
-
+  <%= render SpinnerComponent.new, cached: true %>
 <% end %>
