@@ -16,7 +16,41 @@ const usualConfig = {
   dom: '<"card-header border-bottom p-1"<"head-label"><"dt-action-buttons text-right"B>><"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
 }
 
-// mostly pulled from https://github.com/jgorman/stimulus-datatables/blob/master/src/index.js, but heavily modified
+/*
+    This is the base class for all datatable controllers.
+
+    mostly pulled from https://github.com/jgorman/stimulus-datatables/blob/master/src/index.js, but heavily modified
+
+    The config that is sent must include the following:
+    ajax: {
+      'url': datatableURL,
+      'type': 'GET'
+    },
+    order: [[ 0, 'desc' ]],
+    columns: [
+      { data: 'sku' },
+      { data: 'name' },
+      { data: 'stock' },
+      {
+        data: function (row, _type, _set) {
+          return `<a href="${itemPath}/${row.id}" class="btn btn-outline-primary my-0 mr-0">
+                          <i data-feather="chevrons-right"></i>
+                        </a>`;
+        }
+      }
+    ],
+    columnDefs: [
+      { name: 'sku',   targets: 0 },
+      { name: 'name',  targets: 1 },
+      { name: 'stock', targets: 2 },
+      { name: 'view',  targets: 3, 'orderable': false, 'searchable': false },
+
+      { targets: '_all', searchable: true, orderable: true}
+    ],
+    exportColumns: [0, 1, 2, 3],
+
+    exportColumns are not part of the DataTable API, but are required for the export to work.
+ */
 export class StimulusDatatable extends Controller {
 
   // this will get overridden by the child controller
@@ -27,12 +61,6 @@ export class StimulusDatatable extends Controller {
   }
 
   connect() {
-    // console.log("Stimulus Datatable connected");
-    // console.log(this.config());
-    // console.log(this.element);
-
-    // console.log("Is booting? " + this.isBooting());
-
     if (!this.isBooting()) return false
 
     // Register the teardown listener
@@ -98,7 +126,7 @@ export class StimulusDatatable extends Controller {
   }
 
   isPreview() {
-    return document.documentElement.hasAttribute('data-turbolinks-preview');
+    return document.documentElement.hasAttribute('data-turbo-preview');
   }
 
   isLive() {

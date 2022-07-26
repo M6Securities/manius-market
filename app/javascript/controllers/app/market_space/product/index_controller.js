@@ -39,7 +39,7 @@ export default class extends StimulusDatatable {
 
         { targets: '_all', searchable: true, orderable: true}
       ],
-      exportColumns: [0, 1, 2, 3],
+      exportColumns: [0, 1, 2, 3]
     };
   }
 }
