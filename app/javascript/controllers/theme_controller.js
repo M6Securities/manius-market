@@ -11,7 +11,7 @@ export default class extends Controller {
   toggleTheme() {
     const htmlElement = window.jQuery('html');
 
-    console.log("toggleTheme");
+    // console.log("toggleTheme");
 
     // check to see if htmlElement has the class 'dark-theme'
     if (htmlElement.hasClass('dark-layout')) {

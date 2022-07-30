@@ -2,7 +2,11 @@
 <script src="https://cdn.m6securities.com/vuexy_admin_8-0/app-assets/js/scripts/pages/app-ecommerce-checkout.min.js"></script>
 <script src="https://js.stripe.com/v3/"></script>
 
-<div class="container">
+<div class="container"
+     data-controller="site--checkout"
+     data-site--checkout-url-value="<%= stripe_checkout_create_path %>"
+     data-site--checkout-key-value="<%= @current_market.stripe_publishable_key %>"
+>
   <!-- Checkout Place order starts -->
   <div id="place-order" class="list-view product-checkout">
     <!-- Checkout Place Order Left starts -->
@@ -136,7 +140,7 @@
           <h6 class="card-title">Shipping Address</h6>
         </div>
         <div class="card-body">
-          <form id="place-order-form">
+          <form id="place-order-form" data-action="site--checkout#checkoutFormSubmit">
             <!-- rails authenticity token -->
             <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 
@@ -176,113 +180,3 @@
   </div>
   <!-- Checkout Place order Ends -->
 </div>
-
-<script defer>
-    $(function() {
-        $('.bootstrap-touchspin').TouchSpin();
-        $('select:not(.flatpickr-input)').select2();
-
-        const placeOrderButton = $('#place-order-button');
-
-        // this way it gets triggered if it's pre-filled
-        if (validOrderForm()) {
-            placeOrderButton.removeClass('disabled');
-        } else {
-            placeOrderButton.addClass('disabled');
-        }
-
-        $("#place-order-form input").change(function () {
-            if (validOrderForm()) {
-                placeOrderButton.removeClass('disabled');
-            } else {
-                placeOrderButton.addClass('disabled');
-            }
-        });
-
-    });
-
-    function validOrderForm() {
-        let valid = true;
-        $("#place-order-form").find('input').each(function () {
-            const element = $(this);
-            if (element.prop('required')) {
-                if (element.prop('type') === 'text') {
-                    if (element.val() === '') {
-                        valid = false;
-
-                        element.addClass('is-invalid');
-                        element.removeClass('is-valid');
-                    } else {
-                        element.removeClass('is-invalid');
-                        element.addClass('is-valid');
-                    }
-                }
-            }
-        });
-
-        const placeOrderEmail = $('#place-order-email');
-        if (validateEmail(placeOrderEmail.val())) {
-            placeOrderEmail.removeClass('is-invalid');
-            placeOrderEmail.addClass('is-valid');
-        } else {
-            placeOrderEmail.addClass('is-invalid');
-            placeOrderEmail.removeClass('is-valid');
-            valid = false;
-        }
-
-        //console.log("Validating form: " + valid);
-
-        return valid;
-    }
-
-    $('#place-order-form').submit(function(e) {
-        e.preventDefault();
-
-        if (!validOrderForm()) {
-            return null;
-        }
-
-        const stripe = Stripe('<%= @current_market.stripe_publishable_key %>');
-
-        const formElement = document.getElementById('place-order-form');
-        const formData = new FormData(formElement);
-
-        // Create a new Checkout Session using the server-side endpoint you
-        // created in step 3.
-        fetch('<%= stripe_checkout_create_path %>', {
-            method: 'POST',
-            body: formData
-        })
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (session) {
-                console.log(session)
-
-                return stripe.redirectToCheckout({
-                    sessionId: session.id
-                });
-
-            })
-            .then(function (result) {
-                console.log(result)
-                // If `redirectToCheckout` fails due to a browser or network
-                // error, you should display the localized error message to your
-                // customer using `error.message`.
-                if (result.error) {
-                    alert(result.error.message);
-                }
-            })
-            .catch(function (error) {
-                console.error('Error:', error);
-            });
-    });
-
-    // https://stackoverflow.com/a/9204568
-    function validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-    }
-
-
-</script>

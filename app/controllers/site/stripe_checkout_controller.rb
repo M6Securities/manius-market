@@ -7,19 +7,34 @@ module Site
       # at this point, we are in the checkout process
       # So we need to remove all items from the cart and create an order with it
 
-      order = @current_customer.orders.create payment_status: Order::PS_NONE
+      order = @current_customer.orders.create payment_status: :none
 
       safe_params = params.require(:create).permit(:shipping_name, :email, :address_line_1, :address_line_2, :city, :state, :zip, :country)
 
       customer_email = safe_params[:email]
+
+      puts safe_params
 
       return render json: { error: 'Email is required' }, status: :unprocessable_entity unless customer_email.present?
 
       possible_existing_customer = @current_customer.market.customers.find_by(email: customer_email)
 
       if possible_existing_customer.nil?
+        puts 'Creating new customer'
         # no customer exists with this email, so we use the current one
         order.customer.email = customer_email
+
+        puts order.customer.inspect
+        puts "Valid? #{order.customer.valid?}"
+        puts 'Customer Erorrs'
+        puts order.customer.errors.inspect
+        puts order.customer.errors.full_messages.inspect
+        puts order.customer.save
+
+        puts 'Order Errors'
+        puts order.errors.inspect
+        puts order.errors.full_messages.inspect
+
         return render json: { error: 'Email is invalid' }, status: :unprocessable_entity unless order.customer.save
       elsif possible_existing_customer.id != @current_customer.id
         # if a customer already exists and it's NOT the same customer object, then we need to transfer over the cart to that one.
@@ -62,6 +77,8 @@ module Site
           }
         }
       end
+
+      puts "Line Items: #{line_items}"
 
       Stripe.api_key = @current_customer.market.stripe_secret_key
 

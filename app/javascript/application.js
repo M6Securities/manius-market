@@ -2,17 +2,8 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
-function updateFeather() {
-    if (feather) {
-        feather.replace({
-            width: 14,
-            height: 14
-        });
-    }
-    return 'Updated Feather';
-}
-
 window.updateFeather = updateFeather;
+window.validateEmail = validateEmail;
 
 document.addEventListener('turbo:load', function () {
     updateFeather();
@@ -25,3 +16,19 @@ document.addEventListener('turbo:frame-render', function () {
 window.jQuery(window).on('load', function () {
     updateFeather();
 });
+
+function updateFeather() {
+    if (feather) {
+        feather.replace({
+            width: 14,
+            height: 14
+        });
+    }
+    return 'Updated Feather';
+}
+
+// https://stackoverflow.com/a/9204568
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}

@@ -16,7 +16,16 @@ class Order < ApplicationRecord
   PS_CANCELLED = 6
   PS_SUCCEEDED = 7
 
-  enum :payment_status, %i[none requires_payment_method requires_confirmation requires_action processing requires_capture cancelled succeeded], prefix: :payment_status # ignore the warning this is right
+  enum :payment_status, {
+    none: PS_NONE,
+    requires_payment_method: PS_REQUIRES_PAYMENT_METHOD,
+    requires_confirmation: PS_REQUIRES_CONFIRMATION,
+    requires_action: PS_REQUIRES_ACTION,
+    processing: PS_PROCESSING,
+    requires_capture: PS_REQUIRES_CAPTURE,
+    cancelled: PS_CANCELLED,
+    succeeded: PS_SUCCEEDED
+  }, prefix: true, default: :payment_status_none # ignore the warning this is right
 
   PS_ARRAY = [
     PS_NONE,
@@ -77,7 +86,7 @@ class Order < ApplicationRecord
   # Validations
   # --------------------------------------------------------------------------------------------------------------------
   validates_presence_of :customer
-  validates :payment_status, inclusion: { in: PS_ARRAY }
+  # validates :payment_status, inclusion: { in: PS_ARRAY }
   validates :status, inclusion: { in: statuses.keys }
 
   # Methods
