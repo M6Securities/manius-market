@@ -52,6 +52,11 @@ const usualConfig = {
     exportColumns are not part of the DataTable API, but are required for the export to work.
  */
 export class StimulusDatatable extends Controller {
+  static values = {
+    url : String,
+    itemPath: String,
+    branchTable: String
+  }
 
   // this will get overridden by the child controller
   config() {};

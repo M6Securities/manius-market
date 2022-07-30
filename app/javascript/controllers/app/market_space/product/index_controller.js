@@ -1,14 +1,8 @@
-import { Controller } from "@hotwired/stimulus"
+// import { Controller } from "@hotwired/stimulus"
 import { StimulusDatatable } from "../../../datatable_controller";
 
 // Connects to data-controller="app--market-space--product--index"
 export default class extends StimulusDatatable {
-  static values = {
-    url : String,
-    itemPath: String,
-    branchTable: String
-  }
-
   config() {
     const datatableURL = this.urlValue;
     const itemPath = this.itemPathValue;
@@ -26,8 +20,8 @@ export default class extends StimulusDatatable {
         {
           data: function (row, _type, _set) {
             return `<a href="${itemPath}/${row.id}" class="btn btn-outline-primary my-0 mr-0">
-                            <i data-feather="chevrons-right"></i>
-                          </a>`;
+                      <i data-feather="chevrons-right"></i>
+                    </a>`;
           }
         }
       ],

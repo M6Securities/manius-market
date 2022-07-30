@@ -81,7 +81,7 @@ module Api
         end
         order.action_logs.create(
           action: 'Order Placed',
-          user_id: User::SYSTEM_USER_ID
+          user_market_permission_id: User::SYSTEM_USER_ID
         )
       end
 
@@ -117,7 +117,7 @@ module Api
 
         order.action_logs.create(
           action: "Payment Intent Updated to #{payment_intent_status}",
-          user_id: User::SYSTEM_USER_ID
+          user_market_permission_id: User::SYSTEM_USER_ID
         )
       end
 

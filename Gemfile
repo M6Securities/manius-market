@@ -54,11 +54,6 @@ group :development, :test do
 
   gem 'figaro'
 
-  gem 'factory_bot_rails'
-  gem 'faker'
-  gem 'rspec-rails'
-  gem 'rubocop-rspec'
-
   gem 'launchy'
 end
 
@@ -77,8 +72,8 @@ group :development do
   gem 'binding_of_caller'
 
   gem 'rubocop'
-  gem 'rubocop-rails'
   gem 'rubocop-faker'
+  gem 'rubocop-rails'
 end
 
 group :test do
@@ -86,6 +81,11 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'rspec-rails'
+  gem 'rubocop-rspec'
 end
 
 # UI

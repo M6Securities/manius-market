@@ -57,7 +57,14 @@ class Order < ApplicationRecord
   OS_DELIVERED = 4
   OS_CANCELLED = 5
 
-  enum :status, %i[waiting_acknowledgement acknowledged processing shipped delivered cancelled], prefix: :status # ignore the warning this is right
+  enum :status, {
+    not_acknowledged: OS_NOT_ACKNOWLEDGED,
+    acknowledged: OS_ACKNOWLEDGED,
+    processing: OS_PROCESSING,
+    shipped: OS_SHIPPED,
+    delivered: OS_DELIVERED,
+    cancelled: OS_CANCELLED
+  }, prefix: :status # ignore the warning this is right
 
   OS_ARRAY = [
     OS_NOT_ACKNOWLEDGED,
