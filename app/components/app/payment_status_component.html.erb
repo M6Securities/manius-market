@@ -1,19 +1,19 @@
-<% case @payment_status %>
-<% when Order::PS_NONE %>
+<% case :"#{@payment_status}" %>
+<% when :none %>
   <span class="badge bg-danger">None</span>
-<% when Order::PS_REQUIRES_PAYMENT_METHOD %>
+<% when :requires_payment_method %>
   <span class="badge badge-light-warning">Requires Payment Method</span>
-<% when Order::PS_REQUIRES_CONFIRMATION %>
+<% when :requires_confirmation %>
   <span class="badge badge-light-warning">Requires Confirmation</span>
-<% when Order::PS_REQUIRES_ACTION %>
+<% when :requires_action %>
   <span class="badge bg-warning">Requires Action</span>
-<% when Order::PS_PROCESSING %>
+<% when :processing %>
   <span class="badge bg-info">Processing</span>
-<% when Order::PS_REQUIRES_CAPTURE %>
+<% when :requires_capture %>
   <span class="badge bg-info">Requires Capture</span>
-<% when Order::PS_CANCELLED %>
+<% when :cancelled %>
   <span class="badge bg-danger">Canceled</span>
-<% when Order::PS_SUCCEEDED %>
+<% when :succeeded %>
   <span class="badge bg-success">Succeeded</span>
 <% else %>
   <span class="text-danger">Unknown</span>

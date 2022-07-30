@@ -1,15 +1,15 @@
-<% case @status %>
-<% when Order::OS_NOT_ACKNOWLEDGED %>
+<% case :"#{@status}" %>
+<% when :not_acknowledged %>
   <span class="badge badge-light-warning">Not Acknowledged</span>
-<% when Order::OS_ACKNOWLEDGED %>
+<% when :acknowledged %>
   <span class="badge badge-light-success">Acknowledged</span>
-<% when Order::OS_PROCESSING %>
+<% when :processing %>
   <span class="badge bg-info">Processing</span>
-<% when Order::OS_SHIPPED %>
+<% when :shipped %>
   <span class="badge badge-light-success">Shipped</span>
-<% when Order::OS_DELIVERED %>
+<% when :delivered %>
   <span class="badge bg-success">Delivered</span>
-<% when Order::OS_CANCELLED %>
+<% when :cancelled %>
   <span class="badge badge-light-danger">Cancelled</span>
 <% else %>
   <span class="text-danger">Unknown</span>

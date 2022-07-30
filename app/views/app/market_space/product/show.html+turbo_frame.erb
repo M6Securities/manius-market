@@ -132,7 +132,11 @@
     </div>
     <div class="card-body">
 
-      <table id="product-orders-table" class="table dataTable table-striped" style="width:100%">
+      <table id="product-orders-table" class="table table-striped" style="width:100%"
+             data-controller="app--market-space--product--orders"
+             data-app--market-space--product--orders-url-value="<%= app_market_space_product_orders_datatable_path @product %>"
+             data-app--market-space--product--orders-item-path-value="<%= app_market_space_order_index_path %>"
+      >
         <thead>
         <tr>
           <th>Date</th>
@@ -160,141 +164,5 @@
   </div>
 
   <%= render App::ActionLogTableComponent.new(@product) %>
-
-  <script>
-      (function () {
-          const exportColumns = [0, 1, 2, 3]
-
-          const productOrdersTable = $('#product-orders-table').DataTable({
-              ajax: {
-                  'url': '<%= app_market_space_product_orders_datatable_path @product %>',
-                  'type': 'GET'
-              },
-
-              processing: true,
-              serverSide: true,
-              paging: true,
-              pagingType: 'full_numbers',
-              searching: true,
-              lengthChange: true,
-              responsive: true,
-              order: [[ 0, 'desc' ]],
-              columns: [
-                  {
-                      data: function (row, _type, _set) {
-                          const date = new Date(row.created_at);
-                          return date.toLocaleString();
-                      }
-                  },
-                  { data: 'count' },
-                  {
-                      data: function (row, _type, _set) {
-                          switch (row.payment_status) {
-                              case <%= Order::PS_NONE %>:
-                                  return '<span class="badge bg-danger">None</span>';
-                              case <%= Order::PS_REQUIRES_PAYMENT_METHOD %>:
-                                  return '<span class="badge badge-light-warning">Requires Payment Method</span>';
-                              case <%= Order::PS_REQUIRES_CONFIRMATION %>:
-                                  return '<span class="badge badge-light-warning">Requires Confirmation</span>';
-                              case <%= Order::PS_REQUIRES_ACTION %>:
-                                  return '<span class="badge bg-warning">Requires Action</span>';
-                              case <%= Order::PS_PROCESSING %>:
-                                  return '<span class="badge bg-info">Processing</span>';
-                              case <%= Order::PS_REQUIRES_CAPTURE %>:
-                                  return '<span class="badge bg-info">Requires Capture</span>';
-                              case <%= Order::PS_CANCELLED %>:
-                                  return '<span class="badge bg-danger">Canceled</span>';
-                              case <%= Order::PS_SUCCEEDED %>:
-                                  return '<span class="badge bg-success">Succeeded</span>';
-
-                              default:
-                                  return '<span class="text-danger">Unknown</span>';
-                          }
-                      }
-                  },
-                  {
-                      data: function (row, _type, _set) {
-                          switch (row.status) {
-                              case <%= Order::OS_NOT_ACKNOWLEDGED %>:
-                                  return `<span class="badge badge-light-warning">Not Acknowledged</span>`;
-                              case <%= Order::OS_ACKNOWLEDGED %>:
-                                  return `<span class="badge badge-light-success">Acknowledged</span>`;
-                              case <%= Order::OS_PROCESSING %>:
-                                  return `<span class="badge bg-info">Processing</span>`;
-                              case <%= Order::OS_SHIPPED %>:
-                                  return `<span class="badge badge-light-success">Shipped</span>`;
-                              case <%= Order::OS_DELIVERED %>:
-                                  return `<span class="badge bg-success">Delivered</span>`;
-                              case <%= Order::OS_CANCELLED %>:
-                                  return `<span class="badge badge-light-danger">Cancelled</span>`;
-
-                              default:
-                                  return '<span class="text-danger">Unknown</span>'
-                          }
-                      }
-                  },
-                  {
-                      data: function (row, _type, _set) {
-                          return `<a href="<%= app_market_space_order_index_path %>/${row.id}" class="btn btn-outline-primary my-0 mr-0" target="_blank">
-                            <i data-feather="external-link"></i>
-                          </a>`;
-                      }
-                  }
-              ],
-              columnDefs: [
-                  { name: 'orders.created_at', targets: 0 },
-                  { name: 'count', targets: 1 },
-                  { name: 'orders.payment_status', targets: 2 },
-                  { name: 'orders.status', targets: 3 },
-                  { name: 'view',  targets: 4, 'orderable': false, 'searchable': false },
-
-                  { targets: '_all', searchable: true, orderable: true}
-              ],
-              drawCallback: function(_settings, _json) {
-                  updateFeather();
-              },
-              initComplete: function(_settings, _json) {
-                  const tableInput = $('div.dataTables_filter input');
-
-                  tableInput.unbind();
-                  tableInput.bind('keyup', function(e) {
-                      if(e.keyCode === 13) {
-                          productOrdersTable.search(this.value).draw();
-                      }
-                  });
-              },
-              dom: '<"card-header border-bottom p-1"<"head-label"><"dt-action-buttons text-right"B>><"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-              buttons: [
-                  {
-                      extend: 'csv',
-                      exportOptions: {
-                          columns: exportColumns
-                      }
-                  },
-                  {
-                      extend: 'copy',
-                      exportOptions: {
-                          columns: exportColumns
-                      }
-                  },
-                  {
-                      extend: 'pdf',
-                      exportOptions: {
-                          columns: exportColumns
-                      },
-                      orientation: 'landscape'
-                  },
-                  {
-                      extend: 'print',
-                      exportOptions: {
-                          columns: exportColumns
-                      }
-                  }
-              ]
-          });
-
-          //$("div.head-label").html('<h6 class="mb-0">Orders Table</h6>');
-      })();
-  </script>
 
 <% end %>
