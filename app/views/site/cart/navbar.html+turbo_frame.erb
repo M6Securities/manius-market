@@ -2,11 +2,6 @@
   <div data-controller="site--cart--main">
     <a class="nav-link <%= 'show' if @show_navbar_cart %>" href="#" id="cart-navbar-dropdown-button" data-bs-toggle="dropdown" aria-expanded="<%= @show_navbar_cart ? 'true' : 'false' %>" data-action="site--cart--main#toggleDropdown" data-site--cart-open-value="<%= @show_navbar_cart ? 'true' : 'false' %>">
       <i class="ficon" data-feather='shopping-cart'></i>
-      <% if @cart_items_count > 0 %>
-      <span class="badge rounded-pill bg-primary badge-up cart-item-count">
-        <%= @cart_items_count %>
-      </span>
-      <% end %>
     </a>
 
     <ul id="cart-navbar-dropdown-items" class="dropdown-menu dropdown-menu-media dropdown-menu-end <%= 'show' if @show_navbar_cart %>">
