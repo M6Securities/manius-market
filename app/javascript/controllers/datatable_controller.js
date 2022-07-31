@@ -67,10 +67,10 @@ export class StimulusDatatable extends Controller {
   }
 
   connect() {
-    if (!this.isBooting()) return false
+    if (!this.isBooting()) return false;
 
     // Register the teardown listener
-    document.addEventListener('turbo:before-render', this._teardown)
+    document.addEventListener('turbo:before-render', this._teardown);
 
 
     let config = usualConfig;

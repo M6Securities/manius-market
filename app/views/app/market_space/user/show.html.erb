@@ -1,5 +1,5 @@
 <% content_for :title, "User #{@user.email}" %>
 
 <%= turbo_frame_tag @user, src: app_market_space_user_path(@user), loading: :lazy, target: '_top' do %>
-
+  <%= render SpinnerComponent.new, cached: true %>
 <% end %>

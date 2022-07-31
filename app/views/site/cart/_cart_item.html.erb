@@ -1,0 +1,46 @@
+<turbo-stream action="prepend" target="cart_items">
+  <template>
+
+    <%= turbo_frame_tag cart_item do %>
+      <div class="list-item align-items-center" id="cart-item-div-<%= cart_item.id %>">
+
+        <img class="d-block rounded me-1" src="<%= cart_item.product.primary_image_icon_url %>" alt="<%= cart_item.product.name %>" width="62">
+
+        <div class="list-item-body flex-grow-1">
+
+          <button type="button" class="btn btn-sm cart-item-remove" data-action="site--cart#removeItem" data-site--cart-item-param="<%= cart_item.id %>">
+            <i class="ficon" data-feather="x"></i>
+          </button>
+
+
+          <div class="media-heading">
+            <h6 class="cart-item-title">
+              <a class="text-body" href="<%= product_path cart_item.product %>">
+                <%= cart_item.product.name %>
+              </a>
+            </h6>
+            <% if cart_item.quantity > 1 %>
+              <small class="cart-item-by">
+                <%= cart_item.product.product_price_from_currency(market.default_currency).price.format %> Each
+              </small>
+            <% end %>
+          </div>
+
+          <input type="hidden" name="update[cart_items][][id]" value="<%= cart_item.id %>">
+
+          <div class="cart-item-qty">
+            <div class="input-group">
+              <input class="touchspin-cart cart-navbar-input"  name="update[cart_items][][quantity]" type="number" value="<%= cart_item.quantity %>" step="1" min="1">
+            </div>
+          </div>
+
+          <h5 class="cart-item-price">
+            <%= cart_item.price_total(market.default_currency).format %>
+          </h5>
+
+        </div>
+      </div>
+    <% end %>
+
+  </template>
+</turbo-stream>

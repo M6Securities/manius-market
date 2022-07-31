@@ -1,9 +1,28 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
-import "@hotwired/turbo-rails"
-import "controllers"
+import "@hotwired/turbo-rails";
+
+import jQuery from 'jquery';
+import "bootstrap";
+import "perfect-scrollbar";
+import "classnames";
+
+window.$ = jQuery;
+window.jQuery = jQuery;
+
+import "tether";
+import "shepherd.js";
+import "toastr";
+import "wnumb";
+import "nouislider";
+import feather from 'feather-icons';
+import Unison from "unison";
+
+import "controllers";
+
 
 window.updateFeather = updateFeather;
 window.validateEmail = validateEmail;
+window.Unison = Unison;
 
 document.addEventListener('turbo:load', function () {
     updateFeather();

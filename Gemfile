@@ -123,4 +123,5 @@ gem 'country_select'
 #
 # main gem: https://github.com/cockroachdb/activerecord-cockroachdb-adapter
 # with support: https://github.com/keithdoggett/activerecord-cockroachdb-adapter/tree/ar-70
-gem 'activerecord-cockroachdb-adapter', github: 'keithdoggett/activerecord-cockroachdb-adapter', branch: 'ar-70'
+# gem 'activerecord-cockroachdb-adapter', github: 'keithdoggett/activerecord-cockroachdb-adapter', branch: 'ar-70'
+gem 'activerecord-cockroachdb-adapter', '~> 7.0.0'

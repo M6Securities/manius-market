@@ -50,13 +50,13 @@
 
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
       <%= turbo_frame_tag "user_#{@user.id}_permissions", src: app_market_space_user_permissions_path(@user), loading: :lazy do %>
-
+        <%= render SpinnerComponent.new, cached: true %>
       <% end %>
 
       <br>
 
       <%= turbo_frame_tag "user_#{@user.id}_remove", src: app_market_space_user_remove_path(@user), loading: :lazy do %>
-
+        <%= render SpinnerComponent.new, cached: true %>
       <% end %>
     </div>
 
