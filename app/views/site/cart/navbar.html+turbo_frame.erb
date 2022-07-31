@@ -26,9 +26,7 @@
 
           <%= turbo_stream_from :cart_items %>
           <div id="cart_items">
-            <% @current_customer.cart_items.each do |cart_item| %>
-              <%= render partial: 'site/cart/cart_item', locals: { cart_item: cart_item, market: @current_customer.market } %>
-            <% end %>
+            <%= render partial: 'site/cart/cart_item', locals: { customer: @current_customer } %>
           </div>
 
         </li>

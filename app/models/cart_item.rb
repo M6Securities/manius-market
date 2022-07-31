@@ -16,8 +16,7 @@ CartItem < ApplicationRecord
   # Methods
   # ------------------------------------------------------------
 
-  after_create_commit -> { broadcast_append_to 'cart_items', partial: 'site/cart/cart_item', target: 'cart_items', locals: { cart_item: self, market: } }
-  after_update_commit -> { broadcast_update_to 'cart_items', partial: 'site/cart/cart_item', target: 'cart_items', locals: { cart_item: self, market: } }
+  after_commit -> { broadcast_replace_to 'cart_items', partial: 'site/cart/cart_item', target: 'cart_items', locals: { customer: } }
 
   def market
     customer.market
