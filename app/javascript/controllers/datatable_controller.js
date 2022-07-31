@@ -10,10 +10,12 @@ const usualConfig = {
   responsive: true,
   stateSave: true,
   fixedHeader: true,
+  order: [[ 0, 'asc' ]],
   drawCallback: function () {
     window.updateFeather();
   },
   dom: '<"card-header border-bottom p-1"<"head-label"><"dt-action-buttons text-right"B>><"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+  exportColumns: [0, 1]
 }
 
 /*
@@ -23,10 +25,9 @@ const usualConfig = {
 
     The config that is sent must include the following:
     ajax: {
-      'url': datatableURL,
-      'type': 'GET'
+      url: datatableURL,
+      type: 'GET'
     },
-    order: [[ 0, 'desc' ]],
     columns: [
       { data: 'sku' },
       { data: 'name' },
@@ -145,8 +146,6 @@ export class StimulusDatatable extends Controller {
   _teardown = () => this.teardown(this);
 
   teardown(_event) {
-    // console.log("Teardown event");
-
     if (!this.isLive()){
       return false;
     }
@@ -155,7 +154,6 @@ export class StimulusDatatable extends Controller {
     this.dataTable.destroy();
     this.dataTable = undefined;
 
-    // this.debug('teardown')
     return true;
   }
 

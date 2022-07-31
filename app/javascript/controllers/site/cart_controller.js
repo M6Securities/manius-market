@@ -10,7 +10,7 @@ export default class extends Controller {
 
 
   connect() {
-    console.log("Cart controller connected");
+    // console.log("Cart controller connected");
 
     $('.touchspin-cart').TouchSpin();
 

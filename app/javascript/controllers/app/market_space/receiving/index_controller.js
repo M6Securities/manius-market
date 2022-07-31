@@ -1,7 +1,6 @@
-// import { Controller } from "@hotwired/stimulus"
-import { StimulusDatatable } from "../../../datatable_controller";
+import {StimulusDatatable} from "../../../datatable_controller";
 
-// Connects to data-controller="app--market-space--product--index"
+// Connects to data-controller="app--market-space--receiving--index"
 export default class extends StimulusDatatable {
   config() {
     const datatableURL = this.urlValue;
@@ -13,9 +12,8 @@ export default class extends StimulusDatatable {
         type: 'GET'
       },
       columns: [
-        { data: 'sku' },
-        { data: 'name' },
-        { data: 'stock' },
+        { data: 'created_at' },
+        { data: 'user_id'},
         {
           data: function (row, _type, _set) {
             return `<a href="${itemPath}/${row.id}" class="btn btn-outline-primary my-0 mr-0">
@@ -25,14 +23,13 @@ export default class extends StimulusDatatable {
         }
       ],
       columnDefs: [
-        { name: 'sku',   targets: 0 },
-        { name: 'name',  targets: 1 },
-        { name: 'stock', targets: 2 },
-        { name: 'view',  targets: 3, 'orderable': false, 'searchable': false },
+        { name: 'created_at', targets: 0 },
+        { name: 'user_id', targets: 1 },
+        { name: 'view', targets: 2, orderable: false, searchable: false },
 
-        { targets: '_all', searchable: true, orderable: true}
+        { targets: '_all', orderable: true, searchable: true}
       ],
-      exportColumns: [0, 1, 2, 3]
+      exportColumns: [0, 1]
     };
   }
 }

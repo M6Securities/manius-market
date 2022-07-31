@@ -8,10 +8,9 @@ export default class extends StimulusDatatable {
 
     return {
       ajax: {
-        'url': datatableURL,
-        'type': 'GET'
+        url: datatableURL,
+        type: 'GET'
       },
-      order: [[0, 'desc']],
       columns: [
         {
           data: function (row, _type, _set) {

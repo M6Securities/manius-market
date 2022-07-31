@@ -38,40 +38,41 @@
   </div>
 
   <div class="card">
-    <div class="card-body">
+    <div class="card-header">
+      <h3 class="card-title">
+        Items
+      </h3>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>
+            Product
+          </th>
+          <th>
+            Quantity
+          </th>
+        </tr>
+        </thead>
 
-      <div class="table-responsive">
-        <table class="table table-bordered">
-          <thead>
-          <tr>
-            <th>
-              Product
-            </th>
-            <th>
-              Quantity
-            </th>
-          </tr>
-          </thead>
-
-          <tbody>
-          <% @receiving.receive_items.each do |item| %>
-            <% cache item do %>
-              <tr>
-                <td>
+        <tbody>
+        <% @receiving.receive_items.each do |item| %>
+          <% cache item do %>
+            <tr>
+              <td>
                   <span>
                     <%= item.product.name %> - <span class="text-muted"><%= item.product.sku %></span> <a href="<%= app_market_space_product_path item.product %>" target="_blank"><i data-feather='external-link'></i></a>
                   </span>
-                </td>
-                <td>
-                  <%= item.quantity %>
-                </td>
-              </tr>
-            <% end %>
+              </td>
+              <td>
+                <%= item.quantity %>
+              </td>
+            </tr>
           <% end %>
-          </tbody>
-        </table>
-      </div>
-
+        <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
 

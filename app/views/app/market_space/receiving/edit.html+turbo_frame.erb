@@ -1,5 +1,5 @@
 <%= turbo_frame_tag @receiving do %>
-  <form action="<%= app_market_space_receiving_path @receiving %>" method="patch">
+  <form action="<%= app_market_space_receiving_path @receiving %>" method="patch" data-controller="app--market-space--receiving--edit">
     <!-- rails authenticity token -->
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
@@ -15,7 +15,7 @@
 
         <a href="<%= app_market_space_receiving_path @receiving %>" class="btn btn-outline-danger mx-1" data-turbo-action="advance" style="height: 39px;">
           <i data-feather="x"></i>
-          Cancel
+          Back
         </a>
 
         <button type="submit" class="btn btn-success ms-1" style="height: 39px;">
@@ -28,43 +28,46 @@
     <%= render FormFlashComponent.new %>
 
     <div class="card">
+
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>
+              Product
+            </th>
+            <th>
+              Quantity
+            </th>
+            <th>
+              Actions
+            </th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <% @receiving.receive_items.each do |item| %>
+            <% cache item do %>
+              <tr>
+                <td>
+                  <span>
+                    <%= item.product.name %> - <span class="text-muted"><%= item.product.sku %></span> <a href="<%= app_market_space_product_path item.product %>" target="_blank"><i data-feather='external-link'></i></a>
+                  </span>
+                  <input type="hidden" name="update[items][][id]" value="<%= item.id %>">
+                </td>
+                <td>
+                  <div class="input-group">
+                    <input class="touchspin-cart"  name="update[items][][quantity]" type="number" value="<%= item.quantity %>" step="1" min="1">
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+
       <div class="card-body">
-
-        <div class="table-responsive">
-          <table class="table table-bordered">
-            <thead>
-            <tr>
-              <th>
-                Product
-              </th>
-              <th>
-                Quantity
-              </th>
-              <th>
-                Actions
-              </th>
-            </tr>
-            </thead>
-
-            <tbody>
-              <% @receiving.receive_items.each do |item| %>
-                <% cache item do %>
-                  <tr>
-                    <td>
-                      <span>
-                        <%= item.product.name %> - <span class="text-muted"><%= item.product.sku %></span> <a href="<%= app_market_space_product_path item.product %>" target="_blank"><i data-feather='external-link'></i></a>
-                      </span>
-                      <input type="hidden" name="update[items][][id]" value="<%= item.id %>">
-                    </td>
-                    <td>
-                      <%= render InputBlockComponent.new(name: 'update[items][][quantity]', value: item.quantity, type: :number, div_classes: '') %>
-                    </td>
-                  </tr>
-                <% end %>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
 
         <div class="d-flex justify-content-end mt-1">
 
