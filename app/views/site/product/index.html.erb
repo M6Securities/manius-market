@@ -86,63 +86,66 @@
 
         <% @products.each do |product| %>
           <% cache product do %>
-            <div class="card ecommerce-card">
-            <div class="item-img text-center d-flex justify-content-center">
-              <a href="<%= product_path product %>">
-                <img class="img-fluid card-img-top" src="<%= product.primary_image_icon_url %>" alt="<%= product.name %>"/>
-              </a>
-            </div>
-            <div class="card-body">
-              <div class="item-wrapper">
-                <div class="item-rating">
-                  <ul class="unstyled-list list-inline">
-                    <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                    <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                    <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                    <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                    <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                  </ul>
-                </div>
-                <div>
-                  <h6 class="item-price">
-                    <%= product.product_price_from_currency(@current_market.default_currency).price.format %>
-                  </h6>
-                </div>
-              </div>
-              <h6 class="item-name">
-                <a class="text-body" href="<%= product_path product %>">
-                  <%= product.name %>
+            <div class="card ecommerce-card"
+                 data-controller="site--product--index-item"
+                 data-site--product--index-item-id-value="<%= product.id %>"
+            >
+              <div class="item-img text-center d-flex justify-content-center">
+                <a href="<%= product_path product %>">
+                  <img class="img-fluid card-img-top" src="<%= product.primary_image_icon_url %>" alt="<%= product.name %>"/>
                 </a>
-              </h6>
-              <p class="card-text item-description">
-                <%= product.description %>
-              </p>
-            </div>
-            <div class="item-options text-center">
-              <div class="item-wrapper">
-                <div class="item-cost">
-                  <h4 class="item-price">
-                    <%= product.product_price_from_currency(@current_market.default_currency).price.format %>
-                  </h4>
-                </div>
               </div>
-              <a href="#" class="btn btn-light btn-wishlist">
-                <i data-feather="heart"></i>
-                <span>Wishlist</span>
-              </a>
+              <div class="card-body">
+                <div class="item-wrapper">
+                  <div class="item-rating">
+                    <ul class="unstyled-list list-inline">
+                      <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
+                      <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
+                      <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
+                      <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
+                      <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h6 class="item-price">
+                      <%= product.product_price_from_currency(@current_market.default_currency).price.format %>
+                    </h6>
+                  </div>
+                </div>
+                <h6 class="item-name">
+                  <a class="text-body" href="<%= product_path product %>">
+                    <%= product.name %>
+                  </a>
+                </h6>
+                <p class="card-text item-description">
+                  <%= product.description %>
+                </p>
+              </div>
+              <div class="item-options text-center">
+                <div class="item-wrapper">
+                  <div class="item-cost">
+                    <h4 class="item-price">
+                      <%= product.product_price_from_currency(@current_market.default_currency).price.format %>
+                    </h4>
+                  </div>
+                </div>
+                <a href="#" class="btn btn-light btn-wishlist">
+                  <i data-feather="heart"></i>
+                  <span>Wishlist</span>
+                </a>
 
-              <form method="post" action="<%= cart_update_item_path %>" id="add-to-cart-form-<%= product.id %>">
-                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-                <input type="hidden" name="add[product_id]" value="<%= product.id %>">
-                <input type="hidden" name="add[quantity]" value="1">
-                <button type="button" class="btn btn-primary btn-cart" onclick="product.addToCart('<%= product.id %>')">
-                  <i data-feather="shopping-cart" class="me-50"></i>
-                  <span class="add-to-cart">Add to cart</span>
-                </button>
-              </form>
+                <form method="post" action="<%= cart_update_item_path %>" id="add-to-cart-form-<%= product.id %>">
+                  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                  <input type="hidden" name="add[product_id]" value="<%= product.id %>">
+                  <input type="hidden" name="add[quantity]" value="1">
+                  <button type="button" class="btn btn-primary btn-cart" data-action="site--product--index-item#addItem">
+                    <i data-feather="shopping-cart" class="me-50"></i>
+                    <span class="add-to-cart">Add to cart</span>
+                  </button>
+                </form>
 
+              </div>
             </div>
-          </div>
           <% end %>
         <% end %>
 
@@ -447,34 +450,3 @@
     </div>
   </div>
 </div>
-
-<script async>
-
-    product = {
-        addToCart: function(productID) {
-            console.log('adding to cart');
-            const id = `add-to-cart-form-${productID}`;
-
-            const formElement = document.getElementById(id);
-            const url = '<%= cart_update_item_path %>';
-            const form = new FormData(formElement);
-
-            const postForm = $.ajax({
-                url: url,
-                data: form,
-                cache: false,
-                processData: false,
-                contentType: false,
-                type: 'POST',
-                success: function (data) {
-                    //console.log(data)
-                    document.getElementById('customer_<%= @current_customer.id %>').src = '<%= cart_navbar_path %>';
-                    document.getElementById('customer_<%= @current_customer.id %>').reload();
-                }
-            });
-        }
-    }
-
-</script>
-
-

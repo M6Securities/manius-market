@@ -1,6 +1,6 @@
 <%= turbo_frame_tag @current_customer do %>
-  <div data-controller="site--cart">
-    <a class="nav-link <%= 'show' if @show_navbar_cart %>" href="#" id="cart-navbar-dropdown-button" data-bs-toggle="dropdown" aria-expanded="<%= @show_navbar_cart ? 'true' : 'false' %>" data-action="site--cart#toggleDropdown" data-site--cart-open-value="<%= @show_navbar_cart ? 'true' : 'false' %>">
+  <div data-controller="site--cart--main">
+    <a class="nav-link <%= 'show' if @show_navbar_cart %>" href="#" id="cart-navbar-dropdown-button" data-bs-toggle="dropdown" aria-expanded="<%= @show_navbar_cart ? 'true' : 'false' %>" data-action="site--cart--main#toggleDropdown" data-site--cart-open-value="<%= @show_navbar_cart ? 'true' : 'false' %>">
       <i class="ficon" data-feather='shopping-cart'></i>
       <% if @cart_items_count > 0 %>
       <span class="badge rounded-pill bg-primary badge-up cart-item-count">
@@ -24,7 +24,12 @@
 
         <li class="scrollable-container media-list ps">
 
-          <%= turbo_stream_from 'cart_items' %>
+          <%= turbo_stream_from :cart_items %>
+          <div id="cart_items">
+            <% @current_customer.cart_items.each do |cart_item| %>
+              <%= render partial: 'site/cart/cart_item', locals: { cart_item: cart_item, market: @current_customer.market } %>
+            <% end %>
+          </div>
 
         </li>
 

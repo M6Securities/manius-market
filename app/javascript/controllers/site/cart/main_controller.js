@@ -1,17 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Connects to data-controller="site--cart"
+// Connects to data-controller="site--cart--main"
 export default class extends Controller {
   static values = { open : Boolean }
 
-  initialize() {
-    // console.log(this.openValue);
-  }
-
-
   connect() {
-    // console.log("Cart controller connected");
-
     $('.touchspin-cart').TouchSpin();
 
 
@@ -30,7 +23,6 @@ export default class extends Controller {
   }
 
   toggleDropdown() {
-    console.log("toggleDropdown");
 
     const cardNavbarDropdownButton = $('#cart-navbar-dropdown-button');
     if (this.openValue) {
@@ -44,16 +36,5 @@ export default class extends Controller {
       $('#cart-navbar-dropdown-items').addClass('show');
       this.openValue = true;
     }
-
-    console.log(this.openValue);
-  }
-
-  removeItem(event) {
-    const element = $(`#cart-item-div-${event.params.item}`);
-    element.slideUp();
-    element.remove();
-    $('#navbar-cart-update-div').show();
-
-    console.log("removed item");
   }
 }

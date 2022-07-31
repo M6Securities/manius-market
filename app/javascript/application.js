@@ -17,12 +17,12 @@ import "nouislider";
 import feather from 'feather-icons';
 import Unison from "unison";
 
-import "controllers";
-
 
 window.updateFeather = updateFeather;
 window.validateEmail = validateEmail;
 window.Unison = Unison;
+
+import "controllers";
 
 document.addEventListener('turbo:load', function () {
     updateFeather();

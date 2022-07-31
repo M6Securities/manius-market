@@ -13,11 +13,11 @@ CartItem < ApplicationRecord
             numericality: { greater_than: 0 }
   validate :validate_same_markets
 
-
   # Methods
   # ------------------------------------------------------------
 
-  after_commit :update_stream_item, on: [:create, :update]
+  after_create_commit -> { broadcast_append_to 'cart_items', partial: 'site/cart/cart_item', target: 'cart_items', locals: { cart_item: self, market: } }
+  after_update_commit -> { broadcast_update_to 'cart_items', partial: 'site/cart/cart_item', target: 'cart_items', locals: { cart_item: self, market: } }
 
   def market
     customer.market
@@ -35,9 +35,5 @@ CartItem < ApplicationRecord
     return errors.add(:product, 'must exist') if product.nil?
 
     errors.add(:base, 'customer and product must be from the same market') if customer.market != product.market
-  end
-
-  def update_stream_item
-    broadcast_prepend_to 'cart_items', partial: 'site/cart/cart_item', target: 'cart_items', locals: { cart_item: self, market: market }
   end
 end
