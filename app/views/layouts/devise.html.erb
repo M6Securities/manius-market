@@ -1,77 +1,75 @@
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
-<head>
-  <title>
-    <%= yield(:title) %>
-  </title>
+  <head>
+    <title>
+      <%= yield(:title) %>
+    </title>
 
-  <%= render 'shared/head' %>
+    <%= render 'shared/head' %>
 
-  <style>
-      #dumbass-menu-spacer {
-          height: 60px;
-      }
-      @media only screen and (max-width: 1320px) {
-          #dumbass-menu-spacer {
-              height: 0;
-          }
-      }
-  </style>
+    <style>
+        #dumbass-menu-spacer {
+            height: 60px;
+        }
+        @media only screen and (max-width: 1320px) {
+            #dumbass-menu-spacer {
+                height: 0;
+            }
+        }
+    </style>
 
-  <!-- BEGIN: Page CSS-->
-  <link rel="stylesheet" type="text/css" href="https://cdn.m6securities.com/vuexy_admin_8-0/app-assets/css/core/menu/menu-types/horizontal-menu.min.css">
-  <!-- END: Page CSS-->
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.m6securities.com/vuexy_admin_8-0/app-assets/css/core/menu/menu-types/horizontal-menu.min.css">
+    <!-- END: Page CSS-->
 
-</head>
+  </head>
 
-<body class="horizontal-layout horizontal-menu navbar-floating footer-static" data-open="hover" data-menu="horizontal-menu" data-col="">
+  <body class="horizontal-layout horizontal-menu navbar-floating footer-static" data-open="hover" data-menu="horizontal-menu" data-col="">
 
-<!-- BEGIN: Content-->
+  <!-- BEGIN: Content-->
 
-<div class="app-content content" style="padding: 0 !important;">
-  <div class="content-wrapper">
+  <div class="app-content content" style="padding: 0 !important;">
+    <div class="content-wrapper">
 
-    <div>
+      <div>
 
-    </div>
+      </div>
 
-    <div class="content-body">
-      <div class="auth-wrapper auth-cover">
-        <div class="auth-inner row m-0">
-          <!-- Brand logo-->
-          <a class="brand-logo">
+      <div class="content-body">
+        <div class="auth-wrapper auth-cover">
+          <div class="auth-inner row m-0">
+            <!-- Brand logo-->
+            <a class="brand-logo">
 
-            <h2 class="brand-text text-primary ms-1">
-              <%= Setting.first.app_name %>
-            </h2>
-          </a>
-          <!-- /Brand logo-->
-          <!-- Left Text-->
-          <div class="d-none d-lg-flex col-lg-8 align-items-center p-5">
-            <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
-              <img class="img-fluid" src="https://cdn.m6securities.com/vuexy_admin_8-0/app-assets/images/pages/login-v2.svg" alt="Login V2">
+              <h2 class="brand-text text-primary ms-1">
+                <%= Setting.first.app_name %>
+              </h2>
+            </a>
+            <!-- /Brand logo-->
+            <!-- Left Text-->
+            <div class="d-none d-lg-flex col-lg-8 align-items-center p-5">
+              <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
+                <img class="img-fluid" src="https://cdn.m6securities.com/vuexy_admin_8-0/app-assets/images/pages/login-v2.svg" alt="Login V2">
+              </div>
             </div>
-          </div>
-          <!-- /Left Text-->
+            <!-- /Left Text-->
 
-          <!-- Content-->
-          <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
-            <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
+            <!-- Content-->
+            <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
+              <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
 
-              <%= yield %>
+                <%= yield %>
 
+              </div>
             </div>
+            <!-- /Content-->
           </div>
-          <!-- /Content-->
         </div>
       </div>
+
     </div>
-
   </div>
-</div>
-<!-- END: Content-->
+  <!-- END: Content-->
 
-
-<%= render ThemeJavascriptComponent.new %>
-</body>
+  </body>
 </html>

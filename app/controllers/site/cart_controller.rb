@@ -44,7 +44,8 @@ module Site
         @cart_items_count = 0
         @cart_total = @current_customer.cart_total # can't manually set to 0.00
 
-        return render :navbar, status: :ok, layout: false
+        # return render :navbar, status: :ok, layout: false
+        return nil
       end
 
       param_cart_item_ids = []
@@ -53,7 +54,7 @@ module Site
 
         cart_item = CartItem.find_by id: param_cart_item[:id]
 
-        return render status: :bad_request, json: { message: 'Cart item not found' } if cart_item.nil?
+        return render status: :bad_request, json: { message: 'Cart item not found' }, text: 'Cart item not found' if cart_item.nil?
 
         if param_cart_item[:quantity].to_i.zero?
           cart_item.destroy
@@ -67,7 +68,8 @@ module Site
       end
 
       @show_navbar_cart = true
-      redirect_to cart_navbar_path(show_cart: true)
+
+      # render turbo_stream: turbo_stream.replace('cart_items', partial: 'site/cart/cart_item', locals: { customer: @current_customer })
     end
 
     private

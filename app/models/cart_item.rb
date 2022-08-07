@@ -17,6 +17,7 @@ CartItem < ApplicationRecord
   # ------------------------------------------------------------
 
   after_commit -> { broadcast_replace_to 'cart_items', partial: 'site/cart/cart_item', target: 'cart_items', locals: { customer: } }
+  after_destroy -> { broadcast_replace_to 'cart_items', partial: 'site/cart/cart_item', target: 'cart_items', locals: { customer: } }
 
   def market
     customer.market

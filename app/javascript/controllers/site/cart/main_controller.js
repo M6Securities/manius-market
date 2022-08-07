@@ -2,7 +2,8 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="site--cart--main"
 export default class extends Controller {
-  static values = { open : Boolean }
+  static values = { open : Boolean };
+  static targets = ['form'];
 
   connect() {
     $('.touchspin-cart').TouchSpin();
@@ -20,6 +21,24 @@ export default class extends Controller {
       //cartNavbar.update();
       $('#navbar-cart-update-div').show();
     });
+
+
+    const updateButtonDiv = $('#navbar-cart-update-div');
+    const updateButton = $('#navbar-cart-update');
+
+    /*
+    this.formTarget.addEventListener('turbo:submit-start', (event) => {
+      updateButton.prepend('<span class="spinner-border spinner-border-sm text-success"></span>');
+      updateButton.addClass('disabled');
+    });
+
+    this.formTarget.addEventListener('turbo:submit-end', (event) => {
+      updateButtonDiv.hide();
+      updateButton.removeClass('disabled');
+      updateButton.children('.spinner-border').remove();
+    });
+     */
+
   }
 
   toggleDropdown() {
@@ -36,5 +55,26 @@ export default class extends Controller {
       $('#cart-navbar-dropdown-items').addClass('show');
       this.openValue = true;
     }
+  }
+
+  async formSubmit(event) {
+    event.preventDefault();
+
+    const updateButtonDiv = $('#navbar-cart-update-div');
+    const updateButton = $('#navbar-cart-update');
+    const formElement = $(event.target);
+
+    updateButton.prepend('<span class="spinner-border spinner-border-sm text-success"></span>');
+    updateButton.addClass('disabled');
+
+    // continue event
+    event.target.submit();
+
+    updateButtonDiv.hide();
+    updateButton.removeClass('disabled');
+    updateButton.children('.spinner-border').remove();
+
+
+    // updateButtonDiv.hide();
   }
 }

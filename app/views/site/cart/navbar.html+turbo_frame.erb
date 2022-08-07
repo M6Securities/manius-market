@@ -9,11 +9,13 @@
       <li class="dropdown-menu-header">
         <div class="dropdown-header d-flex">
           <h4 class="notification-title mb-0 me-auto">My Cart</h4>
-          <div class="badge rounded-pill badge-light-primary"><%= @cart_items_count %> Items</div>
+          <div class="badge rounded-pill badge-light-primary">
+            <span class="cart-item-count"><%= @cart_items_count %></span> Items
+          </div>
         </div>
       </li>
 
-      <form action="<%= cart_update_cart_path %>" method="post">
+      <form action="<%= cart_update_cart_path %>" method="post" data-site--cart--main-target="form" data-action="site--cart--main#formSubmit">
         <!-- rails authenticity token -->
         <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 
@@ -38,7 +40,7 @@
             <h6 class="fw-bolder mb-0">
               Total:
             </h6>
-            <h6 class="text-primary fw-bolder mb-0">
+            <h6 class="text-primary fw-bolder mb-0" id="cart-total-price-display">
               <%= @cart_total.format %>
             </h6>
           </div>

@@ -23,6 +23,11 @@ export default class extends Controller {
       that.changeEvent(event);
     });
 
+    document.addEventListener('turbo:before-stream-render', function (event) {
+      that.updateCartCount();
+      $('#navbar-cart-update-div').hide();
+    });
+
     this.updateCartCount();
   }
 
@@ -31,11 +36,9 @@ export default class extends Controller {
     element.slideUp();
     element.remove();
     $('#navbar-cart-update-div').show();
-
-    // console.log("removed item");
   }
 
-  changeEvent(event) {
+  changeEvent(_event) {
     $('#navbar-cart-update-div').show();
     this.updateCartCount();
   }
@@ -55,14 +58,27 @@ export default class extends Controller {
           numItems += value;
       }
     });
-    const itemCountElement = $('#cart-item-count');
+
+    let itemCountElements = $('.cart-item-count');
+    const cartTotal = $('#cart-total-price').val();
+
+    // console.log(numItems);
+     // console.log(cartTotal);
 
     // if it exists
-    if (itemCountElement.length > 0) {
-      itemCountElement.text(numItems);
+    // remember itemCountElements has two entries. One on the navbar, one on the cart page.
+    if (itemCountElements.length > 1) {
+      itemCountElements.text(numItems);
     } else {
       // if it doesn't exist, create it
-      $('#cart-navbar-dropdown-button').append(`<span class="badge rounded-pill bg-primary badge-up" id="cart-item-count">${numItems}</span>`);
+      $('#cart-navbar-dropdown-button').append(`<span class="badge rounded-pill bg-primary badge-up cart-item-count">${numItems}</span>`);
+      itemCountElements = $('.cart-item-count');
     }
+
+    if(numItems === 0) {
+      // $('#navbar-cart-update-div').hide();
+    }
+
+    $('#cart-total-price-display').text(cartTotal);
   }
 }
