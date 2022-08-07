@@ -1,5 +1,10 @@
 import { Controller } from "@hotwired/stimulus";
 
+// import 'pdfmake';
+
+// import 'vfs_fonts';
+import 'datatables';
+
 const usualConfig = {
   processing: true,
   serverSide: true,
@@ -110,12 +115,14 @@ export class StimulusDatatable extends Controller {
         },
         orientation: 'landscape'
       },
+      /*
       {
         extend: 'print',
         exportOptions: {
           columns: config.exportColumns
         }
       }
+     */
     ];
 
     // console.log(config);
