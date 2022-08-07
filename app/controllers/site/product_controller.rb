@@ -4,7 +4,9 @@ module Site
   # public product controller
   class ProductController < SiteController
     def index
-      @products = Product.all
+      @products = @current_market.products.all
+
+      @pagy, @products = pagy(@products)
     end
 
     def show
