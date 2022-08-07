@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.m6securities.com/vuexy_admin_8-0/app-assets/css/pages/app-ecommerce.min.css">
 
-<div class="container">
+<div class="container" data-controller="site--product--index">
   <div class="content-header row">
     <div class="content-header-left col-md-9 col-12 mb-2">
       <div class="row">
@@ -41,14 +41,15 @@
                   </div>
                 </div>
                 <div class="btn-group" role="group">
-                  <input type="radio" class="btn-check" name="radio_options" id="radio_option1" autocomplete="off" checked />
-                  <label class="btn btn-icon btn-outline-primary view-btn grid-view-btn" for="radio_option1"
-                  ><i data-feather="grid" class="font-medium-3"></i
-                  ></label>
-                  <input type="radio" class="btn-check" name="radio_options" id="radio_option2" autocomplete="off" />
-                  <label class="btn btn-icon btn-outline-primary view-btn list-view-btn" for="radio_option2"
-                  ><i data-feather="list" class="font-medium-3"></i
-                  ></label>
+
+                  <button type="button" class="btn btn-icon btn-outline-primary" data-action="site--product--index#productViewGrid">
+                    <i data-feather="grid" class="font-medium-3"></i>
+                  </button>
+
+                  <button type="button" class="btn btn-icon btn-outline-primary" data-action="site--product--index#productViewList">
+                    <i data-feather="list" class="font-medium-3"></i>
+                  </button>
+
                 </div>
               </div>
             </div>
@@ -82,7 +83,7 @@
       <!-- E-commerce Search Bar Ends -->
 
       <!-- E-commerce Products Starts -->
-      <section id="ecommerce-products" class="grid-view">
+      <section id="ecommerce-products" class="grid-view" data-site--product--index-target="productView">
 
         <% @products.each do |product| %>
           <% cache product do %>

@@ -32,6 +32,10 @@ document.addEventListener('turbo:frame-render', function () {
     updateFeather();
 });
 
+document.addEventListener('turbo:render', function () {
+    updateFeather();
+});
+
 window.jQuery(window).on('load', function () {
     updateFeather();
 });

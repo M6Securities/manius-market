@@ -2,10 +2,10 @@
 
 module App
   class MenuComponent < ViewComponent::Base
-
-    def initialize(user)
+    def initialize(user, market)
       super
       @user = user
+      @market = market
     end
 
     def render?
@@ -15,6 +15,5 @@ module App
 
       true
     end
-
   end
 end

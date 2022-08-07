@@ -9,7 +9,7 @@ class AppController < ApplicationController
   before_action :set_market_dropdown_false
 
   def current_market
-    puts 'Current Market...'
+    # puts 'Current Market...'
     @current_market = Market.find session[:market_id] unless session[:market_id].blank?
     @current_market = nil unless current_user.markets.include?(@current_market) # unless @current_market.nil?
     @current_market = current_user.markets.first if @current_market.nil?

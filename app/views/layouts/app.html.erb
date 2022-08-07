@@ -20,7 +20,7 @@
     <%= render App::NavbarComponent.new(current_user, @current_market) %>
     <!-- END: Header-->
 
-    <%= render App::MenuComponent.new current_user %>
+    <%= render App::MenuComponent.new(current_user, @current_market) %>
 
     <!-- BEGIN: Content-->
     <div class="app-content content">

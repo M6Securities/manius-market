@@ -30,7 +30,7 @@ pin 'shepherd.js', to: 'https://ga.jspm.io/npm:shepherd.js@10.0.0/dist/js/shephe
 pin 'toastr', to: 'https://ga.jspm.io/npm:toastr@2.1.4/toastr.js'
 pin 'wnumb', to: 'https://ga.jspm.io/npm:wnumb@1.2.0/wNumb.js'
 pin 'nouislider', to: 'https://ga.jspm.io/npm:nouislider@15.6.0/dist/nouislider.js'
-pin 'feather-icons', to: 'https://ga.jspm.io/npm:feather-icons@4.29.0/dist/feather.js'
+pin 'feather-icons', to: 'https://ga.jspm.io/npm:feather-icons@4.29.0/dist/feather.js', preload: true
 pin 'unison'
 
 pin 'app-ecommerce', to: 'https://cdn.m6securities.com/vuexy_admin_8-0/app-assets/js/scripts/pages/app-ecommerce.min.js'
