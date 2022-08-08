@@ -40,9 +40,6 @@
             </div>
 
             <div class="col-12 col-lg-6 col-md-6 col-sm-12">
-              <%= render InputBlockComponent.new(name: 'update[stripe_publishable_key]', title: 'Stripe Publishable Key', placeholder: 'pk_live_adsibasdas...', helper_text: 'You cannot view the current keys, but you can replace them if needed.', required: false) %>
-              <%= render InputBlockComponent.new(name: 'update[stripe_secret_key]', title: 'Stripe Secret Key', placeholder: 'sk_live_adsibasdas...', helper_text: 'Both keys are encrypted and only shown to Market Owners', required: false) %>
-              <%= render InputBlockComponent.new(name: 'update[stripe_webhook_secret]', title: 'Stripe Webhook Secret', placeholder: 'whsec_adsibasdas...', required: false) %>
 
               <select name="update[default_currency]" class="form-control" required>
                 <%= options_for_select(currency_code_select_array, @market.default_currency) %>

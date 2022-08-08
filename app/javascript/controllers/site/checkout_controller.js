@@ -2,10 +2,6 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="site--checkout"
 export default class extends Controller {
-  static values = {
-    url: String,
-    key: String
-  }
 
   connect() {
     $('.bootstrap-touchspin').TouchSpin();
@@ -62,53 +58,5 @@ export default class extends Controller {
     //console.log("Validating form: " + valid);
 
     return valid;
-  }
-
-  checkoutFormSubmit(event) {
-    event.preventDefault();
-
-    const stripeURL = this.urlValue;
-    const stripeKey = this.keyValue;
-
-    if (!this.validOrderForm()) {
-      return null;
-    }
-
-    const stripe = Stripe(stripeKey);
-
-    const formElement = document.getElementById('place-order-form');
-    const formData = new FormData(formElement);
-
-    console.log(formData);
-
-    // Create a new Checkout Session using the server-side endpoint you
-    // created in step 3.
-    fetch(stripeURL, {
-      method: 'POST',
-      body: formData
-    })
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (session) {
-          console.log(session)
-
-          return stripe.redirectToCheckout({
-            sessionId: session.id
-          });
-
-        })
-        .then(function (result) {
-          console.log(result)
-          // If `redirectToCheckout` fails due to a browser or network
-          // error, you should display the localized error message to your
-          // customer using `error.message`.
-          if (result.error) {
-            alert(result.error.message);
-          }
-        })
-        .catch(function (error) {
-          console.error('Error:', error);
-        });
   }
 }

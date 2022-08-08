@@ -10,9 +10,6 @@ test_market:
   path_name: 'test'
   email: 'maniusmarket@m6securities.com'
   default_currency: 'USD'
-  stripe_publishable_key: '<%= Rails.application.credentials.stripe[:publishable_key] %>'
-  stripe_secret_key: '<%= Rails.application.credentials.stripe[:secret_key] %>'
-  stripe_webhook_secret: '<%= Rails.application.credentials.stripe[:webhook_secret] %>'
 
 # column: value
 #

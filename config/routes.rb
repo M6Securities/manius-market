@@ -86,21 +86,12 @@ Rails.application.routes.draw do
         match 'update_item' => 'cart#update_item', via: %i[post patch put]
         match 'update_cart' => 'cart#update_cart', via: %i[post patch put]
       end
-
-      scope :stripe_checkout, as: :stripe_checkout do
-        match 'create' => 'stripe_checkout#create', via: %i[post patch put]
-        get 'success' => 'stripe_checkout#success', as: :success
-        get 'cancel/:order_id' => 'stripe_checkout#cancel', as: :cancel
-      end
     end
   end
 
   # API
   namespace :api, defaults: { format: :json } do
     namespace :webhook do
-      scope :stripe, as: :stripe do
-        match '/' => 'stripe#index', via: %i[post patch put]
-      end
     end
   end
 

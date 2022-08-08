@@ -16,10 +16,6 @@ class ProductPrice < ApplicationRecord
             presence: true,
             numericality: { greater_than: 0 }
 
-  # Callbacks
-  after_commit :create_stripe_price, on: :create
-  after_commit :update_stripe_price, on: :update
-
   def market
     product.market
   end
@@ -28,13 +24,5 @@ class ProductPrice < ApplicationRecord
 
   def unique_currency
     errors.add(:currency, 'must be unique') unless ProductPrice.where(product_id:, price_currency:).where.not(id:).size.zero?
-  end
-
-  def create_stripe_price
-    CreateStripeProductPriceWorker.perform_async(id)
-  end
-
-  def update_stripe_price
-    UpdateStripeProductPriceWorker.perform_async(id)
   end
 end

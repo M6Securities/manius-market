@@ -41,19 +41,4 @@ RSpec.describe Market, type: :model do
     market = FactoryBot.build(:market, path_name: Faker::Name.first_name.downcase + ' ' + Faker::Name.last_name.downcase)
     expect(market).to_not be_valid
   end
-
-  it 'is invalid without a stripe publishable key' do
-    market = FactoryBot.build(:market, stripe_publishable_key: nil)
-    expect(market).to_not be_valid
-  end
-
-  it 'is invalid without a stripe secret key' do
-    market = FactoryBot.build(:market, stripe_secret_key: nil)
-    expect(market).to_not be_valid
-  end
-
-  it 'is invalid without a stripe webhook secret' do
-    market = FactoryBot.build(:market, stripe_webhook_secret: nil)
-    expect(market).to_not be_valid
-  end
 end

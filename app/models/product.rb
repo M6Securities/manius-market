@@ -23,9 +23,6 @@ class Product < ApplicationRecord
 
   has_many :action_logs, as: :loggable, dependent: :destroy
 
-  after_commit :create_stripe_product, on: :create
-  after_commit :update_stripe_product, on: :update
-
   # Validations
   # ------------------------------------------------------------
   validates :name, presence: true
@@ -49,11 +46,6 @@ class Product < ApplicationRecord
   # Methods
   # ------------------------------------------------------------
 
-  def stripe_product_id
-    # stripe product ids are not globally unique, so we need to make it unique for us
-    "maniusmarket_#{market.id}_#{id}"
-  end
-
   def primary_image_icon_url
     if primary_image.variable?
       url_for(product.primary_image.variant(gravity: 'Center', resize: '200x200^', crop: '200x200+0+0'))
@@ -70,13 +62,5 @@ class Product < ApplicationRecord
 
   def unique_sku
     errors.add(:sku, 'sku already exists in this market') unless market.products.where(sku:).where.not(id:).size.zero?
-  end
-
-  def create_stripe_product
-    CreateStripeProductWorker.perform_async(id)
-  end
-
-  def update_stripe_product
-    UpdateStripeProductWorker.perform_async(id)
   end
 end

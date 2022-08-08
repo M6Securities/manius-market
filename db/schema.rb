@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_08_022121) do
   create_table "action_logs", force: :cascade do |t|
     t.string "loggable_type"
     t.bigint "loggable_id"
@@ -67,7 +67,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
     t.string "session_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.string "stripe_customer_id"
     t.string "email"
     t.index ["market_id"], name: "index_customers_on_market_id"
     t.index ["session_id"], name: "index_customers_on_session_id", unique: true
@@ -80,10 +79,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
     t.string "email", default: ""
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.string "stripe_publishable_key"
-    t.string "stripe_secret_key"
     t.string "default_currency", default: "USD"
-    t.string "stripe_webhook_secret"
   end
 
   create_table "old_passwords", force: :cascade do |t|
@@ -101,7 +97,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
     t.bigint "quantity", default: 0
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.string "stripe_line_item_id"
     t.index ["order_id"], name: "index_order_items_on_order_id"
     t.index ["product_id"], name: "index_order_items_on_product_id"
   end
@@ -114,10 +109,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
     t.string "state"
     t.string "zip"
     t.string "country"
-    t.string "stripe_checkout_session_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.string "stripe_payment_intent_id"
     t.bigint "payment_status", default: 0
     t.bigint "status", default: 0
     t.string "shipping_name"
@@ -131,7 +124,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
     t.uuid "product_id"
     t.bigint "price_cents", default: 0, null: false
     t.string "price_currency", default: "USD", null: false
-    t.string "stripe_price_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["product_id"], name: "index_product_prices_on_product_id"
@@ -145,13 +137,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_211431) do
     t.bigint "market_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.string "stripe_product_id"
     t.boolean "enabled", default: true
     t.boolean "shippable", default: true
     t.string "description", default: ""
     t.index ["market_id"], name: "index_products_on_market_id"
     t.index ["sku"], name: "index_products_on_sku"
-    t.index ["stripe_product_id"], name: "index_products_on_stripe_product_id", unique: true
   end
 
   create_table "receive_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

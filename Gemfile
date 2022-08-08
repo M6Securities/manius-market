@@ -114,7 +114,6 @@ gem 'currency_select'
 gem 'monetize'
 gem 'money-heuristics'
 gem 'money-rails'
-gem 'stripe'
 
 # Country select
 gem 'country_select'

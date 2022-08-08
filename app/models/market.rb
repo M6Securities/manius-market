@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
 class Market < ApplicationRecord
-  # Encrypted Attributes
-  encrypts :stripe_publishable_key
-  encrypts :stripe_secret_key
-  encrypts :stripe_webhook_secret
-
   # Associations
   # ---------------------------------------------------------------------------
   has_many :user_market_permissions, dependent: :destroy
@@ -30,7 +25,4 @@ class Market < ApplicationRecord
                     uniqueness: true,
                     email: true,
                     unless: proc { |_m| Rails.env.test? }
-  validates :stripe_publishable_key, presence: true
-  validates :stripe_secret_key, presence: true
-  validates :stripe_webhook_secret, presence: true
 end

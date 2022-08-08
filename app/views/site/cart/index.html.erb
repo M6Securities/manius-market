@@ -3,16 +3,13 @@
 <script src="https://js.stripe.com/v3/"></script>
 
 <div class="container"
-     data-controller="site--checkout"
-     data-site--checkout-url-value="<%= stripe_checkout_create_path %>"
-     data-site--checkout-key-value="<%= @current_market.stripe_publishable_key %>"
->
+     data-controller="site--checkout">
   <!-- Checkout Place order starts -->
   <div id="place-order" class="list-view product-checkout">
     <!-- Checkout Place Order Left starts -->
     <div class="checkout-items">
 
-      <% @current_customer.cart_items.each do |cart_item| %>
+      <% @current_customer.cart_items.reload.each do |cart_item| %>
         <% cache cart_item do %>
           <div class="card ecommerce-card">
 
