@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_08_022121) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_08_033701) do
   create_table "action_logs", force: :cascade do |t|
     t.string "loggable_type"
     t.bigint "loggable_id"
@@ -118,6 +118,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_08_022121) do
     t.string "total_price_currency"
     t.index ["customer_id"], name: "index_orders_on_customer_id"
     t.index ["status"], name: "index_orders_on_status"
+  end
+
+  create_table "payment_gateways", force: :cascade do |t|
+    t.bigint "gateway", null: false
+    t.boolean "enabled", default: true
+    t.jsonb "credentials", default: {}, null: false
+    t.bigint "market_id"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["market_id"], name: "index_payment_gateways_on_market_id"
   end
 
   create_table "product_prices", force: :cascade do |t|

@@ -110,6 +110,7 @@ gem 'sidekiq-status'
 gem 'sidekiq-unique-jobs'
 
 # money
+gem 'activemerchant'
 gem 'currency_select'
 gem 'monetize'
 gem 'money-heuristics'
@@ -126,3 +127,5 @@ gem 'country_select'
 gem 'activerecord-cockroachdb-adapter', '~> 7.0.0'
 
 gem 'pagy'
+
+gem 'data_migrate'

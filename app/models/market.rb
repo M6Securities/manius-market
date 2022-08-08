@@ -10,6 +10,7 @@ class Market < ApplicationRecord
   has_many :customers, dependent: :destroy
   has_many :orders, through: :customers
   has_many :action_logs, as: :loggable, dependent: :destroy
+  has_many :payment_gateways, dependent: :destroy
 
   # Validations
   # ---------------------------------------------------------------------------

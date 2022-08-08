@@ -1,5 +1,5 @@
 <%= turbo_frame_tag @market do %>
-  <form action="<%= app_market_space_market_path @market %>" method="patch">
+  <form action="<%= app_market_space_market_path @market %>" method="patch" data-controller="app--market-space--market--edit">
     <!-- rails authenticity token -->
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
@@ -40,8 +40,8 @@
             </div>
 
             <div class="col-12 col-lg-6 col-md-6 col-sm-12">
-
-              <select name="update[default_currency]" class="form-control" required>
+              <label class="form-label" for=default-market-currency>Default Currency</label>
+              <select name="update[default_currency]" class="form-control" id="default-market-currency" required>
                 <%= options_for_select(currency_code_select_array, @market.default_currency) %>
               </select>
 
@@ -49,6 +49,59 @@
 
           </div>
 
+        </div>
+      </div>
+    </div>
+
+
+    <div class="card">
+      <div class="card-header">
+        <h3 class="h3">
+          Edit Payment Gateways
+        </h3>
+      </div>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Gateway Name</th>
+            <th>Enabled</th>
+            <th>Credentials</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody data-app--market-space--market--edit-target="gatewayTable">
+          <% @market.payment_gateways.each do |gateway| %>
+            <tr>
+              <td>
+                <input type="text" class="form-control" name="update[payment_gateways][name]" value="<%= gateway.name %>" readonly>
+              </td>
+              <td>
+                <%= gateway.enabled %>
+              </td>
+              <td>
+                Credentials cannot be viewed
+              </td>
+              <td>
+                <button type="button" class="btn btn-danger" data-action="app--market-space--market--edit#removeGateway">
+                  <i data-feather="trash"></i>
+                </button>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <div class="card-body">
+        <div class="d-flex justify-content-end">
+          <select id="gateway-select" class="form-control" style="width: min-content;" data-app--market-space--market--edit-target="gatewaySelect">
+            <option selected value="">Select a Gateway</option>
+            <option value="">----------------</option>
+            <%= options_for_select PaymentGateway::GATEWAY_OPTIONS %>
+          </select>
+          <button type="button" class="btn btn-success ms-1" data-action="app--market-space--market--edit#addGateway">
+            <i data-feather="plus"></i>
+          </button>
         </div>
       </div>
     </div>
