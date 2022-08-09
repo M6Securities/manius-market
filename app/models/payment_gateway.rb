@@ -13,7 +13,8 @@ class PaymentGateway < ApplicationRecord
   # IMPORTANT: The order of this hash cannot change. The order of this reflects the enum gateway order
   # Should also be reflected in app/javascript/controllers/app/market_space/market/edit_controller.js
   GATEWAY_CONFIG = {
-    stripe: %i[publishable_key secret_key]
+    stripe: %i[publishable_key secret_key],
+    paypal: %i[pem]
   }.freeze
 
   GATEWAY_OPTIONS = GATEWAY_CONFIG.keys.map { |k| [k.to_s.titleize, k] }.freeze

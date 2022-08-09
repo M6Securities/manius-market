@@ -67,6 +67,7 @@ module App
         if payment_gateways.nil?
           @market.payment_gateways.destroy_all
           @market.update(enabled: false)
+          @market.payment_gateways.reload
 
           flash[:success] = 'Market updated' if @market.save
 
@@ -90,6 +91,11 @@ module App
           # compare the keys to GateWayConfig
           valid_creds = true
           PaymentGateway::GATEWAY_CONFIG[payment_gateway[:gateway].to_sym].each do |key|
+            if gateway_creds.blank?
+              valid_creds = false
+              break
+            end
+
             if gateway_creds[key].blank?
               valid_creds = false
               break
@@ -107,6 +113,9 @@ module App
 
           # check to see if the db_payment_gateway is valid. If not, then let the user now
           flash[:error] = db_payment_gateway.errors.full_messages.join(', ') unless db_payment_gateway.valid?
+
+          # if the db_payment_gateway is valid, then we save it
+          db_payment_gateway.save
         end
 
         # now we remove deleted payment gateways
@@ -114,6 +123,8 @@ module App
         @market.payment_gateways.each do |payment_gateway|
           payment_gateway.destroy unless payment_gateways.any? { |pg| pg[:gateway] == payment_gateway.gateway }
         end
+
+        @market.payment_gateways.reload
 
         flash[:success] = 'Market updated' if @market.save
 

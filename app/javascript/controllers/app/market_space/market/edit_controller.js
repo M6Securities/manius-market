@@ -1,7 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
 
 const gatewayConfig = {
-  stripe: ['publishable_key', 'secret_key']
+  stripe: ['publishable_key', 'secret_key'],
+  paypal: ['pem'],
 }
 
 // Connects to data-controller="app--market-space--market--edit"

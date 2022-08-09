@@ -74,7 +74,8 @@
           <% @market.payment_gateways.each do |gateway| %>
             <tr>
               <td>
-                <input type="text" class="form-control" name="update[payment_gateways][name]" value="<%= gateway.name %>" readonly>
+                <input type="text" class="form-control" name="update[payment_gateways][][name]" value="<%= gateway.name %>" readonly>
+                <input type="hidden" name="update[payment_gateways][][gateway]" value="<%= gateway.gateway %>" readonly>
               </td>
               <td>
                 <%= gateway.enabled %>
