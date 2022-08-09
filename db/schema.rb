@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_08_033701) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_09_024001) do
   create_table "action_logs", force: :cascade do |t|
     t.string "loggable_type"
     t.bigint "loggable_id"
@@ -73,6 +73,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_08_033701) do
     t.index ["user_id"], name: "index_customers_on_user_id"
   end
 
+  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
+  end
+
   create_table "markets", force: :cascade do |t|
     t.string "display_name", default: ""
     t.string "path_name", default: ""
@@ -80,6 +83,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_08_033701) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "default_currency", default: "USD"
+    t.boolean "enabled", default: false
   end
 
   create_table "old_passwords", force: :cascade do |t|

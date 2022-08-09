@@ -26,4 +26,5 @@ class Market < ApplicationRecord
                     uniqueness: true,
                     email: true,
                     unless: proc { |_m| Rails.env.test? }
+  validates :enabled, inclusion: { in: [true, false] }
 end

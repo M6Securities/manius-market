@@ -27,7 +27,7 @@ export default class extends Controller {
     // generate credentials html
     let credentialsHtml = `<div class="d-flex">`;
     for (const key of gatewayConfig[selectedGateway]) {
-        credentialsHtml += `<input type="text" class="form-control me-1" name="update[gateway]${selectedGateway}[${key}]" placeholder="${key}">`;
+        credentialsHtml += `<input type="text" class="form-control me-1" name="update[payment_gateways][]${selectedGateway}[${key}]" placeholder="${key}" required>`;
     }
     credentialsHtml += `</div>`;
 
@@ -36,7 +36,8 @@ export default class extends Controller {
     const html = `
         <tr>
             <td>
-             <input type="text" class="form-control" name="update[payment_gateways][name]" value="${gatewayText}" readonly>
+             <input type="text" class="form-control" name="update[payment_gateways][][name]" value="${gatewayText}" readonly>
+             <input type="hidden" name="update[payment_gateways][][gateway]" value="${selectedGateway}" readonly>
             </td>
             <td>
               Not Saved

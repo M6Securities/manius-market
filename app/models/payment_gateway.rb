@@ -1,5 +1,5 @@
 class PaymentGateway < ApplicationRecord
-  encrypts :credentials, type: :jsonb
+  encrypts :credentials
   belongs_to :market
 
   validates :gateway, presence: true
