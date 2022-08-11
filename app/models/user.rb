@@ -33,6 +33,7 @@ class User < ApplicationRecord
   has_many :customers
   has_many :cart_items, through: :customers
   has_many :orders, through: :customers
+  has_many :addresses, as: :addressable, dependent: :destroy
 
   # Validations
   # ---------------------------------------------------------------------------

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_09_024001) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_11_005041) do
   create_table "action_logs", force: :cascade do |t|
     t.string "loggable_type"
     t.bigint "loggable_id"
@@ -48,6 +48,24 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_09_024001) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "addresses", force: :cascade do |t|
+    t.string "addressable_type"
+    t.bigint "addressable_id"
+    t.string "street_1"
+    t.string "street_2"
+    t.string "street_3"
+    t.string "city"
+    t.string "region"
+    t.string "postal_area"
+    t.string "country", limit: 2
+    t.string "contact_name"
+    t.string "contact_phone"
+    t.integer "address_type", limit: 2
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable"
   end
 
   create_table "cart_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -107,17 +125,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_09_024001) do
 
   create_table "orders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "customer_id"
-    t.string "address_line_1"
-    t.string "address_line_2"
-    t.string "city"
-    t.string "state"
-    t.string "zip"
-    t.string "country"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.bigint "payment_status", default: 0
     t.bigint "status", default: 0
-    t.string "shipping_name"
     t.bigint "total_price_cents"
     t.string "total_price_currency"
     t.index ["customer_id"], name: "index_orders_on_customer_id"

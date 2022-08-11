@@ -89,10 +89,12 @@ class Order < ApplicationRecord
   belongs_to :customer
   has_many :order_items, dependent: :destroy
   has_many :action_logs, as: :loggable, dependent: :destroy
+  has_one :address, as: :addressable, dependent: :destroy
 
   # Validations
   # --------------------------------------------------------------------------------------------------------------------
   validates_presence_of :customer
+  validates_presence_of :address
   # validates :payment_status, inclusion: { in: PS_ARRAY }
   validates :status, inclusion: { in: statuses.keys }
 
