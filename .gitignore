@@ -42,3 +42,4 @@ node_modules
 # Ignore application configuration
 /config/application.yml
 node1
+.gem_rbs_collection
