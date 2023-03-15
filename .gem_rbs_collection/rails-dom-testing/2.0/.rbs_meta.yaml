@@ -1,0 +1,9 @@
+---
+name: rails-dom-testing
+version: '2.0'
+source:
+  type: git
+  name: ruby/gem_rbs_collection
+  revision: e2b79a0eb3acdaf36c53ec1af631387afb452d94
+  remote: https://github.com/ruby/gem_rbs_collection.git
+  repo_dir: gems

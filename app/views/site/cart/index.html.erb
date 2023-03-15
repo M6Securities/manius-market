@@ -145,20 +145,7 @@
 
             <%= render InputBlockComponent.new(type: :email, name: 'create[email]', title: 'Email', placeholder: 'john.smith@example.com', id: 'place-order-email', value: (@current_customer.email)) %>
 
-            <%= render InputBlockComponent.new(name: 'create[address_line_1]', title: 'Address', placeholder: 'Address Line 1') %>
-
-            <%= render InputBlockComponent.new(name: 'create[address_line_2]', title: '', placeholder: 'Address Line 2', required: false) %>
-
-            <%= render InputBlockComponent.new(name: 'create[city]', title: 'City', placeholder: 'City') %>
-
-            <div class="row">
-              <div class="col-6">
-                <%= render InputBlockComponent.new(name: 'create[state]', title: 'State', placeholder: 'State') %>
-              </div>
-              <div class="col-6">
-                <%= render InputBlockComponent.new(name: 'create[zip]', title: 'Zip', placeholder: 'Zip') %>
-              </div>
-            </div>
+            <%= render AddressSelectComponent.new(@customer) %>
 
             <div>
               <%= country_select(:create, :country, { priority_countries: %w[US CA], selected: 'US' }, { class: 'form-control' }) %>
