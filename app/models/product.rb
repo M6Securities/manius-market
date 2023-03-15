@@ -11,7 +11,7 @@ class Product < ApplicationRecord
   belongs_to :market
 
   has_many :receive_items
-  has_many :receives, through: :receive_items
+  has_many :receive, through: :receive_items, as: :receives
 
   has_many :product_prices, dependent: :destroy
 
